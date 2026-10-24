@@ -98,9 +98,9 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
 </div>
 
 <section class="card" id="intro">
-  <span class="label">Case file · Main Street, two o'clock</span>
+  <span class="label">Case file · Main Street, afternoon</span>
   <h2>The Main Street cake caper</h2>
-  <p style="margin:0">A sunny afternoon on Main Street, a street musician, a three-tier cake outside the bakery. Something walks off that shouldn't. You were there. Watch the episode once — then tell us what you saw.</p>
+  <p style="margin:0">A sunny afternoon on Main Street. A bakery, a barber, a hardware store — and something sitting outside that somebody wants. It walks off with the wrong person. You were there. Watch the episode once — then tell us what you saw.</p>
   <ol class="how">
     <li><b>1</b><span>Watch this week's episode. About one minute. No rewinds.</span></li>
     <li><b>2</b><span>Answer 12 questions. You get 15 seconds each once the answers appear.</span></li>
@@ -173,23 +173,23 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
 const ANSWER=15,PEEK_COST=250,CASE="2";
 const $=id=>document.getElementById(id);
 const film=$("film");
-let DUR=59;
+let DUR=58;
 film.style.visibility="hidden";
 film.addEventListener("loadedmetadata",()=>{if(film.duration&&isFinite(film.duration))DUR=film.duration;$("watchLeft").textContent=Math.ceil(DUR)});
 
 // Every question below was checked against the actual frames of the episode.
 const Q=[
-["Detail","What was the name on the green hardware store?","SAL'S",["MAX'S","JOE'S","BEN'S"]],
-["Detail","What time did the clock on the building show?","2:00",["10:10","6:30","12:15"]],
-["Detail","What was the thief holding before he moved toward the cake?","A newspaper",["A cup of coffee","An umbrella","A dog leash"]],
-["Detail","What was the thief wearing on his head?","A flat cap",["A top hat","A baseball cap","Nothing"]],
-["Detail","What instrument was the street musician playing?","An accordion",["A guitar","A violin","A trumpet"]],
-["Detail","What color vest was the monkey wearing?","Red",["Green","Blue","Yellow"]],
-["Detail","What was covering the cake on the bakery table?","A glass dome",["A cardboard box","A white cloth","Nothing"]],
-["Order","What was the baker doing when the cake was taken?","Standing in his doorway with his back to the street",["Chasing the monkey","Talking to the mail carrier","Reading the newspaper"]],
+["Detail","Who was watching the street from the upstairs window?","An orange cat",["A pigeon","An old man","Nobody — the window was empty"]],
+["Detail","What was the thief reading before he made his move?","A newspaper",["A paperback book","A map","A menu"]],
+["Detail","Besides his flat cap, what else was the thief wearing?","Eyeglasses",["A red scarf","An eye patch","Sunglasses"]],
+["Detail","What was the street musician wearing?","A striped shirt and a beret",["A tuxedo","Overalls and a straw hat","A red bow tie and vest"]],
+["Detail","What was the woman waiting at the curb wearing?","A yellow jacket",["A red raincoat","A green dress","A blue sweater"]],
+["Detail","What was the mail carrier doing the whole time?","Reading the mail in his hands",["Eating a sandwich","Talking to the bus driver","Feeding the monkey"]],
+["Detail","What was parked at the curb in front of the bakery?","A green bicycle",["A red scooter","A baby stroller","A wooden cart"]],
+["Detail","What was covering the cake before it was taken?","A glass dome",["A cardboard box","A white cloth","Nothing"]],
+["Order","Where was the baker when the cake was taken?","Standing in his doorway with his back to the street",["Chasing the monkey","Talking to the mail carrier","Reading the newspaper"]],
 ["Detail","How did the thief get away?","On the yellow bus",["In the blue pickup truck","On the green bicycle","He ran down the street"]],
 ["Direction","Which way did the bus drive off?","To the right",["To the left","Straight toward the camera","It never moved"]],
-["Detail","What did the baker grab before he gave chase?","A rolling pin",["A frying pan","A broom","A loaf of bread"]],
 ["Detail","Where did the monkey end up during the chase?","On top of the red fire hydrant",["Inside the bus","On the bakery table","Up the tree"]]];
 
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
