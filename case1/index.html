@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Eyewitness Case 1: The great dog show caper. Watch a one-minute cartoon crime once, then answer 12 timed questions. How good a witness are you?">
-<meta property="og:type" content="website"><meta property="og:title" content="Eyewitness — Case #1: The great dog show caper"><meta property="og:description" content="Watch the footage once. Answer 12 questions. Did YOU see who took the trophy?"><meta property="og:image" content="https://bobcoz111-blip.github.io/eyewitness/case1/scene.jpg"><meta property="og:url" content="https://bobcoz111-blip.github.io/eyewitness/case1/"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website"><meta property="og:title" content="Eyewitness — Case #1: The great dog show caper"><meta property="og:description" content="Watch the episode once. Answer 12 questions. Did YOU see who took the trophy?"><meta property="og:image" content="https://bobcoz111-blip.github.io/eyewitness/case1/scene.jpg"><meta property="og:url" content="https://bobcoz111-blip.github.io/eyewitness/case1/"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../icon.svg">
 <title>Eyewitness Case 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,7 +90,7 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
 </header>
 
 <div class="stage" id="stage">
-  <video id="film" src="case1.mp4" poster="scene.jpg" playsinline preload="auto" aria-label="The park security camera footage"></video>
+  <video id="film" src="case1.mp4" poster="scene.jpg" playsinline preload="auto" aria-label="Episode 1"></video>
   <img id="still" src="scene.jpg" alt="The park scene before anything happened" hidden>
   <span class="rec" id="rec" hidden>CAM 1 · REC</span>
   <span class="peektag" id="peekTag" hidden>PEEKING</span>
@@ -100,18 +100,18 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
 <section class="card" id="intro">
   <span class="label">Case file · City park, Saturday morning</span>
   <h2>The great dog show caper</h2>
-  <p style="margin:0">Saturday morning, the park, the annual dog show. Something walks off that shouldn't. You were there. Watch the footage once — then tell us what you saw.</p>
+  <p style="margin:0">Saturday morning, the park, the annual dog show. Something walks off that shouldn't. You were there. Watch the episode once — then tell us what you saw.</p>
   <ol class="how">
-    <li><b>1</b><span>Watch the footage. About one minute. No rewinds.</span></li>
+    <li><b>1</b><span>Watch this week's episode. About one minute. No rewinds.</span></li>
     <li><b>2</b><span>Answer 12 questions. You get 15 seconds each once the answers appear.</span></li>
     <li><b>3</b><span>Right and fast scores most. Peeking at the opening still costs 250 points.</span></li>
   </ol>
-  <button class="primary" id="play">Watch the footage</button>
+  <button class="primary" id="play">Watch the episode</button>
   <span class="hint" id="next" style="text-align:center"></span>
 </section>
 
 <section class="card" id="watch" hidden>
-  <div class="row"><span class="label">Watching · no rewinds</span><span class="big" style="font-size:30px" id="watchLeft">62</span></div>
+  <div class="row"><span class="label">Watching the episode · no rewinds</span><span class="big" style="font-size:30px" id="watchLeft">62</span></div>
   <div class="bar" id="watchWrap"><i id="watchBar"></i></div>
 </section>
 
@@ -144,13 +144,13 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
     <button class="fbk" id="fbShare">Share on Facebook</button>
   </div>
   <div class="hint" id="copied" aria-live="polite"></div>
-  <button id="replayTop" class="ghost" style="border-style:solid">▶ Watch the footage again — pause and rewind as much as you like</button>
+  <button id="replayTop" class="ghost" style="border-style:solid">▶ Watch the episode again — pause and rewind as much as you like</button>
 </section>
 
 <section class="card" id="missedCard" hidden>
   <span class="label">What really happened — the answers</span>
   <ol class="missed" id="missed"></ol>
-  <button id="replay">▶ Watch the footage again</button>
+  <button id="replay">▶ Watch the episode again</button>
 </section>
 <section class="card" id="signupCard">
   <span class="label">Next case drops every Friday</span>
@@ -174,10 +174,10 @@ let DUR=62;
 film.style.visibility="hidden";
 film.addEventListener("loadedmetadata",()=>{if(film.duration&&isFinite(film.duration))DUR=film.duration;$("watchLeft").textContent=Math.ceil(DUR)});
 
-// Every question below was checked against the actual frames of the footage.
+// Every question below was checked against the actual frames of the episode.
 const Q=[
 ["Detail","What was written on the red banner over the stage?","DOG SHOW",["PET PARADE","CAT SHOW","BAKE SALE"]],
-["Count","How many ducks were in the pond when the footage began?","3",["2","4","6"]],
+["Count","How many ducks were in the pond when the episode began?","3",["2","4","6"]],
 ["Detail","What time did the tall street clock show?","10:10",["2:50","11:05","9:15"]],
 ["Detail","Where was the thief before he made his move?","Hiding behind the big tree next to the stage",["Sitting on the park bench","Inside the ice cream truck","Standing by the pond"]],
 ["Detail","What color was the thief's hoodie?","Green",["Red","Black","Blue"]],
@@ -210,7 +210,7 @@ function playScene(onDone){film.controls=false;
   film.onended=()=>{clearInterval(watchTick);$("rec").hidden=true;onDone()};
 }
 function seal(text,sub){$("coverText").textContent=text;$("coverSub").textContent=sub;$("cover").hidden=false;film.style.visibility="hidden"}
-$("play").onclick=()=>{if(saved){showResult();return}show("watch");playScene(()=>{seal("Footage over","Now, what did you see?");startQuiz()})};
+$("play").onclick=()=>{if(saved){showResult();return}show("watch");playScene(()=>{seal("Episode over","Now, what did you see?");startQuiz()})};
 
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function startQuiz(){qi=0;score=0;marks=[];show("quiz");ask()}
@@ -229,7 +229,7 @@ function ask(){
 $("peek").onclick=()=>{
   if(peeked||peeking)return;peeked=true;peeking=true;$("peek").disabled=true;$("peek").textContent="Peeking...";
   $("cover").hidden=true;$("still").hidden=false;$("peekTag").hidden=false;
-  setTimeout(()=>{$("peekTag").hidden=true;$("still").hidden=true;seal("Footage over","Now, what did you see?");peeking=false;$("peek").textContent="Peek at the opening still for 3 seconds (costs 250)"},3000);
+  setTimeout(()=>{$("peekTag").hidden=true;$("still").hidden=true;seal("Episode over","Now, what did you see?");peeking=false;$("peek").textContent="Peek at the opening still for 3 seconds (costs 250)"},3000);
 };
 function pick(b,a){
   clearInterval(timer);$("peek").hidden=true;$("hint").textContent="";
@@ -249,7 +249,7 @@ function finish(){
 }
 function shareText(r){const em={g:"🟩",y:"🟨",r:"🟥"};return "Eyewitness Case #"+CASE+" 🕵️ "+r.right+"/12 · "+r.score.toLocaleString()+" pts\n"+r.marks.map(m=>em[m]).join("")+"\nDid YOU see who took the trophy?"}
 function showResult(){
-  show("result");seal("Case closed","Tap Watch the footage again below to see what you missed.");
+  show("result");seal("Case closed","Tap Watch the episode again below to see what you missed.");
   const r=saved;
   $("rank").textContent=rankFor(r.right);$("final").textContent=r.score.toLocaleString();$("finalSub").textContent=r.right+" of 12 right · "+r.marks.filter(m=>m==="y").length+" peeks";
   $("tiles").innerHTML=r.marks.map(m=>'<span class="t-'+m+'"></span>').join("");
