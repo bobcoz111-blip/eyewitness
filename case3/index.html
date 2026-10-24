@@ -98,9 +98,9 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
 </div>
 
 <section class="card" id="intro">
-  <span class="label">Case file · Railway station, four o'clock</span>
+  <span class="label">Case file · Railway station, afternoon</span>
   <h2>The station hatbox heist</h2>
-  <p style="margin:0">Four o'clock on the platform, a juggler, a lady's luggage on the porter's cart. Something rides off that shouldn't. You were there. Watch the episode once — then tell us what you saw.</p>
+  <p style="margin:0">A quiet platform, a train waiting, and a porter's cart piled with somebody's luggage. Something rides off that shouldn't. You were there. Watch the episode once — then tell us what you saw.</p>
   <ol class="how">
     <li><b>1</b><span>Watch this week's episode. About one minute. No rewinds.</span></li>
     <li><b>2</b><span>Answer 12 questions. You get 15 seconds each once the answers appear.</span></li>
@@ -179,18 +179,18 @@ film.addEventListener("loadedmetadata",()=>{if(film.duration&&isFinite(film.dura
 
 // Every question below was checked against the actual frames of the episode.
 const Q=[
-["Detail","What was the name on the diner sign?","ROSIE'S DINER",["MOLLY'S DINER","ROSIE'S CAFE","THE DEPOT DINER"]],
-["Detail","What time did the station clock show?","4:00",["2:00","10:10","6:30"]],
 ["Count","How many suitcases were stacked on the porter's cart?","3",["2","4","5"]],
-["Detail","What was on top of the suitcases?","A striped hatbox",["A birdcage","A picnic basket","A violin case"]],
+["Detail","What was sitting on top of the suitcases?","A striped hatbox",["A birdcage","A picnic basket","A violin case"]],
+["Detail","Who was in the ticket window?","A black-and-white cat",["The ticket clerk","A pigeon","A vase of flowers"]],
+["Detail","What was the thief wearing on his head?","A bowler hat",["A flat cap","A top hat","Nothing"]],
 ["Detail","What color was the thief's scarf?","Green",["Red","Yellow","Blue"]],
-["Order","What was the thief doing before he made his move?","Reading a timetable by the lamppost",["Buying a ticket","Sitting on the bench","Petting the dog"]],
-["Detail","Who was entertaining the crowd?","A juggler",["An accordion player","A magician","A clown with balloons"]],
-["Detail","What was the lady in the lavender coat holding?","A yellow umbrella",["A red handbag","A bouquet of flowers","A birdcage"]],
+["Order","What was the thief doing before he made his move?","Reading a paper by the lamppost",["Buying a ticket","Sitting on the bench","Petting the dog"]],
+["Detail","What was the paperboy waving in the air?","Newspapers",["A flag","A train ticket","His cap"]],
+["Detail","What kind of dog was with the lady in lavender?","A small white dog",["A brown dachshund","A black poodle","A spotted dalmatian"]],
+["Count","How many children were sitting on the bench?","2",["1","3","4"]],
 ["Detail","How did the thief get away?","On the red bicycle",["On the train","In a taxi","He ran down the tracks"]],
 ["Direction","Which way did the bicycle go?","To the left",["To the right","Straight toward the camera","It never moved"]],
-["Detail","What did the porter lose as he gave chase?","His cap",["His whistle","His jacket","His shoe"]],
-["Detail","What did the juggler drop at the end?","His three red balls",["His hat","A bowling pin","Nothing"]]];
+["Detail","What did the porter lose as he gave chase?","His cap",["His whistle","His jacket","His shoe"]]];
 
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
 function dayKey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
