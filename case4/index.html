@@ -77,6 +77,7 @@ ol.missed{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 @media (max-width:540px){.two{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){button{transition:none}}
 input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:17px;font-family:inherit;background:#fff;color:var(--ink)}
+[hidden]{display:none!important}
 </style>
 
 <div class="wrap">
@@ -143,8 +144,14 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
     <button class="fbk" id="fbShare">Share on Facebook</button>
   </div>
   <div class="hint" id="copied" aria-live="polite"></div>
+  <button id="replayTop" class="ghost" style="border-style:solid">▶ Watch the footage again — pause and rewind as much as you like</button>
 </section>
 
+<section class="card" id="missedCard" hidden>
+  <span class="label">What really happened — the answers</span>
+  <ol class="missed" id="missed"></ol>
+  <button id="replay">▶ Watch the footage again</button>
+</section>
 <section class="card" id="signupCard">
   <span class="label">Next case drops every Friday</span>
   <p style="margin:0 0 6px">Get the new case in your inbox the moment it's released. No spam, one email a week.</p>
@@ -157,11 +164,6 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
   <div class="hint" id="mlMsg" aria-live="polite"></div>
 </section>
 
-<section class="card" id="missedCard" hidden>
-  <span class="label">What really happened</span>
-  <ol class="missed" id="missed"></ol>
-  <button id="replay">Watch the footage again</button>
-</section>
 </div>
 
 <script>
@@ -196,10 +198,10 @@ let timer=null,left=0,qi=0,score=0,marks=[],peeked=false,peeking=false,watchTick
 const sections=["intro","watch","quiz","result"];
 function show(id){sections.forEach(s=>$(s).hidden=s!==id);$("signupCard").hidden=id==="watch"||id==="quiz";$("missedCard").hidden=id!=="result"}
 
-function countdown(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);const s=Math.floor((m-n)/1000);const txt=Math.floor(s/3600)+"h "+String(Math.floor(s%3600/60)).padStart(2,"0")+"m";$("sNext").textContent=txt;$("next").textContent=saved?"You solved this case. Next case in "+txt+".":"New case every day at midnight."}
+function countdown(){const n=new Date(),m=new Date(n);m.setDate(n.getDate()+((5-n.getDay()+7)%7||7));m.setHours(9,0,0,0);const s=Math.floor((m-n)/1000);const txt=(s>=86400?Math.floor(s/86400)+"d ":"")+Math.floor(s%86400/3600)+"h "+String(Math.floor(s%3600/60)).padStart(2,"0")+"m";$("sNext").textContent=txt;$("next").textContent=saved?"You solved this case. Next case in "+txt+".":"New case every Friday morning."}
 setInterval(countdown,1000);countdown();
 
-function playScene(onDone){
+function playScene(onDone){film.controls=false;
   $("cover").hidden=true;$("rec").hidden=false;$("still").hidden=true;film.style.visibility="visible";
   film.currentTime=0;
   const p=film.play();if(p&&p.catch)p.catch(()=>{});
@@ -260,7 +262,8 @@ function showResult(){
 }
 $("copy").onclick=()=>{const t=$("share").value;navigator.clipboard.writeText(t).then(()=>$("copied").textContent="Copied. Paste it on Facebook or in a group text.").catch(()=>{$("share").select();$("copied").textContent="Selected. Use your keyboard's Copy."})};
 $("fbShare").onclick=()=>{const u="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(location.href.split("#")[0])+"&quote="+encodeURIComponent($("share").value);window.open(u,"_blank","noopener,width=620,height=560")};
-$("replay").onclick=()=>{window.scrollTo({top:0,behavior:"smooth"});playScene(()=>seal("Replay over","Same footage. New case next Friday."))};
+function replayFilm(){window.scrollTo({top:0,behavior:"smooth"});film.controls=true;$("cover").hidden=true;$("still").hidden=true;film.style.visibility="visible";$("rec").hidden=true;film.currentTime=0;const p=film.play();if(p&&p.catch)p.catch(()=>{});film.onended=()=>{}}
+$("replay").onclick=replayFilm;$("replayTop").onclick=replayFilm;
 
 function renderBoard(){}
 function submit(){}
