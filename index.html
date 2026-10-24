@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eyewitness — the weekly witness game</title>
+<meta name="description" content="Watch a one-minute cartoon crime once, then answer 12 timed questions about what you saw. A new case every Friday. How good a witness are you?">
+<meta property="og:type" content="website"><meta property="og:title" content="Eyewitness — how good a witness are you?"><meta property="og:description" content="Watch the footage once. Answer 12 questions. New case every Friday."><meta property="og:image" content="https://bobcoz111-blip.github.io/eyewitness/case1/scene.jpg"><meta property="og:url" content="https://bobcoz111-blip.github.io/eyewitness/"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg">
+<style>
+/* One phone-width column like a daily puzzle. The painted park film is the hero; the questions take its place. Bright and sunny on purpose. */
+:root{
+  --sky:#e6f4ff;--card:#ffffff;--ink:#16224a;--muted:#55638c;--line:#c9d8f0;
+  --sun:#ffc93c;--sun-ink:#4a3300;--coral:#ff6b5b;--good:#1f9d61;--good-bg:#dcf5e8;--bad:#d63b2f;--bad-bg:#fde3e0;--peek:#e0a400;
+  --display:"Fredoka","Arial Rounded MT Bold",sans-serif;--body:"Nunito",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--sky);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:16px 48px;display:flex;flex-direction:column;gap:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo h1{font-family:var(--display);font-weight:700;font-size:30px;margin:0;letter-spacing:.3px}
+.pill{font-family:var(--display);font-weight:600;font-size:14px;background:var(--ink);color:#fff;border-radius:999px;padding:4px 12px;white-space:nowrap}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.label{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.1;margin:0;text-wrap:balance}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+button{font-family:var(--display);font-weight:600;font-size:19px;border-radius:14px;min-height:54px;padding:10px 18px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;width:100%}
+button.primary{background:var(--sun);border-color:var(--ink);color:var(--sun-ink);box-shadow:0 4px 0 var(--ink)}
+button.primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+button.fbk{background:#1b4fd6;color:#fff;border-color:#102e80}
+button:focus-visible,input:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.stage{position:relative;border-radius:16px;overflow:hidden;border:3px solid var(--ink);background:#16224a;aspect-ratio:852/480}
+.stage video,.stage img{display:block;width:100%;height:100%;object-fit:cover}
+.stage img{position:absolute;inset:0}
+.cover{position:absolute;inset:0;background:rgba(22,34,74,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-family:var(--display);font-weight:600;font-size:22px;text-align:center;padding:16px}
+.rec{position:absolute;top:10px;left:10px;background:var(--coral);color:#fff;font:700 13px var(--display);padding:3px 10px;border-radius:999px;letter-spacing:1px}
+.peektag{position:absolute;top:10px;right:10px;background:var(--peek);color:#2a1d00;font:700 13px var(--display);padding:3px 10px;border-radius:999px}
+.bar{height:14px;background:#dbe7f7;border-radius:999px;overflow:hidden;border:2px solid var(--ink)}
+.bar>i{display:block;height:100%;width:100%;background:var(--sun)}
+.bar.low>i{background:var(--coral)}
+.q{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.25;margin:0;min-height:60px;text-wrap:balance}
+.kind{align-self:flex-start;font-family:var(--display);font-weight:600;font-size:13px;background:#eef3ff;border:2px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:540px){.opts{grid-template-columns:1fr}}
+.opts.wait{visibility:hidden}
+.opt{text-align:left;border:2px solid var(--line);min-height:58px;font-size:18px}
+.opt:hover{border-color:var(--ink)}
+.opt.ok{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.no{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.ghost{border:2px dashed var(--peek);color:#7a5800;background:#fff8e1;min-height:48px;font-size:16px}
+.hint{font-size:15px;color:var(--muted);min-height:22px}
+.fb{font-family:var(--display);font-weight:600;min-height:28px}
+.tiles{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:5px}
+.tiles span{aspect-ratio:1;border-radius:6px;border:2px solid var(--ink)}
+.t-g{background:#3fbf7f}.t-y{background:var(--sun)}.t-r{background:var(--coral)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:540px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:#eef6ff;border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.big{font-family:var(--display);font-weight:700;font-size:44px;line-height:1}
+.rank{display:inline-block;font-family:var(--display);font-weight:700;font-size:20px;background:var(--coral);color:#fff;border-radius:999px;padding:4px 14px;transform:rotate(-2deg);align-self:flex-start}
+textarea{width:100%;box-sizing:border-box;font:16px/1.4 var(--body);border:2px solid var(--line);border-radius:12px;padding:10px;resize:none;background:#f8fbff;color:var(--ink)}
+input[type=text]{width:100%;box-sizing:border-box;font:inherit;min-height:50px;border:2px solid var(--line);border-radius:12px;padding:8px 12px;background:#fff;color:var(--ink)}
+.board{list-style:none;margin:0;padding:0}
+.board li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;padding:10px 4px;border-top:2px solid #eef3fb;font-variant-numeric:tabular-nums;align-items:center}
+.board li:first-child{border-top:0}
+.board li.me{background:#fff4cc;border-radius:10px}
+.rk{font-family:var(--display);font-weight:700;color:var(--muted);text-align:center}
+.how{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.how li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:center}
+.how b{width:36px;height:36px;border-radius:50%;background:var(--sun);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--display)}
+ol.missed{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.err{color:var(--bad);font-size:15px;min-height:20px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:540px){.two{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){button{transition:none}}
+
+.hero{text-align:center;padding:10px 0 4px}.hero h2{font-size:30px;margin:6px 0}.hero p{color:var(--muted);margin:0 0 14px;font-size:17px}
+.cases{display:grid;gap:14px}.case{display:grid;grid-template-columns:120px 1fr;gap:12px;background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden;color:var(--ink);text-decoration:none}
+.case img{width:120px;height:100%;object-fit:cover;min-height:110px}.case div{padding:10px 12px 10px 0;display:flex;flex-direction:column;gap:4px}.case h3{margin:0;font-size:18px}.case p{margin:0;color:var(--muted);font-size:14px}.go{color:#1b4fd6;font-weight:700;font-size:14px;margin-top:auto}
+.case.featured{grid-template-columns:1fr;border-color:var(--sun)}.case.featured img{width:100%;height:auto;aspect-ratio:852/480}.case.featured div{padding:12px 14px 14px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:18px 0}
+input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:17px;font-family:inherit;background:#fff;color:var(--ink)}
+</style></head><body>
+<div class="wrap">
+<header><div class="logo"><svg width="44" height="44" viewBox="0 0 100 100" aria-hidden="true"><circle cx="44" cy="44" r="30" fill="#fff" stroke="#16224a" stroke-width="9"/><circle cx="44" cy="44" r="14" fill="#2f7bf0"/><circle cx="44" cy="44" r="7" fill="#16224a"/><circle cx="49" cy="39" r="3" fill="#fff"/><line x1="66" y1="66" x2="90" y2="90" stroke="#16224a" stroke-width="12" stroke-linecap="round"/></svg><h1>Eyewitness</h1></div><span class="pill">New case every Friday</span></header>
+<section class="hero"><h2>How good a witness are you?</h2><p>Watch a one-minute cartoon crime — once, no rewinds. Then answer 12 quick questions about what you saw. Share your score and see who's got the sharpest eyes.</p></section>
+<section class="cases"><a class="case featured" href="case1/"><img src="case1/scene.jpg" alt="" loading="lazy"><div><span class="label">Case #1</span><h3>The great dog show caper</h3><p>City park · the trophy walks off during the dog show.</p><span class="go">Play this case →</span></div></a><a class="case" href="case2/"><img src="case2/scene.jpg" alt="" loading="lazy"><div><span class="label">Case #2</span><h3>The Main Street cake caper</h3><p>Main Street · a three-tier cake leaves on the bus.</p><span class="go">Play this case →</span></div></a><a class="case" href="case3/"><img src="case3/scene.jpg" alt="" loading="lazy"><div><span class="label">Case #3</span><h3>The station hatbox heist</h3><p>Railway platform · a hatbox rides away on a bicycle.</p><span class="go">Play this case →</span></div></a><a class="case" href="case4/"><img src="case4/scene.jpg" alt="" loading="lazy"><div><span class="label">Case #4</span><h3>The prize pumpkin pinch</h3><p>Harvest market · a blue-ribbon pumpkin gets wheeled off.</p><span class="go">Play this case →</span></div></a></section>
+<section class="card" id="signupCard">
+  <span class="label">Don't miss the next case</span>
+  <p style="margin:0 0 6px">One email every Friday with the new case. Nothing else.</p>
+  <form id="mlForm" action="https://assets.mailerlite.com/jsonp/2682193/forms/202178679620503284/subscribe" method="post" target="mlFrame" class="row" style="flex-wrap:nowrap;align-items:flex-start">
+    <div style="flex:1;min-width:0"><input type="email" name="fields[email]" required placeholder="you@example.com" aria-label="Your email" autocomplete="email"></div>
+    <input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anti_spam" value="">
+    <button type="submit" style="width:auto;min-height:50px">Sign me up</button>
+  </form>
+  <iframe name="mlFrame" title="signup" hidden style="display:none"></iframe>
+  <div class="hint" id="mlMsg" aria-live="polite"></div>
+</section>
+<section class="card"><span class="label">How it works</span>
+<ol class="how"><li><b>1</b><span>Press play. The footage runs about a minute. You only get to see it once — like a real witness.</span></li><li><b>2</b><span>Answer 12 multiple-choice questions. Right and fast scores most.</span></li><li><b>3</b><span>Stuck? Peek at the opening scene for 3 seconds — it costs you 250 points.</span></li><li><b>4</b><span>Share your result grid and challenge your friends. New case every Friday.</span></li></ol></section>
+<footer>Eyewitness © 2026 · Made with far too much coffee</footer>
+</div>
+<script>document.getElementById("mlForm").addEventListener("submit",()=>{setTimeout(()=>{document.getElementById("mlMsg").textContent="Check your inbox for a confirmation email. Welcome aboard, witness.";document.getElementById("mlForm").reset()},400)});</script>
+</body></html>

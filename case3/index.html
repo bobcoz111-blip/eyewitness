@@ -1,0 +1,266 @@
+<meta name="description" content="Eyewitness Case 3: The station hatbox heist. Watch a one-minute cartoon crime once, then answer 12 timed questions. How good a witness are you?">
+<meta property="og:type" content="website"><meta property="og:title" content="Eyewitness — Case #3: The station hatbox heist"><meta property="og:description" content="Watch the footage once. Answer 12 questions. Did YOU see who took the hatbox?"><meta property="og:image" content="https://bobcoz111-blip.github.io/eyewitness/case3/scene.jpg"><meta property="og:url" content="https://bobcoz111-blip.github.io/eyewitness/case3/"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.svg">
+<title>Eyewitness Case 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap">
+<style>
+/* One phone-width column like a daily puzzle. The painted park film is the hero; the questions take its place. Bright and sunny on purpose. */
+:root{
+  --sky:#e6f4ff;--card:#ffffff;--ink:#16224a;--muted:#55638c;--line:#c9d8f0;
+  --sun:#ffc93c;--sun-ink:#4a3300;--coral:#ff6b5b;--good:#1f9d61;--good-bg:#dcf5e8;--bad:#d63b2f;--bad-bg:#fde3e0;--peek:#e0a400;
+  --display:"Fredoka","Arial Rounded MT Bold",sans-serif;--body:"Nunito",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--sky);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:16px 48px;display:flex;flex-direction:column;gap:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo h1{font-family:var(--display);font-weight:700;font-size:30px;margin:0;letter-spacing:.3px}
+.pill{font-family:var(--display);font-weight:600;font-size:14px;background:var(--ink);color:#fff;border-radius:999px;padding:4px 12px;white-space:nowrap}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.label{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.1;margin:0;text-wrap:balance}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+button{font-family:var(--display);font-weight:600;font-size:19px;border-radius:14px;min-height:54px;padding:10px 18px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;width:100%}
+button.primary{background:var(--sun);border-color:var(--ink);color:var(--sun-ink);box-shadow:0 4px 0 var(--ink)}
+button.primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+button.fbk{background:#1b4fd6;color:#fff;border-color:#102e80}
+button:focus-visible,input:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.stage{position:relative;border-radius:16px;overflow:hidden;border:3px solid var(--ink);background:#16224a;aspect-ratio:852/480}
+.stage video,.stage img{display:block;width:100%;height:100%;object-fit:cover}
+.stage img{position:absolute;inset:0}
+.cover{position:absolute;inset:0;background:rgba(22,34,74,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-family:var(--display);font-weight:600;font-size:22px;text-align:center;padding:16px}
+.rec{position:absolute;top:10px;left:10px;background:var(--coral);color:#fff;font:700 13px var(--display);padding:3px 10px;border-radius:999px;letter-spacing:1px}
+.peektag{position:absolute;top:10px;right:10px;background:var(--peek);color:#2a1d00;font:700 13px var(--display);padding:3px 10px;border-radius:999px}
+.bar{height:14px;background:#dbe7f7;border-radius:999px;overflow:hidden;border:2px solid var(--ink)}
+.bar>i{display:block;height:100%;width:100%;background:var(--sun)}
+.bar.low>i{background:var(--coral)}
+.q{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.25;margin:0;min-height:60px;text-wrap:balance}
+.kind{align-self:flex-start;font-family:var(--display);font-weight:600;font-size:13px;background:#eef3ff;border:2px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:540px){.opts{grid-template-columns:1fr}}
+.opts.wait{visibility:hidden}
+.opt{text-align:left;border:2px solid var(--line);min-height:58px;font-size:18px}
+.opt:hover{border-color:var(--ink)}
+.opt.ok{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.no{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.ghost{border:2px dashed var(--peek);color:#7a5800;background:#fff8e1;min-height:48px;font-size:16px}
+.hint{font-size:15px;color:var(--muted);min-height:22px}
+.fb{font-family:var(--display);font-weight:600;min-height:28px}
+.tiles{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:5px}
+.tiles span{aspect-ratio:1;border-radius:6px;border:2px solid var(--ink)}
+.t-g{background:#3fbf7f}.t-y{background:var(--sun)}.t-r{background:var(--coral)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:540px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:#eef6ff;border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.big{font-family:var(--display);font-weight:700;font-size:44px;line-height:1}
+.rank{display:inline-block;font-family:var(--display);font-weight:700;font-size:20px;background:var(--coral);color:#fff;border-radius:999px;padding:4px 14px;transform:rotate(-2deg);align-self:flex-start}
+textarea{width:100%;box-sizing:border-box;font:16px/1.4 var(--body);border:2px solid var(--line);border-radius:12px;padding:10px;resize:none;background:#f8fbff;color:var(--ink)}
+input[type=text]{width:100%;box-sizing:border-box;font:inherit;min-height:50px;border:2px solid var(--line);border-radius:12px;padding:8px 12px;background:#fff;color:var(--ink)}
+.board{list-style:none;margin:0;padding:0}
+.board li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;padding:10px 4px;border-top:2px solid #eef3fb;font-variant-numeric:tabular-nums;align-items:center}
+.board li:first-child{border-top:0}
+.board li.me{background:#fff4cc;border-radius:10px}
+.rk{font-family:var(--display);font-weight:700;color:var(--muted);text-align:center}
+.how{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.how li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:center}
+.how b{width:36px;height:36px;border-radius:50%;background:var(--sun);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--display)}
+ol.missed{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.err{color:var(--bad);font-size:15px;min-height:20px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:540px){.two{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){button{transition:none}}
+input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:17px;font-family:inherit;background:#fff;color:var(--ink)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="logo">
+    <svg width="44" height="44" viewBox="0 0 100 100" aria-hidden="true"><circle cx="44" cy="44" r="30" fill="#fff" stroke="#16224a" stroke-width="9"/><circle cx="44" cy="44" r="14" fill="#2f7bf0"/><circle cx="44" cy="44" r="7" fill="#16224a"/><circle cx="49" cy="39" r="3" fill="#fff"/><line x1="66" y1="66" x2="90" y2="90" stroke="#16224a" stroke-width="12" stroke-linecap="round"/></svg>
+    <h1>Eyewitness</h1>
+  </div>
+  <a class="pill" id="caseNo" href="../" style="text-decoration:none">Case #3 · all cases</a>
+</header>
+
+<div class="stage" id="stage">
+  <video id="film" src="case3.mp4" poster="scene.jpg" playsinline preload="auto" aria-label="The station platform camera footage"></video>
+  <img id="still" src="scene.jpg" alt="The station platform before anything happened" hidden>
+  <span class="rec" id="rec" hidden>CAM 1 · REC</span>
+  <span class="peektag" id="peekTag" hidden>PEEKING</span>
+  <div class="cover" id="cover"><span id="coverText">This week's case is sealed</span><span style="font-size:16px;font-weight:500" id="coverSub">You get to watch it once, like a real witness.</span></div>
+</div>
+
+<section class="card" id="intro">
+  <span class="label">Case file · Railway station, four o'clock</span>
+  <h2>The station hatbox heist</h2>
+  <p style="margin:0">Four o'clock on the platform, a juggler, a lady's luggage on the porter's cart. Something rides off that shouldn't. You were there. Watch the footage once — then tell us what you saw.</p>
+  <ol class="how">
+    <li><b>1</b><span>Watch the footage. About one minute. No rewinds.</span></li>
+    <li><b>2</b><span>Answer 12 questions. You get 15 seconds each once the answers appear.</span></li>
+    <li><b>3</b><span>Right and fast scores most. Peeking at the opening still costs 250 points.</span></li>
+  </ol>
+  <button class="primary" id="play">Watch the footage</button>
+  <span class="hint" id="next" style="text-align:center"></span>
+</section>
+
+<section class="card" id="watch" hidden>
+  <div class="row"><span class="label">Watching · no rewinds</span><span class="big" style="font-size:30px" id="watchLeft">62</span></div>
+  <div class="bar" id="watchWrap"><i id="watchBar"></i></div>
+</section>
+
+<section class="card" id="quiz" hidden>
+  <div class="row"><span class="label" id="qNum">Question 1 of 12</span><span class="label" id="qScore">0 pts</span></div>
+  <div class="bar" id="qWrap"><i id="qBar"></i></div>
+  <span class="kind" id="qKind">Detail</span>
+  <p class="q" id="qText"></p>
+  <div class="opts wait" id="opts"></div>
+  <button class="ghost" id="peek" hidden>Peek at the opening still for 3 seconds (costs 250)</button>
+  <div class="hint" id="hint" aria-live="polite"></div>
+  <div class="fb" id="fb" aria-live="polite"></div>
+</section>
+
+<section class="card" id="result" hidden>
+  <span class="label">Case #3 closed</span>
+  <span class="rank" id="rank">Reliable witness</span>
+  <div class="row" style="align-items:flex-end"><div class="big" id="final">0</div><div class="hint" id="finalSub"></div></div>
+  <div class="tiles" id="tiles" aria-label="Your answers: green right, yellow right after peeking, red wrong"></div>
+  <div class="stats">
+    <div class="stat"><b id="sStreak">1</b><span>Cases played</span></div>
+    <div class="stat"><b id="sBest">0</b><span>Best score</span></div>
+    
+    <div class="stat"><b id="sNext">--</b><span>Next case</span></div>
+  </div>
+  <span class="label">Challenge your friends</span>
+  <textarea id="share" rows="4" readonly aria-label="Your shareable result"></textarea>
+  <div class="two">
+    <button class="primary" id="copy">Copy my result</button>
+    <button class="fbk" id="fbShare">Share on Facebook</button>
+  </div>
+  <div class="hint" id="copied" aria-live="polite"></div>
+</section>
+
+<section class="card" id="signupCard">
+  <span class="label">Next case drops every Friday</span>
+  <p style="margin:0 0 6px">Get the new case in your inbox the moment it's released. No spam, one email a week.</p>
+  <form id="mlForm" action="https://assets.mailerlite.com/jsonp/2682193/forms/202178679620503284/subscribe" method="post" target="mlFrame" class="row" style="flex-wrap:nowrap;align-items:flex-start">
+    <div style="flex:1;min-width:0"><input type="email" name="fields[email]" required placeholder="you@example.com" aria-label="Your email" autocomplete="email"></div>
+    <input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anti_spam" value="">
+    <button type="submit" style="width:auto;min-height:50px">Sign me up</button>
+  </form>
+  <iframe name="mlFrame" title="signup" hidden style="display:none"></iframe>
+  <div class="hint" id="mlMsg" aria-live="polite"></div>
+</section>
+
+<section class="card" id="missedCard" hidden>
+  <span class="label">What really happened</span>
+  <ol class="missed" id="missed"></ol>
+  <button id="replay">Watch the footage again</button>
+</section>
+</div>
+
+<script>
+const ANSWER=15,PEEK_COST=250,CASE="3";
+const $=id=>document.getElementById(id);
+const film=$("film");
+let DUR=53;
+film.addEventListener("loadedmetadata",()=>{if(film.duration&&isFinite(film.duration))DUR=film.duration;$("watchLeft").textContent=Math.ceil(DUR)});
+
+// Every question below was checked against the actual frames of the footage.
+const Q=[
+["Detail","What was the name on the diner sign?","ROSIE'S DINER",["MOLLY'S DINER","ROSIE'S CAFE","THE DEPOT DINER"]],
+["Detail","What time did the station clock show?","4:00",["2:00","10:10","6:30"]],
+["Count","How many suitcases were stacked on the porter's cart?","3",["2","4","5"]],
+["Detail","What was on top of the suitcases?","A striped hatbox",["A birdcage","A picnic basket","A violin case"]],
+["Detail","What color was the thief's scarf?","Green",["Red","Yellow","Blue"]],
+["Order","What was the thief doing before he made his move?","Reading a timetable by the lamppost",["Buying a ticket","Sitting on the bench","Petting the dog"]],
+["Detail","Who was entertaining the crowd?","A juggler",["An accordion player","A magician","A clown with balloons"]],
+["Detail","What was the lady in the lavender coat holding?","A yellow umbrella",["A red handbag","A bouquet of flowers","A birdcage"]],
+["Detail","How did the thief get away?","On the red bicycle",["On the train","In a taxi","He ran down the tracks"]],
+["Direction","Which way did the bicycle go?","To the left",["To the right","Straight toward the camera","It never moved"]],
+["Detail","What did the porter lose as he gave chase?","His cap",["His whistle","His jacket","His shoe"]],
+["Detail","What did the juggler drop at the end?","His three red balls",["His hat","A bowling pin","Nothing"]]];
+
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function dayKey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+let stats=store("ewd-stats")||{streak:0,best:0,played:0,lastDay:""};
+let saved=store("ewd-film-"+CASE);
+let nick=store("ewd-nick")||"";
+let timer=null,left=0,qi=0,score=0,marks=[],peeked=false,peeking=false,watchTick=null;
+const sections=["intro","watch","quiz","result"];
+function show(id){sections.forEach(s=>$(s).hidden=s!==id);$("signupCard").hidden=id==="watch"||id==="quiz";$("missedCard").hidden=id!=="result"}
+
+function countdown(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);const s=Math.floor((m-n)/1000);const txt=Math.floor(s/3600)+"h "+String(Math.floor(s%3600/60)).padStart(2,"0")+"m";$("sNext").textContent=txt;$("next").textContent=saved?"You solved this case. Next case in "+txt+".":"New case every day at midnight."}
+setInterval(countdown,1000);countdown();
+
+function playScene(onDone){
+  $("cover").hidden=true;$("rec").hidden=false;$("still").hidden=true;
+  film.currentTime=0;
+  const p=film.play();if(p&&p.catch)p.catch(()=>{});
+  clearInterval(watchTick);
+  watchTick=setInterval(()=>{const t=film.currentTime;$("watchLeft").textContent=Math.max(0,Math.ceil(DUR-t));$("watchBar").style.width=(Math.max(0,1-t/DUR)*100)+"%";$("watchWrap").classList.toggle("low",t>DUR*0.85)},200);
+  film.onended=()=>{clearInterval(watchTick);$("rec").hidden=true;onDone()};
+}
+function seal(text,sub){$("coverText").textContent=text;$("coverSub").textContent=sub;$("cover").hidden=false}
+$("play").onclick=()=>{if(saved){showResult();return}show("watch");playScene(()=>{seal("Footage over","Now, what did you see?");startQuiz()})};
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startQuiz(){qi=0;score=0;marks=[];show("quiz");ask()}
+function run(sec,done){clearInterval(timer);left=sec;$("qBar").style.width="100%";$("qWrap").classList.remove("low");timer=setInterval(()=>{left=Math.max(0,left-0.1);$("qBar").style.width=(left/sec*100)+"%";$("qWrap").classList.toggle("low",left/sec<0.25);if(left<=0){clearInterval(timer);done()}},100)}
+function ask(){
+  if(qi>=Q.length)return finish();
+  const [k,q,a,w]=Q[qi];peeked=false;
+  $("qNum").textContent="Question "+(qi+1)+" of "+Q.length;$("qScore").textContent=score.toLocaleString()+" pts";$("qKind").textContent=k;
+  $("qText").textContent="";$("fb").textContent="";$("peek").hidden=true;$("peek").disabled=false;
+  const box=$("opts");box.innerHTML="";box.classList.add("wait");
+  shuffle([a,...w]).forEach(o=>{const b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=()=>pick(b,a);box.appendChild(b)});
+  $("qBar").style.width="100%";$("qWrap").classList.remove("low");$("hint").textContent="Read the question. Your clock starts when the answers appear.";
+  let i=0;clearInterval(timer);
+  timer=setInterval(()=>{i++;$("qText").textContent=q.slice(0,i);if(i>=q.length){clearInterval(timer);setTimeout(()=>{box.classList.remove("wait");$("peek").hidden=false;$("hint").textContent="15 seconds.";run(ANSWER,()=>pick(null,a))},350)}},30);
+}
+$("peek").onclick=()=>{
+  if(peeked||peeking)return;peeked=true;peeking=true;$("peek").disabled=true;$("peek").textContent="Peeking...";
+  $("cover").hidden=true;$("still").hidden=false;$("peekTag").hidden=false;
+  setTimeout(()=>{$("peekTag").hidden=true;$("still").hidden=true;seal("Footage over","Now, what did you see?");peeking=false;$("peek").textContent="Peek at the opening still for 3 seconds (costs 250)"},3000);
+};
+function pick(b,a){
+  clearInterval(timer);$("peek").hidden=true;$("hint").textContent="";
+  [...$("opts").children].forEach(x=>{x.onclick=null;if(x.textContent===a)x.classList.add("ok")});
+  let mark="r",msg="Time's up.";
+  if(b){if(b.textContent===a){let p=Math.round(500+500*left/ANSWER);if(peeked)p=Math.max(0,p-PEEK_COST);score+=p;mark=peeked?"y":"g";msg="+"+p+" points"+(peeked?" (peeked)":"")}else{b.classList.add("no");msg="Not quite."}}
+  marks.push(mark);$("fb").textContent=msg;$("fb").style.color=mark==="r"?"var(--bad)":"var(--good)";
+  setTimeout(()=>{qi++;ask()},1200);
+}
+function rankFor(n){return n>=12?"Eagle-eyed witness":n>=9?"Reliable witness":n>=6?"Shaky witness":n>=3?"Blurry witness":"Were you even there?"}
+function finish(){
+  const today=dayKey(new Date()),y=dayKey(new Date(Date.now()-864e5));
+  if(stats.lastDay!==today){stats.streak=stats.lastDay===y?stats.streak+1:1;stats.played++;stats.lastDay=today}
+  stats.best=Math.max(stats.best,score);store("ewd-stats",stats);
+  saved={score,marks,right:marks.filter(m=>m!=="r").length};store("ewd-film-"+CASE,saved);
+  submit();showResult();
+}
+function shareText(r){const em={g:"🟩",y:"🟨",r:"🟥"};return "Eyewitness Case #"+CASE+" 🕵️ "+r.right+"/12 · "+r.score.toLocaleString()+" pts\n"+r.marks.map(m=>em[m]).join("")+"\nDid YOU see who took the hatbox?"}
+function showResult(){
+  show("result");seal("Case closed","Tap Watch the footage again below to see what you missed.");
+  const r=saved;
+  $("rank").textContent=rankFor(r.right);$("final").textContent=r.score.toLocaleString();$("finalSub").textContent=r.right+" of 12 right · "+r.marks.filter(m=>m==="y").length+" peeks";
+  $("tiles").innerHTML=r.marks.map(m=>'<span class="t-'+m+'"></span>').join("");
+  $("sStreak").textContent=stats.played;$("sBest").textContent=Number(stats.best).toLocaleString();
+  $("share").value=shareText(r);
+  $("copied").textContent="";
+  const m=$("missed");m.innerHTML="";
+  Q.forEach((q,i)=>{const li=document.createElement("li");li.textContent=q[1]+" "+q[2]+"."+(r.marks[i]==="r"?" (you missed this)":"");m.appendChild(li)});
+  
+}
+$("copy").onclick=()=>{const t=$("share").value;navigator.clipboard.writeText(t).then(()=>$("copied").textContent="Copied. Paste it on Facebook or in a group text.").catch(()=>{$("share").select();$("copied").textContent="Selected. Use your keyboard's Copy."})};
+$("fbShare").onclick=()=>{const u="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(location.href.split("#")[0])+"&quote="+encodeURIComponent($("share").value);window.open(u,"_blank","noopener,width=620,height=560")};
+$("replay").onclick=()=>{window.scrollTo({top:0,behavior:"smooth"});playScene(()=>seal("Replay over","Same footage. New case next Friday."))};
+
+function renderBoard(){}
+function submit(){}
+$("mlForm").addEventListener("submit",()=>{setTimeout(()=>{$("mlMsg").textContent="Check your inbox for a confirmation email. Welcome aboard, witness.";$("mlForm").reset()},400)});
+if(saved){$("play").textContent="See my result";}
+</script>
