@@ -106,6 +106,7 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
     <li><b>2</b><span>Answer 12 questions. You get 15 seconds each once the answers appear.</span></li>
     <li><b>3</b><span>Right and fast scores most. Peeking at the opening still costs 250 points.</span></li>
   </ol>
+  <div class="hint" id="challengeLine" hidden style="background:#fff8e1;border:2px dashed var(--peek);border-radius:12px;padding:10px;color:#4a3300;font-weight:700"></div>
   <button class="primary" id="play">Watch the episode</button>
   <span class="hint" id="next" style="text-align:center"></span>
 </section>
@@ -138,6 +139,8 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
     <div class="stat"><b id="sNext">--</b><span>Next case</span></div>
   </div>
   <span class="label">Challenge your friends</span>
+  <div class="row" style="flex-wrap:nowrap;align-items:center;margin-bottom:6px"><span class="hint" style="white-space:nowrap">Sign it as</span><input type="text" id="nick" maxlength="20" placeholder="your first name" aria-label="Your name on the challenge" style="flex:1;min-width:0;min-height:44px;border:2px solid var(--line);border-radius:10px;padding:0 10px;font-size:16px;font-family:inherit"></div>
+  <div class="hint" id="vsLine" style="font-weight:700;color:var(--ink)"></div>
   <textarea id="share" rows="4" readonly aria-label="Your shareable result"></textarea>
   <div class="two">
     <button class="primary" id="copy">Copy my result</button>
@@ -247,21 +250,29 @@ function finish(){
   saved={score,marks,right:marks.filter(m=>m!=="r").length};store("ewd-film-"+CASE,saved);
   submit();showResult();
 }
-function shareText(r){const em={g:"🟩",y:"🟨",r:"🟥"};return "Eyewitness Case #"+CASE+" 🕵️ "+r.right+"/12 · "+r.score.toLocaleString()+" pts\n"+r.marks.map(m=>em[m]).join("")+"\nDid YOU see who took the pumpkin?"}
+const PAGE=location.origin+location.pathname;
+function chal(){try{const h=new URLSearchParams(location.hash.slice(1));if(!h.get("c"))return null;return{score:+h.get("c")||0,right:+h.get("r")||0,name:(h.get("n")||"A friend").slice(0,20)}}catch(e){return null}}
+const ch=chal();
+function myLink(r){return PAGE+"#c="+r.score+"&r="+r.right+(nick?"&n="+encodeURIComponent(nick):"")}
+function shareText(r){const em={g:"🟩",y:"🟨",r:"🟥"};let beat="";if(ch){beat=r.score>ch.score?" I beat "+ch.name+"'s "+ch.score.toLocaleString()+"!":r.score<ch.score?" "+ch.name+" beat me — your turn.":" Tied with "+ch.name+"!"}
+  return "Eyewitness Case #"+CASE+" 🕵️ "+r.right+"/12 · "+r.score.toLocaleString()+" pts"+beat+"\n"+r.marks.map(m=>em[m]).join("")+"\nDid YOU see who took the pumpkin? Beat my score: "+myLink(r)}
+if(ch){$("challengeLine").hidden=false;$("challengeLine").textContent="🕵️ "+ch.name+" scored "+ch.score.toLocaleString()+" ("+ch.right+"/12) on this episode. Think you saw more?"}
 function showResult(){
   show("result");seal("Case closed","Tap Watch the episode again below to see what you missed.");
   const r=saved;
   $("rank").textContent=rankFor(r.right);$("final").textContent=r.score.toLocaleString();$("finalSub").textContent=r.right+" of 12 right · "+r.marks.filter(m=>m==="y").length+" peeks";
   $("tiles").innerHTML=r.marks.map(m=>'<span class="t-'+m+'"></span>').join("");
   $("sStreak").textContent=stats.played;$("sBest").textContent=Number(stats.best).toLocaleString();
-  $("share").value=shareText(r);
+  $("share").value=shareText(r);$("nick").value=nick;
+  $("vsLine").textContent=ch?("You "+r.score.toLocaleString()+" · "+ch.name+" "+ch.score.toLocaleString()+(r.score>ch.score?" — you out-witnessed "+ch.name+"!":r.score<ch.score?" — "+ch.name+" saw more this time.":" — dead heat.")):"";
   $("copied").textContent="";
   const m=$("missed");m.innerHTML="";
   Q.forEach((q,i)=>{const li=document.createElement("li");li.textContent=q[1]+" "+q[2]+"."+(r.marks[i]==="r"?" (you missed this)":"");m.appendChild(li)});
   
 }
+$("nick").oninput=()=>{nick=$("nick").value.trim().slice(0,20);store("ewd-nick",nick);if(saved)$("share").value=shareText(saved)};
 $("copy").onclick=()=>{const t=$("share").value;navigator.clipboard.writeText(t).then(()=>$("copied").textContent="Copied. Paste it on Facebook or in a group text.").catch(()=>{$("share").select();$("copied").textContent="Selected. Use your keyboard's Copy."})};
-$("fbShare").onclick=()=>{const u="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(location.href.split("#")[0])+"&quote="+encodeURIComponent($("share").value);window.open(u,"_blank","noopener,width=620,height=560")};
+$("fbShare").onclick=()=>{const u="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(saved?myLink(saved):PAGE)+"&quote="+encodeURIComponent($("share").value);window.open(u,"_blank","noopener,width=620,height=560")};
 function replayFilm(){window.scrollTo({top:0,behavior:"smooth"});film.controls=true;$("cover").hidden=true;$("still").hidden=true;film.style.visibility="visible";$("rec").hidden=true;film.currentTime=0;const p=film.play();if(p&&p.catch)p.catch(()=>{});film.onended=()=>{}}
 $("replay").onclick=replayFilm;$("replayTop").onclick=replayFilm;
 
