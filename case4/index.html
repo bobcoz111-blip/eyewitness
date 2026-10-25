@@ -173,7 +173,7 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
 const ANSWER=15,PEEK_COST=250,CASE="4";
 const $=id=>document.getElementById(id);
 const film=$("film");
-let DUR=57;
+let DUR=53;
 film.style.visibility="hidden";
 film.addEventListener("loadedmetadata",()=>{if(film.duration&&isFinite(film.duration))DUR=film.duration;$("watchLeft").textContent=Math.ceil(DUR)});
 
