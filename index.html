@@ -101,7 +101,7 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
 <ol class="how"><li><b>1</b><span>Press play. The episode runs about a minute. You only get to see it once — like a real witness.</span></li><li><b>2</b><span>Answer 12 multiple-choice questions. Right and fast scores most.</span></li><li><b>3</b><span>Stuck? Peek at the opening scene for 3 seconds — it costs you 250 points.</span></li><li><b>4</b><span>Share your result grid and challenge your friends. New case every Friday.</span></li></ol></section>
 <footer>Eyewitness © 2026 · Made with far too much coffee</footer>
 </div>
-<script>document.getElementById("mlForm").addEventListener("submit",()=>{setTimeout(()=>{document.getElementById("mlMsg").textContent="Check your inbox for a confirmation email. Welcome aboard, witness.";document.getElementById("mlForm").reset()},400)});</script>
+<script>document.getElementById("mlForm").addEventListener("submit",()=>{setTimeout(()=>{document.getElementById("mlMsg").textContent="You're in. Check your inbox — Case 1 is waiting. Welcome aboard, witness.";document.getElementById("mlForm").reset()},400)});</script>
 <script>
 document.querySelectorAll('.case[data-release]').forEach(function(a){const R=new Date(a.dataset.release+"T09:00:00-05:00");if(Date.now()<R&&!/preview=1/.test(location.search)){a.removeAttribute('href');a.style.opacity='.6';a.style.filter='grayscale(.6)';const g=a.querySelector('.go');if(g){g.textContent='🔒 Unlocks '+a.dataset.label;g.style.color='#8a7a2e';}}});
 </script>
