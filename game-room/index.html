@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Game Room · Eyewitness</title>
+<meta name="description" content="Welcome to the Eyewitness Game Room: every case in one place, plus the games and puzzles our players love.">
+<meta property="og:title" content="The Eyewitness Game Room">
+<meta property="og:image" content="https://eyewitnessgame.com/case1/scene.jpg">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;800&display=swap">
+<style>
+:root{
+  --bg:#120f2b; --bg2:#1d1846; --panel:#231d55; --ink:#fff8ec; --mut:#c9c2ef;
+  --pink:#ff4fa3; --cyan:#3ee8ff; --gold:#ffcf4a; --green:#5cf29a; --line:#3a3280;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 20% -10%,#3a2a8f 0,transparent 45%),radial-gradient(circle at 90% 10%,#7a1f6b 0,transparent 40%),var(--bg);
+  color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:17px;line-height:1.5;min-height:100vh}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.sign{font-family:Bungee,Impact,sans-serif;font-weight:400;text-align:center;margin:8px 0 6px;
+  font-size:clamp(34px,7vw,64px);line-height:1.05;letter-spacing:.02em;color:#fff;
+  text-shadow:0 0 6px var(--pink),0 0 18px var(--pink),0 0 36px #ff4fa388}
+.sign span{color:var(--cyan);text-shadow:0 0 6px var(--cyan),0 0 18px var(--cyan)}
+.lede{text-align:center;color:var(--mut);max-width:58ch;margin:0 auto 26px;font-size:18px}
+.ticket{display:inline-block;background:var(--gold);color:#2a1d00;font-weight:800;border-radius:6px;padding:3px 10px;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+h2{font-family:Bungee,Impact,sans-serif;font-weight:400;font-size:clamp(22px,4vw,30px);margin:38px 0 6px;color:var(--gold);text-shadow:0 0 10px #ffcf4a66}
+.sub{color:var(--mut);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.cab{position:relative;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--bg2),var(--panel));
+  border:2px solid var(--line);border-radius:18px 18px 10px 10px;overflow:hidden;text-decoration:none;
+  box-shadow:0 10px 24px #0007;transition:transform .15s,border-color .15s,box-shadow .15s}
+.cab:hover,.cab:focus-visible{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 0 0 2px #3ee8ff55,0 14px 30px #0009;outline:none}
+.cab .scr{aspect-ratio:16/10;background:#000 center/cover no-repeat;border-bottom:2px solid var(--line);position:relative}
+.cab .scr.fallback{display:grid;place-items:center;font-family:Bungee,sans-serif;font-size:42px;color:var(--cyan);text-shadow:0 0 12px var(--cyan)}
+.cab .badge{position:absolute;top:10px;left:10px}
+.cab .body{padding:12px 14px 16px;display:grid;gap:4px}
+.cab .k{font-family:Bungee,sans-serif;font-size:13px;color:var(--pink);letter-spacing:.06em}
+.cab .t{font-weight:800;font-size:18px;line-height:1.25}
+.cab .d{color:var(--mut);font-size:15px}
+.cab .go{margin-top:8px;display:inline-block;align-self:start;background:var(--pink);color:#fff;font-weight:800;border-radius:999px;padding:7px 14px;font-size:15px}
+.cab.locked .go{background:#4a4280;color:var(--mut)}
+.prize .scr{background:#fff center/contain no-repeat;aspect-ratio:1/1}
+.prize .scr img{display:block;margin:0 auto;max-width:90%;max-height:92%;position:relative;top:50%;transform:translateY(-50%)}
+.prize .go{background:var(--gold);color:#2a1d00}
+.counter{background:linear-gradient(180deg,#2a1f66,#1a1545);border:2px solid var(--gold);border-radius:20px;padding:6px 18px 22px;margin-top:40px;box-shadow:0 0 30px #ffcf4a22}
+.disc{color:var(--mut);font-size:13px;margin:14px 0 0}
+.share{text-align:center;margin:44px auto 0;max-width:620px;background:var(--panel);border:2px dashed var(--line);border-radius:16px;padding:18px}
+.share b{color:var(--green)}
+footer{text-align:center;color:var(--mut);font-size:14px;margin-top:40px}
+@media (prefers-reduced-motion:reduce){.cab{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p style="text-align:center;margin:0"><span class="ticket">You're in!</span></p>
+  <h1 class="sign">The Game <span>Room</span></h1>
+  <p class="lede">Thanks for signing up. Every Eyewitness case lives here, and a new one opens every Friday. Pick a machine and play.</p>
+
+  <h2>Eyewitness cases</h2>
+  <p class="sub">Watch once. Answer 12 questions. See who has the sharpest eyes.</p>
+  <div class="grid" id="cases"></div>
+
+  <section class="counter" id="counter" hidden>
+    <h2>The prize counter</h2>
+    <p class="sub">Games and puzzles our players love, for game night at home.</p>
+    <div class="grid" id="prizes"></div>
+    <p class="disc">As an Amazon Associate, Eyewitness earns from qualifying purchases. Prices and availability can change.</p>
+  </section>
+
+  <div class="share">
+    <b>Play with friends.</b> Send them <a href="https://eyewitnessgame.com/">eyewitnessgame.com</a> and compare scores after each case.
+  </div>
+  <footer>Eyewitness © 2026 · <a href="https://eyewitnessgame.com/">Back to the front door</a></footer>
+</div>
+
+<script>
+// Cases: unlock dates match the weekly release schedule (Fridays 9 AM Eastern).
+const CASES=[
+  {n:1,slug:"case1",title:"The great dog show caper",desc:"Somebody swiped the trophy. Did you see who?",opens:"2026-10-24T09:00:00-04:00"},
+  {n:2,slug:"case2",title:"The Main Street cake caper",desc:"A prize cake vanishes in broad daylight.",opens:"2026-11-13T09:00:00-05:00"},
+  {n:3,slug:"case3",title:"The station hatbox heist",desc:"Trains, crowds and one very valuable hatbox.",opens:"2026-11-20T09:00:00-05:00"},
+  {n:4,slug:"case4",title:"The prize pumpkin pinch",desc:"The harvest fair's best pumpkin goes missing.",opens:"2026-11-27T09:00:00-05:00"}
+];
+// Prize counter: Amazon products picked by Silk (job S-012), using Amazon's own SiteStripe links.
+// Each item: {name, link (amzn.to short link), img (Amazon image URL from SiteStripe), note}
+const PRIZES=[];
+
+const fmt=d=>d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+const el=(t,c)=>{const e=document.createElement(t); if(c) e.className=c; return e;};
+const now=new Date();
+const box=document.getElementById("cases");
+CASES.forEach(c=>{
+  const open=new Date(c.opens)<=now;
+  const a=el("a","cab"+(open?"":" locked")); a.href="https://eyewitnessgame.com/"+c.slug+"/";
+  const scr=el("div","scr"); const img=new Image();
+  img.onload=()=>{scr.style.backgroundImage="url('"+img.src+"')";};
+  img.onerror=()=>{scr.classList.add("fallback"); const s=el("span"); s.textContent="#"+c.n; scr.prepend(s);};
+  img.src="https://eyewitnessgame.com/"+c.slug+"/scene.jpg";
+  if(!open){ const b=el("span","ticket badge"); b.textContent="Opens "+fmt(new Date(c.opens)); scr.append(b); }
+  else if(now-new Date(c.opens)<7*864e5){ const b=el("span","ticket badge"); b.textContent="New this week"; scr.append(b); }
+  const body=el("div","body");
+  const k=el("div","k"); k.textContent="Case #"+c.n;
+  const t=el("div","t"); t.textContent=c.title;
+  const d=el("div","d"); d.textContent=c.desc;
+  const g=el("span","go"); g.textContent=open?"Play now":"Coming soon";
+  body.append(k,t,d,g); a.append(scr,body); box.append(a);
+});
+if(PRIZES.length){
+  document.getElementById("counter").hidden=false;
+  const pb=document.getElementById("prizes");
+  PRIZES.forEach(p=>{
+    const a=el("a","cab prize"); a.href=p.link; a.target="_blank"; a.rel="sponsored noopener";
+    const scr=el("div","scr"); if(p.img){ const im=new Image(); im.src=p.img; im.alt=p.name; im.loading="lazy"; scr.append(im); }
+    const body=el("div","body");
+    const t=el("div","t"); t.textContent=p.name;
+    if(p.note){ const d=el("div","d"); d.textContent=p.note; body.append(t,d); } else body.append(t);
+    const g=el("span","go"); g.textContent="See it on Amazon"; body.append(g);
+    a.append(scr,body); pb.append(a);
+  });
+}
+</script>
+</body>
+</html>
