@@ -145,16 +145,17 @@ const roomLights=[];
 [[C.pink,-4,4],[C.cyan,4,-3],[C.violet,-4,-10],[C.gold,4,-16],[C.green,-4,-22],[C.pink,3,-27]].forEach(([c,x,z])=>{const l=new THREE.PointLight(c,1.1,14,1.6);l.position.set(x,HALL.h-0.6,z);scene.add(l);roomLights.push(l);});
 
 /* ---------- neon signs ---------- */
-function neonSign(text,color,w,h,size){const t=canvasTex(1024,Math.round(1024*h/w),(g,W,H)=>{glowText(g,text,W/2,H/2,size,color,"Monoton, sans-serif");});
+function neonSign(text,color,w,h,size){const draw=(g,W,H)=>{g.clearRect(0,0,W,H);const s=fitText(g,text,W-90,size,"Monoton, sans-serif");glowText(g,text,W/2,H/2,s,color,"Monoton, sans-serif");};const t=canvasTex(1024,Math.round(1024*h/w),draw);
+  if(document.fonts&&document.fonts.load){document.fonts.load(size+"px Monoton").then(()=>{const {g,c}=t.userData;draw(g,c.width,c.height);t.needsUpdate=true;}).catch(()=>{});}
   return new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:t,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));}
 const signs=[];
 function sign(text,color,w,h,size,x,y,z,ry){const s=neonSign(text,color,w,h,size);s.position.set(x,y,z);s.rotation.y=ry;scene.add(s);signs.push(s);return s;}
 const signBack=sign("PRIZE COUNTER",C.gold,7,1.4,120,0,3.75,HALL.zBack+0.05,0);
 sign("CASE FILES",C.cyan,5,1.0,130,-HALL.x+0.05,3.75,-3,Math.PI/2);
-sign("BACKYARD GAMES",C.gold,5,1.0,130,-HALL.x+0.05,3.75,-9.5,Math.PI/2);
-sign("KIDS & CARDS",C.pink,4,1.0,130,-HALL.x+0.05,3.75,-17,Math.PI/2);
-sign("VIDEO GAMES",C.green,4,1.0,130,HALL.x-0.05,3.75,-1,-Math.PI/2);
-sign("BOARD GAMES",C.violet,5,1.0,130,HALL.x-0.05,3.75,-9.6,-Math.PI/2);
+sign("BACKYARD GAMES",C.gold,6.2,1.0,130,-HALL.x+0.05,3.75,-9.5,Math.PI/2);
+sign("KIDS & CARDS",C.pink,5.4,1.0,130,-HALL.x+0.05,3.75,-17,Math.PI/2);
+sign("VIDEO GAMES",C.green,5.4,1.0,130,HALL.x-0.05,3.75,-1,-Math.PI/2);
+sign("BOARD GAMES",C.violet,6.2,1.0,130,HALL.x-0.05,3.75,-9.6,-Math.PI/2);
 sign("EYEWITNESS",C.pink,6,1.2,130,0,3.9,HALL.zFront-0.05,Math.PI);
 
 /* ---------- ceiling marquee bulbs ---------- */
