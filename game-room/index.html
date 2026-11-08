@@ -1,495 +1,560 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>The Game Room · Eyewitness</title>
-<meta name="description" content="Welcome to the Eyewitness Game Room: every case in one place, plus the games and puzzles our players love.">
+<meta name="description" content="Walk the Eyewitness arcade: every case file plus our favorite games and puzzles.">
 <meta property="og:title" content="The Eyewitness Game Room">
 <meta property="og:image" content="https://eyewitnessgame.com/case1/scene.jpg">
 <meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;800&display=swap">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Monoton&family=Chakra+Petch:wght@500;600;700&display=swap">
 <style>
+/* Layout: one full-screen 3D arcade hall, controls floating over the corners, a bottom card for the machine you tap. Deliberately single dark neon look. */
 :root{
-  --bg:#120f2b; --bg2:#1d1846; --panel:#231d55; --ink:#fff8ec; --mut:#c9c2ef;
-  --pink:#ff4fa3; --cyan:#3ee8ff; --gold:#ffcf4a; --green:#5cf29a; --line:#3a3280;
+  --night:#07050f; --panel:#120c22; --ink:#f4efff; --dim:#a99cc8;
+  --pink:#ff3fa4; --cyan:#2ef2ff; --gold:#ffd23f; --violet:#9b5cff;
+  --display:"Monoton","Chakra Petch",system-ui,sans-serif;
+  --ui:"Chakra Petch",system-ui,sans-serif;
+  color-scheme:dark;
 }
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 20% -10%,#3a2a8f 0,transparent 45%),radial-gradient(circle at 90% 10%,#7a1f6b 0,transparent 40%),var(--bg);
-  color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:17px;line-height:1.5;min-height:100vh}
-a{color:inherit}
-.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
-.sign{font-family:Bungee,Impact,sans-serif;font-weight:400;text-align:center;margin:8px 0 6px;
-  font-size:clamp(34px,7vw,64px);line-height:1.05;letter-spacing:.02em;color:#fff;
-  text-shadow:0 0 6px var(--pink),0 0 18px var(--pink),0 0 36px #ff4fa388}
-.sign span{color:var(--cyan);text-shadow:0 0 6px var(--cyan),0 0 18px var(--cyan)}
-.lede{text-align:center;color:var(--mut);max-width:58ch;margin:0 auto 26px;font-size:18px}
-.ticket{display:inline-block;background:var(--gold);color:#2a1d00;font-weight:800;border-radius:6px;padding:3px 10px;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
-h2{font-family:Bungee,Impact,sans-serif;font-weight:400;font-size:clamp(22px,4vw,30px);margin:38px 0 6px;color:var(--gold);text-shadow:0 0 10px #ffcf4a66}
-.sub{color:var(--mut);margin:0 0 16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
-.cab{position:relative;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--bg2),var(--panel));
-  border:2px solid var(--line);border-radius:18px 18px 10px 10px;overflow:hidden;text-decoration:none;
-  box-shadow:0 10px 24px #0007;transition:transform .15s,border-color .15s,box-shadow .15s}
-.cab:hover,.cab:focus-visible{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 0 0 2px #3ee8ff55,0 14px 30px #0009;outline:none}
-.cab .scr{aspect-ratio:16/10;background:#000 center/cover no-repeat;border-bottom:2px solid var(--line);position:relative}
-.cab .scr.fallback{display:grid;place-items:center;font-family:Bungee,sans-serif;font-size:42px;color:var(--cyan);text-shadow:0 0 12px var(--cyan)}
-.cab .badge{position:absolute;top:10px;left:10px}
-.cab .body{padding:12px 14px 16px;display:grid;gap:4px}
-.cab .k{font-family:Bungee,sans-serif;font-size:13px;color:var(--pink);letter-spacing:.06em}
-.cab .t{font-weight:800;font-size:18px;line-height:1.25}
-.cab .d{color:var(--mut);font-size:15px}
-.cab .go{margin-top:8px;display:inline-block;align-self:start;background:var(--pink);color:#fff;font-weight:800;border-radius:999px;padding:7px 14px;font-size:15px}
-.cab.locked .go{background:#4a4280;color:var(--mut)}
-.prize .scr{background:#fff center/contain no-repeat;aspect-ratio:1/1}
-.prize .scr img{display:block;margin:0 auto;max-width:90%;max-height:92%;position:relative;top:50%;transform:translateY(-50%)}
-.prize .scr.icon{background:radial-gradient(circle,#3a2f8a,#1a1545);display:grid;place-items:center;aspect-ratio:16/10}
-.prize .scr.icon span{font-size:64px;filter:drop-shadow(0 0 12px #3ee8ff88)}
-#prizes .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-#prizes .scr.icon{aspect-ratio:4/3}
-#prizes .scr.icon span{font-size:44px}
-#prizes .t{font-size:16px}
-#prizes .go{font-size:14px;padding:6px 12px}
-h3.sec{font-family:Bungee,sans-serif;font-weight:400;color:var(--cyan);font-size:19px;margin:26px 0 12px;text-shadow:0 0 8px #3ee8ff66}
-.prize .go{background:var(--gold);color:#2a1d00}
-.counter{background:linear-gradient(180deg,#2a1f66,#1a1545);border:2px solid var(--gold);border-radius:20px;padding:6px 18px 22px;margin-top:40px;box-shadow:0 0 30px #ffcf4a22}
-.disc{color:var(--mut);font-size:13px;margin:14px 0 0}
-.share{text-align:center;margin:44px auto 0;max-width:620px;background:var(--panel);border:2px dashed var(--line);border-radius:16px;padding:18px}
-.share b{color:var(--green)}
-footer{text-align:center;color:var(--mut);font-size:14px;margin-top:40px}
-@media (prefers-reduced-motion:reduce){.cab{transition:none}}
+[hidden]{display:none!important}
+html,body{height:100%;background:var(--night);color:var(--ink);overflow:hidden;font-family:var(--ui)}
+#stage{position:fixed;inset:0;touch-action:none;display:block}
+canvas{display:block;outline:none}
+.hud{position:fixed;z-index:5;display:flex;gap:10px;align-items:center}
+.top{top:calc(env(safe-area-inset-top,0px) + 12px);left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));justify-content:space-between;pointer-events:none}
+.brand{font-family:var(--display);font-size:clamp(18px,3.4vw,28px);color:var(--pink);text-shadow:0 0 8px var(--pink),0 0 22px rgba(255,63,164,.6);letter-spacing:.04em}
+.top .btns{display:flex;gap:8px;pointer-events:auto}
+button{font-family:var(--ui);font-weight:600;color:var(--ink);background:rgba(18,12,34,.78);border:1.5px solid rgba(46,242,255,.55);border-radius:12px;padding:10px 14px;font-size:15px;cursor:pointer;-webkit-tap-highlight-color:transparent;backdrop-filter:blur(6px)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button:active{transform:scale(.96)}
+.pad{bottom:calc(env(safe-area-inset-bottom,0px) + 16px);left:max(16px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,58px);gap:6px}
+.pad button{width:58px;height:58px;padding:0;font-size:22px;border-radius:14px}
+.pad .up{grid-column:2;grid-row:1}.pad .lt{grid-column:1;grid-row:2}.pad .dn{grid-column:2;grid-row:2}.pad .rt{grid-column:3;grid-row:2}
+.tour{bottom:calc(env(safe-area-inset-bottom,0px) + 16px);right:max(16px,env(safe-area-inset-right,0px))}
+.tour button{border-color:rgba(255,210,63,.6)}
+.hint{position:fixed;z-index:4;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 62px);font-size:14px;color:var(--dim);background:rgba(7,5,15,.6);padding:6px 12px;border-radius:20px;white-space:nowrap;transition:opacity .8s}
+#card{position:fixed;z-index:6;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 150px);width:min(420px,calc(100% - 32px));background:var(--panel);border:2px solid var(--c,var(--cyan));border-radius:18px;padding:18px 18px 16px;box-shadow:0 0 30px color-mix(in srgb,var(--c,var(--cyan)) 45%,transparent);display:flex;flex-direction:column;gap:8px}
+#card .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--c,var(--cyan))}
+#card h2{margin:0;font-size:24px;line-height:1.15;text-wrap:balance}
+#card p{margin:0;color:var(--dim);font-size:15.5px;line-height:1.45}
+#card .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+#card a.go{font-family:var(--ui);font-weight:700;text-decoration:none;color:#120c22;background:var(--c,var(--cyan));border-radius:12px;padding:11px 16px;font-size:16px}
+#card .disc{flex-basis:100%;font-size:12px;margin:2px 0 0;color:var(--dim)}
+#card .soon{font-weight:700;color:var(--gold);font-size:15px;padding:11px 0}
+#intro{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 60%,rgba(155,92,255,.28),rgba(7,5,15,.88) 70%);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#intro .box{max-width:460px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+#intro h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(34px,8vw,58px);line-height:1.05;color:var(--cyan);text-shadow:0 0 10px var(--cyan),0 0 34px rgba(46,242,255,.55)}
+#intro p{margin:0;color:var(--ink);font-size:17px;line-height:1.45}
+#intro .how{color:var(--dim);font-size:15px}
+#intro .enter{font-size:20px;padding:14px 26px;border-color:var(--pink);box-shadow:0 0 18px rgba(255,63,164,.5)}
+#intro .quiet{background:none;border:none;color:var(--dim);font-size:15px;text-decoration:underline}
+.proto{pointer-events:auto;text-decoration:underline;position:fixed;z-index:4;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 84px);font-size:12px;color:var(--dim);opacity:.75}
+@media (min-width:761px){#card{left:auto;transform:none;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 80px);width:340px}#card h2{font-size:21px}}
+@media (max-width:560px){.pad{grid-template-columns:repeat(3,50px);grid-template-rows:repeat(2,50px)}.pad button{width:50px;height:50px}#card{bottom:calc(env(safe-area-inset-bottom,0px) + 132px)}.proto{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 92px);left:50%;right:auto;transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.hint{transition:none}}
 </style>
-</head>
-<body>
-<div class="wrap">
-  <p style="text-align:center;margin:0"><span class="ticket">You're in!</span></p>
-  <h1 class="sign">The Game <span>Room</span></h1>
-  <p class="lede">Thanks for signing up. Every Eyewitness case lives here, and a new one opens every Friday. Pick a machine and play.</p>
 
-  <h2>Eyewitness cases</h2>
-  <p class="sub">Watch once. Answer 12 questions. See who has the sharpest eyes.</p>
-  <div class="grid" id="cases"></div>
+<div id="stage"></div>
 
-  <section class="counter" id="counter" hidden>
-    <h2>The prize counter</h2>
-    <p class="sub">Our favorite games, puzzles and game-night gear, hand-picked for players like you.</p>
-    <div class="grid" id="prizes"></div>
-    <p class="disc">As an Amazon Associate, Eyewitness earns from qualifying purchases. Prices and availability can change.</p>
-  </section>
+<div class="hud top"><div class="brand">Game Room</div><div class="btns"><button id="snd" aria-label="Sound on or off">🔊 Sound</button></div></div>
+<div class="hint" id="hint">Tap the floor arrows to walk · Drag to look · Tap a machine</div>
 
-  <div class="share">
-    <b>Play with friends.</b> Send them <a href="https://eyewitnessgame.com/">eyewitnessgame.com</a> and compare scores after each case.
-  </div>
-  <footer>Eyewitness © 2026 · <a href="https://eyewitnessgame.com/">Back to the front door</a></footer>
+<div class="hud pad" aria-label="Walk controls">
+  <button class="up" data-k="f" aria-label="Walk forward">▲</button>
+  <button class="lt" data-k="l" aria-label="Turn left">◀</button>
+  <button class="dn" data-k="b" aria-label="Walk back">▼</button>
+  <button class="rt" data-k="r" aria-label="Turn right">▶</button>
+</div>
+<div class="hud tour"><button id="prev" aria-label="Previous machine">‹</button><button id="next">Next machine ›</button></div>
+<a class="proto" href="classic.html" style="color:#a99cc8">Simple list view</a>
+
+<div id="card" hidden>
+  <div class="tag" id="cTag"></div>
+  <h2 id="cTitle"></h2>
+  <p id="cText"></p>
+  <div class="row" id="cRow"></div>
 </div>
 
-<script>
-// Cases: unlock dates match the weekly release schedule (Fridays 9 AM Eastern).
-const CASES=[
-  {n:1,slug:"case1",title:"The great dog show caper",desc:"Somebody swiped the trophy. Did you see who?",opens:"2026-10-24T09:00:00-04:00"},
-  {n:2,slug:"case2",title:"The Main Street cake caper",desc:"A prize cake vanishes in broad daylight.",opens:"2026-11-13T09:00:00-05:00"},
-  {n:3,slug:"case3",title:"The station hatbox heist",desc:"Trains, crowds and one very valuable hatbox.",opens:"2026-11-20T09:00:00-05:00"},
-  {n:4,slug:"case4",title:"The prize pumpkin pinch",desc:"The harvest fair's best pumpkin goes missing.",opens:"2026-11-27T09:00:00-05:00"}
-];
-// Prize counter: Amazon affiliate picks (Product Picks sheet, Game Room tab). Tag: bobcoz111-20.
-// Product photos to be added later via SiteStripe image links (Amazon-approved source).
-const PRIZES=[
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "Monopoly Classic",
-"link": "https://www.amazon.com/dp/B0DN37BBGD?tag=bobcoz111-20"
-},
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "Scrabble",
-"link": "https://www.amazon.com/dp/B00IL5XY9K?tag=bobcoz111-20"
-},
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "Wooden Chess & Checkers Set",
-"link": "https://www.amazon.com/dp/B09D9L1MWC?tag=bobcoz111-20"
-},
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "Battleship",
-"link": "https://www.amazon.com/dp/B09D4QRJ8Y?tag=bobcoz111-20"
-},
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "Connect 4",
-"link": "https://www.amazon.com/dp/B00D8STBHY?tag=bobcoz111-20"
-},
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "Yahtzee",
-"link": "https://www.amazon.com/dp/B00TLEMRKM?tag=bobcoz111-20"
-},
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "Risk",
-"link": "https://www.amazon.com/dp/B01ALHAIWG?tag=bobcoz111-20"
-},
-{
-"section": "Classic Board Games",
-"icon": "🎲",
-"name": "The Game of Life",
-"link": "https://www.amazon.com/dp/B06XY48MK1?tag=bobcoz111-20"
-},
-{
-"section": "Mystery & Detective",
-"icon": "🔍",
-"name": "Clue Classic",
-"link": "https://www.amazon.com/dp/B07BMJPPXV?tag=bobcoz111-20"
-},
-{
-"section": "Mystery & Detective",
-"icon": "🔍",
-"name": "Sherlock Holmes Consulting Detective",
-"link": "https://www.amazon.com/dp/2370990074?tag=bobcoz111-20"
-},
-{
-"section": "Mystery & Detective",
-"icon": "🔍",
-"name": "Exit: The Game",
-"link": "https://www.amazon.com/dp/B06WP2G52Z?tag=bobcoz111-20"
-},
-{
-"section": "Mystery & Detective",
-"icon": "🔍",
-"name": "Unlock! Mystery Adventures",
-"link": "https://www.amazon.com/dp/B077XVY44P?tag=bobcoz111-20"
-},
-{
-"section": "Mystery & Detective",
-"icon": "🔍",
-"name": "Hunt A Killer",
-"link": "https://www.amazon.com/dp/B085ZNYPR3?tag=bobcoz111-20"
-},
-{
-"section": "Mystery & Detective",
-"icon": "🔍",
-"name": "Murder Mystery Party Kit",
-"link": "https://www.amazon.com/dp/B000P8HPIM?tag=bobcoz111-20"
-},
-{
-"section": "Family Game Night",
-"icon": "🏠",
-"name": "Ticket to Ride",
-"link": "https://www.amazon.com/dp/B0F8PKN4B7?tag=bobcoz111-20"
-},
-{
-"section": "Family Game Night",
-"icon": "🏠",
-"name": "Catan",
-"link": "https://www.amazon.com/dp/B00U26V4VQ?tag=bobcoz111-20"
-},
-{
-"section": "Family Game Night",
-"icon": "🏠",
-"name": "Sequence",
-"link": "https://www.amazon.com/dp/B00000IVAK?tag=bobcoz111-20"
-},
-{
-"section": "Family Game Night",
-"icon": "🏠",
-"name": "Blokus",
-"link": "https://www.amazon.com/dp/B00FBWBM3G?tag=bobcoz111-20"
-},
-{
-"section": "Family Game Night",
-"icon": "🏠",
-"name": "Carcassonne",
-"link": "https://www.amazon.com/dp/B00NX627HW?tag=bobcoz111-20"
-},
-{
-"section": "Party Games",
-"icon": "🎉",
-"name": "Codenames",
-"link": "https://www.amazon.com/dp/B014Q1XX9S?tag=bobcoz111-20"
-},
-{
-"section": "Party Games",
-"icon": "🎉",
-"name": "Telestrations",
-"link": "https://www.amazon.com/dp/B001SN8GF4?tag=bobcoz111-20"
-},
-{
-"section": "Party Games",
-"icon": "🎉",
-"name": "What Do You Meme?",
-"link": "https://www.amazon.com/dp/B01MRG7T0D?tag=bobcoz111-20"
-},
-{
-"section": "Party Games",
-"icon": "🎉",
-"name": "Heads Up!",
-"link": "https://www.amazon.com/dp/B00FB6O9I2?tag=bobcoz111-20"
-},
-{
-"section": "Party Games",
-"icon": "🎉",
-"name": "Taboo",
-"link": "https://www.amazon.com/dp/B0B3FXMB7Q?tag=bobcoz111-20"
-},
-{
-"section": "Card Games",
-"icon": "🃏",
-"name": "Exploding Kittens",
-"link": "https://www.amazon.com/dp/B010TQY7A8?tag=bobcoz111-20"
-},
-{
-"section": "Card Games",
-"icon": "🃏",
-"name": "Uno",
-"link": "https://www.amazon.com/dp/B07P6MZPK3?tag=bobcoz111-20"
-},
-{
-"section": "Card Games",
-"icon": "🃏",
-"name": "Sushi Go!",
-"link": "https://www.amazon.com/dp/B00J57VU44?tag=bobcoz111-20"
-},
-{
-"section": "Card Games",
-"icon": "🃏",
-"name": "Skip-Bo",
-"link": "https://www.amazon.com/dp/B00006YYY5?tag=bobcoz111-20"
-},
-{
-"section": "Card Games",
-"icon": "🃏",
-"name": "Phase 10",
-"link": "https://www.amazon.com/dp/B01N3489RH?tag=bobcoz111-20"
-},
-{
-"section": "Trivia & Word Games",
-"icon": "🔤",
-"name": "Trivial Pursuit",
-"link": "https://www.amazon.com/dp/B01N4MXCK4?tag=bobcoz111-20"
-},
-{
-"section": "Trivia & Word Games",
-"icon": "🔤",
-"name": "Wavelength",
-"link": "https://www.amazon.com/dp/B07T446163?tag=bobcoz111-20"
-},
-{
-"section": "Trivia & Word Games",
-"icon": "🔤",
-"name": "Bananagrams",
-"link": "https://www.amazon.com/dp/1932188126?tag=bobcoz111-20"
-},
-{
-"section": "Trivia & Word Games",
-"icon": "🔤",
-"name": "Boggle",
-"link": "https://www.amazon.com/dp/B01N6PS4L0?tag=bobcoz111-20"
-},
-{
-"section": "Puzzles & Brain Teasers",
-"icon": "🧩",
-"name": "Hidden-Object Jigsaw Puzzle",
-"link": "https://www.amazon.com/dp/B08669HJ7P?tag=bobcoz111-20"
-},
-{
-"section": "Puzzles & Brain Teasers",
-"icon": "🧩",
-"name": "Ravensburger 1000-Piece Puzzle",
-"link": "https://www.amazon.com/dp/B01NAPZIS0?tag=bobcoz111-20"
-},
-{
-"section": "Puzzles & Brain Teasers",
-"icon": "🧩",
-"name": "Logic Puzzle Book",
-"link": "https://www.amazon.com/dp/B0C7T1V2Y6?tag=bobcoz111-20"
-},
-{
-"section": "Puzzles & Brain Teasers",
-"icon": "🧩",
-"name": "Rubik's Cube",
-"link": "https://www.amazon.com/dp/B09FG5L5ZX?tag=bobcoz111-20"
-},
-{
-"section": "Kids' Corner",
-"icon": "🧸",
-"name": "Guess Who?",
-"link": "https://www.amazon.com/dp/B01N6PRX20?tag=bobcoz111-20"
-},
-{
-"section": "Kids' Corner",
-"icon": "🧸",
-"name": "Spot It!",
-"link": "https://www.amazon.com/dp/B0170U0P6Q?tag=bobcoz111-20"
-},
-{
-"section": "Kids' Corner",
-"icon": "🧸",
-"name": "Outfoxed!",
-"link": "https://www.amazon.com/dp/B00UB7P0XY?tag=bobcoz111-20"
-},
-{
-"section": "Kids' Corner",
-"icon": "🧸",
-"name": "Candy Land",
-"link": "https://www.amazon.com/dp/B00000DMF5?tag=bobcoz111-20"
-},
-{
-"section": "Kids' Corner",
-"icon": "🧸",
-"name": "Operation",
-"link": "https://www.amazon.com/dp/B00000DMFM?tag=bobcoz111-20"
-},
-{
-"section": "Role-Play & Adventure",
-"icon": "🐉",
-"name": "D&D Starter Set",
-"link": "https://www.amazon.com/dp/B0FDJFR245?tag=bobcoz111-20"
-},
-{
-"section": "Role-Play & Adventure",
-"icon": "🐉",
-"name": "D&D Essentials Kit",
-"link": "https://www.amazon.com/dp/0786966831?tag=bobcoz111-20"
-},
-{
-"section": "Role-Play & Adventure",
-"icon": "🐉",
-"name": "Polyhedral Dice Set",
-"link": "https://www.amazon.com/dp/B008KWIU20?tag=bobcoz111-20"
-},
-{
-"section": "Role-Play & Adventure",
-"icon": "🐉",
-"name": "Gloomhaven: Jaws of the Lion",
-"link": "https://www.amazon.com/dp/B088QSDB7S?tag=bobcoz111-20"
-},
-{
-"section": "Video Games",
-"icon": "🎮",
-"name": "Mario Kart 8 Deluxe",
-"link": "https://www.amazon.com/dp/B01N1037CV?tag=bobcoz111-20"
-},
-{
-"section": "Video Games",
-"icon": "🎮",
-"name": "Super Mario Party Jamboree",
-"link": "https://www.amazon.com/dp/B0D7J4W5N3?tag=bobcoz111-20"
-},
-{
-"section": "Video Games",
-"icon": "🎮",
-"name": "Just Dance",
-"link": "https://www.amazon.com/dp/B0FJH3K1RW?tag=bobcoz111-20"
-},
-{
-"section": "Video Games",
-"icon": "🎮",
-"name": "Nintendo Switch Sports",
-"link": "https://www.amazon.com/dp/B09KRK6C82?tag=bobcoz111-20"
-},
-{
-"section": "Retro Arcade",
-"icon": "👾",
-"name": "Arcade1Up Pac-Man Countercade",
-"link": "https://www.amazon.com/dp/B0DJGHWD1G?tag=bobcoz111-20"
-},
-{
-"section": "Retro Arcade",
-"icon": "👾",
-"name": "Atari 2600+ Console",
-"link": "https://www.amazon.com/dp/B0CG7LMFKY?tag=bobcoz111-20"
-},
-{
-"section": "Retro Arcade",
-"icon": "👾",
-"name": "Retro Handheld Game Player",
-"link": "https://www.amazon.com/dp/B0CTVL37T6?tag=bobcoz111-20"
-},
-{
-"section": "Outdoor & Lawn Games",
-"icon": "🌳",
-"name": "Bocce Ball Set",
-"link": "https://www.amazon.com/dp/B07PJFDNLY?tag=bobcoz111-20"
-},
-{
-"section": "Outdoor & Lawn Games",
-"icon": "🌳",
-"name": "Croquet Set",
-"link": "https://www.amazon.com/dp/B07SW7HJV1?tag=bobcoz111-20"
-},
-{
-"section": "Outdoor & Lawn Games",
-"icon": "🌳",
-"name": "Cornhole Boards",
-"link": "https://www.amazon.com/dp/B07TC5X8P5?tag=bobcoz111-20"
-},
-{
-"section": "Outdoor & Lawn Games",
-"icon": "🌳",
-"name": "Ladder Toss",
-"link": "https://www.amazon.com/dp/B00K8ANYWS?tag=bobcoz111-20"
-},
-{
-"section": "Outdoor & Lawn Games",
-"icon": "🌳",
-"name": "Giant Tumbling Tower",
-"link": "https://www.amazon.com/dp/B00ZUABRXO?tag=bobcoz111-20"
-},
-{
-"section": "Outdoor & Lawn Games",
-"icon": "🌳",
-"name": "Spikeball",
-"link": "https://www.amazon.com/dp/B00STL38RE?tag=bobcoz111-20"
-}
-];
+<div id="intro">
+  <div class="box">
+    <h1>The Game Room</h1>
+    <p>Walk the arcade. Play the case files, try the machines, and see what's at the prize counter in the back.</p>
+    <p class="how">Tap the glowing arrows on the floor to walk. Drag to look around. Tap any machine.</p>
+    <button class="enter" id="enter">Walk in with sound</button>
+    <button class="quiet" id="quiet">Walk in quietly</button>
+  </div>
+</div>
 
-const fmt=d=>d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
-const el=(t,c)=>{const e=document.createElement(t); if(c) e.className=c; return e;};
-const now=new Date();
-const box=document.getElementById("cases");
-CASES.forEach(c=>{
-  const open=new Date(c.opens)<=now;
-  const a=el("a","cab"+(open?"":" locked")); a.href="https://eyewitnessgame.com/"+c.slug+"/";
-  const scr=el("div","scr"); const img=new Image();
-  img.onload=()=>{scr.style.backgroundImage="url('"+img.src+"')";};
-  img.onerror=()=>{scr.classList.add("fallback"); const s=el("span"); s.textContent="#"+c.n; scr.prepend(s);};
-  img.src="https://eyewitnessgame.com/"+c.slug+"/scene.jpg";
-  if(!open){ const b=el("span","ticket badge"); b.textContent="Opens "+fmt(new Date(c.opens)); scr.append(b); }
-  else if(now-new Date(c.opens)<7*864e5){ const b=el("span","ticket badge"); b.textContent="New this week"; scr.append(b); }
-  const body=el("div","body");
-  const k=el("div","k"); k.textContent="Case #"+c.n;
-  const t=el("div","t"); t.textContent=c.title;
-  const d=el("div","d"); d.textContent=c.desc;
-  const g=el("span","go"); g.textContent=open?"Play now":"Coming soon";
-  body.append(k,t,d,g); a.append(scr,body); box.append(a);
-});
-if(PRIZES.length){
-  document.getElementById("counter").hidden=false;
-  const pb=document.getElementById("prizes"); pb.className="";
-  const sections=[...new Set(PRIZES.map(p=>p.section))];
-  sections.forEach(sec=>{
-    const h3=el("h3","sec"); h3.textContent=sec; pb.append(h3);
-    const g=el("div","grid"); pb.append(g);
-    PRIZES.filter(p=>p.section===sec).forEach(p=>{
-      const a=el("a","cab prize"); a.href=p.link; a.target="_blank"; a.rel="sponsored noopener";
-      const scr=el("div","scr icon");
-      if(p.img){ const im=new Image(); im.src=p.img; im.alt=p.name; im.loading="lazy"; scr.append(im); scr.classList.remove("icon"); }
-      else { const s=el("span"); s.textContent=p.icon; scr.append(s); }
-      const body=el("div","body");
-      const t=el("div","t"); t.textContent=p.name; body.append(t);
-      const go=el("span","go"); go.textContent="On Amazon"; body.append(go);
-      a.append(scr,body); g.append(a);
-    });
-  });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const C={pink:"#ff3fa4",cyan:"#2ef2ff",gold:"#ffd23f",violet:"#9b5cff",green:"#5bff8f",orange:"#ff8a3d",red:"#ff4a4a",blue:"#3d7bff"};
+const PAL=[C.pink,C.cyan,C.gold,C.violet,C.green,C.orange];
+const REDUCE=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const stage=document.getElementById("stage");
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:"high-performance"});
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+renderer.setSize(innerWidth,innerHeight);
+stage.appendChild(renderer.domElement);
+const scene=new THREE.Scene();
+scene.background=new THREE.Color("#07050f");
+scene.fog=new THREE.Fog("#07050f",16,40);
+const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,0.1,90);
+camera.rotation.order="YXZ";
+const view={x:0.25,z:7.6,yaw:0,pitch:-0.1};
+
+/* ---------- helpers ---------- */
+function canvasTex(w,h,draw){const c=document.createElement("canvas");c.width=w;c.height=h;const g=c.getContext("2d");draw(g,w,h);const t=new THREE.CanvasTexture(c);t.anisotropy=4;t.userData={c,g};return t;}
+function glowText(g,text,x,y,size,color,font){g.font=`${size}px ${font||"Chakra Petch, sans-serif"}`;g.textAlign="center";g.textBaseline="middle";g.shadowColor=color;for(const b of [24,10]){g.shadowBlur=b;g.fillStyle=color;g.fillText(text,x,y);}g.shadowBlur=0;g.fillStyle="#fff";g.globalAlpha=.85;g.fillText(text,x,y);g.globalAlpha=1;}
+function fitText(g,text,max,size,font){g.font=`${size}px ${font||"Chakra Petch, sans-serif"}`;while(g.measureText(text).width>max&&size>12){size-=2;g.font=`${size}px ${font||"Chakra Petch, sans-serif"}`;}return size;}
+const radialCache={};
+function radial(color){if(radialCache[color])return radialCache[color];return radialCache[color]=canvasTex(128,128,(g)=>{const r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,color);r.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=r;g.fillRect(0,0,128,128);});}
+const matCache={};
+function lam(c,em){const k="l"+c+(em||0);return matCache[k]||(matCache[k]=new THREE.MeshLambertMaterial({color:c,emissive:em?c:"#000",emissiveIntensity:em||0}));}
+function bas(c){const k="b"+c;return matCache[k]||(matCache[k]=new THREE.MeshBasicMaterial({color:c}));}
+function box(w,h,d,mat,x,y,z,parent){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);parent.add(m);return m;}
+function plane(w,h,mat,x,y,z,parent){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);m.position.set(x,y,z);parent.add(m);return m;}
+function cyl(rt,rb,h,mat,x,y,z,parent,seg){const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg||14),mat);m.position.set(x,y,z);parent.add(m);return m;}
+function sph(r,mat,x,y,z,parent){const m=new THREE.Mesh(new THREE.SphereGeometry(r,12,10),mat);m.position.set(x,y,z);parent.add(m);return m;}
+const DARK=lam("#1a1030"),PANEL=lam("#241640"),CHROME=lam("#c9c6dc"),BLACK=lam("#0a0614");
+
+/* ---------- the hall ---------- */
+const HALL={x:9.2,zFront:9,zBack:-31,h:4.6};
+const LEN=HALL.zFront-HALL.zBack,MIDZ=(HALL.zFront+HALL.zBack)/2;
+const carpet=canvasTex(512,512,(g,w,h)=>{g.fillStyle="#0b0618";g.fillRect(0,0,w,h);let s=7;const rnd=()=>((s=(s*9301+49297)%233280)/233280);
+  for(let i=0;i<70;i++){const c=PAL[i%PAL.length];g.strokeStyle=c;g.fillStyle=c;g.lineWidth=5;const x=rnd()*w,y=rnd()*h,k=rnd();g.save();g.translate(x,y);g.rotate(rnd()*6.28);
+  if(k<.3){g.beginPath();g.moveTo(0,-14);g.lineTo(13,10);g.lineTo(-13,10);g.closePath();g.stroke();}
+  else if(k<.55){g.beginPath();g.arc(0,0,9,0,6.28);g.stroke();}
+  else if(k<.8){g.beginPath();g.moveTo(-22,0);for(let j=-22;j<=22;j+=11)g.quadraticCurveTo(j+5,(j/11)%2?-10:10,j+11,0);g.stroke();}
+  else{g.fillRect(-4,-4,8,8);}g.restore();}});
+carpet.wrapS=carpet.wrapT=THREE.RepeatWrapping;carpet.repeat.set(7,16);
+const floor=plane(HALL.x*2,LEN,new THREE.MeshLambertMaterial({map:carpet}),0,0,MIDZ,scene);floor.rotation.x=-Math.PI/2;
+const ceil=plane(HALL.x*2,LEN,lam("#0d0a1a"),0,HALL.h,MIDZ,scene);ceil.rotation.x=Math.PI/2;
+const wallTex=canvasTex(256,256,(g,w,h)=>{g.fillStyle="#120b24";g.fillRect(0,0,w,h);g.strokeStyle="rgba(155,92,255,.18)";g.lineWidth=2;for(let x=0;x<w;x+=32){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke();}});
+wallTex.wrapS=wallTex.wrapT=THREE.RepeatWrapping;wallTex.repeat.set(10,2);
+const wallMat=new THREE.MeshLambertMaterial({map:wallTex});
+function wall(w,x,z,ry){const m=plane(w,HALL.h,wallMat,x,HALL.h/2,z,scene);m.rotation.y=ry;}
+wall(LEN,-HALL.x,MIDZ,Math.PI/2);wall(LEN,HALL.x,MIDZ,-Math.PI/2);wall(HALL.x*2,0,HALL.zBack,0);wall(HALL.x*2,0,HALL.zFront,Math.PI);
+box(0.04,0.06,LEN,bas(C.cyan),-HALL.x+0.02,0.12,MIDZ,scene);box(0.04,0.06,LEN,bas(C.pink),HALL.x-0.02,0.12,MIDZ,scene);
+box(0.04,0.06,LEN,bas(C.violet),-HALL.x+0.02,HALL.h-0.15,MIDZ,scene);box(0.04,0.06,LEN,bas(C.violet),HALL.x-0.02,HALL.h-0.15,MIDZ,scene);
+
+scene.add(new THREE.AmbientLight("#4b3a7a",0.95));
+scene.add(new THREE.HemisphereLight("#7b5cff","#200a30",0.55));
+const roomLights=[];
+[[C.pink,-4,4],[C.cyan,4,-3],[C.violet,-4,-10],[C.gold,4,-16],[C.green,-4,-22],[C.pink,3,-27]].forEach(([c,x,z])=>{const l=new THREE.PointLight(c,1.1,14,1.6);l.position.set(x,HALL.h-0.6,z);scene.add(l);roomLights.push(l);});
+
+/* ---------- neon signs ---------- */
+function neonSign(text,color,w,h,size){const t=canvasTex(1024,Math.round(1024*h/w),(g,W,H)=>{glowText(g,text,W/2,H/2,size,color,"Monoton, sans-serif");});
+  return new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:t,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));}
+const signs=[];
+function sign(text,color,w,h,size,x,y,z,ry){const s=neonSign(text,color,w,h,size);s.position.set(x,y,z);s.rotation.y=ry;scene.add(s);signs.push(s);return s;}
+const signBack=sign("PRIZE COUNTER",C.gold,7,1.4,120,0,3.75,HALL.zBack+0.05,0);
+sign("CASE FILES",C.cyan,5,1.0,130,-HALL.x+0.05,3.75,-3,Math.PI/2);
+sign("SKEE-BALL",C.gold,5,1.0,130,-HALL.x+0.05,3.75,-9.5,Math.PI/2);
+sign("CLAWS",C.pink,4,1.0,130,-HALL.x+0.05,3.75,-17,Math.PI/2);
+sign("RACING",C.green,4,1.0,130,HALL.x-0.05,3.75,-1,-Math.PI/2);
+sign("PINBALL",C.violet,5,1.0,130,HALL.x-0.05,3.75,-9.6,-Math.PI/2);
+sign("EYEWITNESS",C.pink,6,1.2,130,0,3.9,HALL.zFront-0.05,Math.PI);
+
+/* ---------- ceiling marquee bulbs ---------- */
+const bulbs=[];const bulbGeo=new THREE.SphereGeometry(0.06,8,6);
+for(const x of [-4,0,4]){for(let i=0;i<28;i++){const m=new THREE.Mesh(bulbGeo,new THREE.MeshBasicMaterial({color:"#ffe9a8"}));m.position.set(x,HALL.h-0.08,HALL.zFront-1-i*1.4);scene.add(m);bulbs.push(m);}}
+
+/* ---------- products: fill these in as Silk's Amazon picks come back ----------
+   PRIZE number -> { name, img (Amazon SiteStripe image URL), link (amzn.to short link, tag bobcoz111-20), blurb (optional) }
+   Example: 1:{name:"Detective board game",img:"https://m.media-amazon.com/images/I/....jpg",link:"https://amzn.to/xxxx"} */
+const PRODUCT_LIST=[{"section": "Classic Board Games", "name": "Monopoly Classic", "link": "https://www.amazon.com/dp/B0DN37BBGD?tag=bobcoz111-20"}, {"section": "Classic Board Games", "name": "Scrabble", "link": "https://www.amazon.com/dp/B00IL5XY9K?tag=bobcoz111-20"}, {"section": "Classic Board Games", "name": "Wooden Chess & Checkers Set", "link": "https://www.amazon.com/dp/B09D9L1MWC?tag=bobcoz111-20"}, {"section": "Classic Board Games", "name": "Battleship", "link": "https://www.amazon.com/dp/B09D4QRJ8Y?tag=bobcoz111-20"}, {"section": "Classic Board Games", "name": "Connect 4", "link": "https://www.amazon.com/dp/B00D8STBHY?tag=bobcoz111-20"}, {"section": "Classic Board Games", "name": "Yahtzee", "link": "https://www.amazon.com/dp/B00TLEMRKM?tag=bobcoz111-20"}, {"section": "Classic Board Games", "name": "Risk", "link": "https://www.amazon.com/dp/B01ALHAIWG?tag=bobcoz111-20"}, {"section": "Classic Board Games", "name": "The Game of Life", "link": "https://www.amazon.com/dp/B06XY48MK1?tag=bobcoz111-20"}, {"section": "Mystery & Detective", "name": "Clue Classic", "link": "https://www.amazon.com/dp/B07BMJPPXV?tag=bobcoz111-20"}, {"section": "Mystery & Detective", "name": "Sherlock Holmes Consulting Detective", "link": "https://www.amazon.com/dp/2370990074?tag=bobcoz111-20"}, {"section": "Mystery & Detective", "name": "Exit: The Game", "link": "https://www.amazon.com/dp/B06WP2G52Z?tag=bobcoz111-20"}, {"section": "Mystery & Detective", "name": "Unlock! Mystery Adventures", "link": "https://www.amazon.com/dp/B077XVY44P?tag=bobcoz111-20"}, {"section": "Mystery & Detective", "name": "Hunt A Killer", "link": "https://www.amazon.com/dp/B085ZNYPR3?tag=bobcoz111-20"}, {"section": "Mystery & Detective", "name": "Murder Mystery Party Kit", "link": "https://www.amazon.com/dp/B000P8HPIM?tag=bobcoz111-20"}, {"section": "Family Game Night", "name": "Ticket to Ride", "link": "https://www.amazon.com/dp/B0F8PKN4B7?tag=bobcoz111-20"}, {"section": "Family Game Night", "name": "Catan", "link": "https://www.amazon.com/dp/B00U26V4VQ?tag=bobcoz111-20"}, {"section": "Family Game Night", "name": "Sequence", "link": "https://www.amazon.com/dp/B00000IVAK?tag=bobcoz111-20"}, {"section": "Family Game Night", "name": "Blokus", "link": "https://www.amazon.com/dp/B00FBWBM3G?tag=bobcoz111-20"}, {"section": "Family Game Night", "name": "Carcassonne", "link": "https://www.amazon.com/dp/B00NX627HW?tag=bobcoz111-20"}, {"section": "Party Games", "name": "Codenames", "link": "https://www.amazon.com/dp/B014Q1XX9S?tag=bobcoz111-20"}, {"section": "Party Games", "name": "Telestrations", "link": "https://www.amazon.com/dp/B001SN8GF4?tag=bobcoz111-20"}, {"section": "Party Games", "name": "What Do You Meme?", "link": "https://www.amazon.com/dp/B01MRG7T0D?tag=bobcoz111-20"}, {"section": "Party Games", "name": "Heads Up!", "link": "https://www.amazon.com/dp/B00FB6O9I2?tag=bobcoz111-20"}, {"section": "Party Games", "name": "Taboo", "link": "https://www.amazon.com/dp/B0B3FXMB7Q?tag=bobcoz111-20"}, {"section": "Card Games", "name": "Exploding Kittens", "link": "https://www.amazon.com/dp/B010TQY7A8?tag=bobcoz111-20"}, {"section": "Card Games", "name": "Uno", "link": "https://www.amazon.com/dp/B07P6MZPK3?tag=bobcoz111-20"}, {"section": "Card Games", "name": "Sushi Go!", "link": "https://www.amazon.com/dp/B00J57VU44?tag=bobcoz111-20"}, {"section": "Card Games", "name": "Skip-Bo", "link": "https://www.amazon.com/dp/B00006YYY5?tag=bobcoz111-20"}, {"section": "Card Games", "name": "Phase 10", "link": "https://www.amazon.com/dp/B01N3489RH?tag=bobcoz111-20"}, {"section": "Trivia & Word Games", "name": "Trivial Pursuit", "link": "https://www.amazon.com/dp/B01N4MXCK4?tag=bobcoz111-20"}, {"section": "Trivia & Word Games", "name": "Wavelength", "link": "https://www.amazon.com/dp/B07T446163?tag=bobcoz111-20"}, {"section": "Trivia & Word Games", "name": "Bananagrams", "link": "https://www.amazon.com/dp/1932188126?tag=bobcoz111-20"}, {"section": "Trivia & Word Games", "name": "Boggle", "link": "https://www.amazon.com/dp/B01N6PS4L0?tag=bobcoz111-20"}, {"section": "Puzzles & Brain Teasers", "name": "Hidden-Object Jigsaw Puzzle", "link": "https://www.amazon.com/dp/B08669HJ7P?tag=bobcoz111-20"}, {"section": "Puzzles & Brain Teasers", "name": "Ravensburger 1000-Piece Puzzle", "link": "https://www.amazon.com/dp/B01NAPZIS0?tag=bobcoz111-20"}, {"section": "Puzzles & Brain Teasers", "name": "Logic Puzzle Book", "link": "https://www.amazon.com/dp/B0C7T1V2Y6?tag=bobcoz111-20"}, {"section": "Puzzles & Brain Teasers", "name": "Rubik's Cube", "link": "https://www.amazon.com/dp/B09FG5L5ZX?tag=bobcoz111-20"}, {"section": "Kids' Corner", "name": "Guess Who?", "link": "https://www.amazon.com/dp/B01N6PRX20?tag=bobcoz111-20"}, {"section": "Kids' Corner", "name": "Spot It!", "link": "https://www.amazon.com/dp/B0170U0P6Q?tag=bobcoz111-20"}, {"section": "Kids' Corner", "name": "Outfoxed!", "link": "https://www.amazon.com/dp/B00UB7P0XY?tag=bobcoz111-20"}, {"section": "Kids' Corner", "name": "Candy Land", "link": "https://www.amazon.com/dp/B00000DMF5?tag=bobcoz111-20"}, {"section": "Kids' Corner", "name": "Operation", "link": "https://www.amazon.com/dp/B00000DMFM?tag=bobcoz111-20"}, {"section": "Role-Play & Adventure", "name": "D&D Starter Set", "link": "https://www.amazon.com/dp/B0FDJFR245?tag=bobcoz111-20"}, {"section": "Role-Play & Adventure", "name": "D&D Essentials Kit", "link": "https://www.amazon.com/dp/0786966831?tag=bobcoz111-20"}, {"section": "Role-Play & Adventure", "name": "Polyhedral Dice Set", "link": "https://www.amazon.com/dp/B008KWIU20?tag=bobcoz111-20"}, {"section": "Role-Play & Adventure", "name": "Gloomhaven: Jaws of the Lion", "link": "https://www.amazon.com/dp/B088QSDB7S?tag=bobcoz111-20"}, {"section": "Video Games", "name": "Mario Kart 8 Deluxe", "link": "https://www.amazon.com/dp/B01N1037CV?tag=bobcoz111-20"}, {"section": "Video Games", "name": "Super Mario Party Jamboree", "link": "https://www.amazon.com/dp/B0D7J4W5N3?tag=bobcoz111-20"}, {"section": "Video Games", "name": "Just Dance", "link": "https://www.amazon.com/dp/B0FJH3K1RW?tag=bobcoz111-20"}, {"section": "Video Games", "name": "Nintendo Switch Sports", "link": "https://www.amazon.com/dp/B09KRK6C82?tag=bobcoz111-20"}, {"section": "Retro Arcade", "name": "Arcade1Up Pac-Man Countercade", "link": "https://www.amazon.com/dp/B0DJGHWD1G?tag=bobcoz111-20"}, {"section": "Retro Arcade", "name": "Atari 2600+ Console", "link": "https://www.amazon.com/dp/B0CG7LMFKY?tag=bobcoz111-20"}, {"section": "Retro Arcade", "name": "Retro Handheld Game Player", "link": "https://www.amazon.com/dp/B0CTVL37T6?tag=bobcoz111-20"}, {"section": "Outdoor & Lawn Games", "name": "Bocce Ball Set", "link": "https://www.amazon.com/dp/B07PJFDNLY?tag=bobcoz111-20"}, {"section": "Outdoor & Lawn Games", "name": "Croquet Set", "link": "https://www.amazon.com/dp/B07SW7HJV1?tag=bobcoz111-20"}, {"section": "Outdoor & Lawn Games", "name": "Cornhole Boards", "link": "https://www.amazon.com/dp/B07TC5X8P5?tag=bobcoz111-20"}, {"section": "Outdoor & Lawn Games", "name": "Ladder Toss", "link": "https://www.amazon.com/dp/B00K8ANYWS?tag=bobcoz111-20"}, {"section": "Outdoor & Lawn Games", "name": "Giant Tumbling Tower", "link": "https://www.amazon.com/dp/B00ZUABRXO?tag=bobcoz111-20"}, {"section": "Outdoor & Lawn Games", "name": "Spikeball", "link": "https://www.amazon.com/dp/B00STL38RE?tag=bobcoz111-20"}];
+const PREF={upright:["Video Games","Retro Arcade","Mystery & Detective","Role-Play & Adventure"],lightgun:["Video Games","Retro Arcade","Mystery & Detective"],driver:["Video Games","Retro Arcade"],dance:["Video Games","Party Games"],
+ pinball:["Classic Board Games","Family Game Night","Mystery & Detective","Trivia & Word Games"],claw:["Kids' Corner","Card Games","Puzzles & Brain Teasers","Party Games"],pusher:["Card Games","Kids' Corner"],wheel:["Party Games","Card Games"],
+ skeeball:["Outdoor & Lawn Games","Party Games"],basketball:["Outdoor & Lawn Games","Party Games"],airhockey:["Outdoor & Lawn Games","Party Games"],whack:["Kids' Corner","Party Games"],stacker:["Puzzles & Brain Teasers"],photobooth:["Party Games"]};
+const taken=new Set();
+function pickProduct(type){for(const sec of (PREF[type]||[])){const i=PRODUCT_LIST.findIndex((p,k)=>!taken.has(k)&&p.section===sec);if(i>=0){taken.add(i);return PRODUCT_LIST[i];}}
+  const i=PRODUCT_LIST.findIndex((p,k)=>!taken.has(k));if(i>=0){taken.add(i);return PRODUCT_LIST[i];}return null;}
+const PREVIEW=false; // false on the live site: empty prize spots then show "New prize soon" instead of the numbered placeholder
+const AMAZON_NOTE="As an Amazon Associate we earn from qualifying purchases.";
+/* ---------- prize slot (where a product photo will go) ---------- */
+let prizeNo=0;
+function slotTex(n,color){return canvasTex(256,256,(g,w,h)=>{g.fillStyle="#0c0718";g.fillRect(0,0,w,h);
+  g.strokeStyle=color;g.lineWidth=6;g.setLineDash([14,10]);g.strokeRect(10,10,w-20,h-20);g.setLineDash([]);
+  g.strokeStyle="rgba(255,255,255,.55)";g.lineWidth=4;g.strokeRect(w/2-34,h/2-50,68,50);g.beginPath();g.arc(w/2,h/2-25,14,0,6.28);g.stroke();
+  if(PREVIEW){glowText(g,"PRIZE #"+n,w/2,h/2+32,30,color);g.fillStyle="#a99cc8";g.font="18px Chakra Petch, sans-serif";g.fillText("product photo here",w/2,h/2+68);}
+  else{glowText(g,"NEW PRIZE",w/2,h/2+32,30,color);g.fillStyle="#a99cc8";g.font="18px Chakra Petch, sans-serif";g.fillText("coming soon",w/2,h/2+68);}});}
+const texLoader=new THREE.TextureLoader();texLoader.setCrossOrigin("anonymous");
+function nameTex(pr,color){return canvasTex(256,256,(g,w,h)=>{g.fillStyle="#0c0718";g.fillRect(0,0,w,h);g.strokeStyle=color;g.lineWidth=6;g.strokeRect(8,8,w-16,h-16);
+  g.fillStyle="#a99cc8";g.font="16px Chakra Petch, sans-serif";g.textAlign="center";g.fillText(pr.section.toUpperCase(),w/2,40);
+  const words=pr.name.split(" ");const lines=[];let cur="";g.font="bold 30px Chakra Petch, sans-serif";for(const wd of words){const t=cur?cur+" "+wd:wd;if(g.measureText(t).width>w-56&&cur){lines.push(cur);cur=wd;}else cur=t;}lines.push(cur);
+  lines.slice(0,4).forEach((ln,i,a)=>glowText(g,ln,w/2,h/2+(i-(a.length-1)/2)*32,26,color));
+  g.fillStyle=C.gold;g.font="bold 17px Chakra Petch, sans-serif";g.fillText("TAP TO SEE IT",w/2,h-30);});}
+function addSlot(m,parent,w,h,x,y,z,rx,ry){if(!m.spec.prize)return;const t=(m.spec.product&&!m.spec.product.img)?nameTex(m.spec.product,m.spec.color):slotTex(m.spec.prize,m.spec.color);const mat=new THREE.MeshBasicMaterial({map:t});const p=plane(w,h,mat,x,y,z,parent);if(rx)p.rotation.x=rx;if(ry)p.rotation.y=ry;
+  const pr=m.spec.product;if(pr&&pr.img){texLoader.load(pr.img,tx=>{const img=tx.image;const c=document.createElement("canvas");c.width=256;c.height=Math.round(256*h/w);const g=c.getContext("2d");g.fillStyle="#ffffff";g.fillRect(0,0,c.width,c.height);
+    const k=Math.min((c.width-16)/img.width,(c.height-16)/img.height);g.drawImage(img,(c.width-img.width*k)/2,(c.height-img.height*k)/2,img.width*k,img.height*k);mat.map=new THREE.CanvasTexture(c);mat.needsUpdate=true;},undefined,()=>{});}
+  const f=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(w+0.04,h+0.04)),new THREE.LineBasicMaterial({color:m.spec.color}));f.position.copy(p.position);f.rotation.copy(p.rotation);f.position.z+=0.002;parent.add(f);}
+
+/* ---------- screens ---------- */
+function addScreen(m,parent,w,h,x,y,z,rx,kind){const t=canvasTex(256,Math.round(256*h/w),()=>{});const p=plane(w,h,new THREE.MeshBasicMaterial({map:t}),x,y,z,parent);if(rx)p.rotation.x=rx;m.screens.push({t,kind:kind||"attract"});return p;}
+function drawScreen(m,s,t){const {g,c}=s.t.userData;const W=c.width,H=c.height,sp=m.spec,col=sp.color;g.fillStyle="#05030c";g.fillRect(0,0,W,H);
+  if(s.kind==="road"){g.fillStyle="#120a24";g.fillRect(0,0,W,H*.45);glowText(g,"GETAWAY",W/2,H*.2,26,col);g.fillStyle="#1b1b2a";g.beginPath();g.moveTo(W*.42,H*.45);g.lineTo(W*.58,H*.45);g.lineTo(W,H);g.lineTo(0,H);g.fill();
+    g.fillStyle=C.gold;for(let k=0;k<6;k++){const p=((t*1.6+k/6)%1);const y=H*.45+p*p*H*.55;g.fillRect(W/2-2-p*6,y,4+p*12,6+p*14);}
+    g.fillStyle=C.red;g.fillRect(W/2-22,H*.78,44,18);}
+  else if(s.kind==="score"){glowText(g,sp.screen[0],W/2,H*.3,Math.min(30,H*.32),col);const n=String(Math.floor((t*37+m.phase*100)%990)).padStart(3,"0");glowText(g,n,W/2,H*.72,Math.min(46,H*.5),"#ff5a3c","Courier New, monospace");}
+  else if(s.kind==="grid"){const cols=7,rows=12,cw=W/cols,ch=H/rows;const row=rows-1-Math.floor((t*2)%rows);const pos=Math.floor(Math.abs(((t*5)%(2*(cols-3)))-(cols-3)));
+    for(let r=0;r<rows;r++)for(let k=0;k<cols;k++){const on=(r===row&&k>=pos&&k<pos+3)||(r>row&&Math.abs(k-3)<=1);g.fillStyle=on?(r<3?C.gold:col):"#1a1030";g.fillRect(k*cw+3,r*ch+3,cw-6,ch-6);}}
+  else if(s.kind==="dance"){const arrows=["◀","▼","▲","▶"];g.font="34px sans-serif";g.textAlign="center";g.textBaseline="middle";arrows.forEach((a,k)=>{g.fillStyle="rgba(255,255,255,.35)";g.fillText(a,W*(.2+k*.2),H*.18);});
+    for(let k=0;k<6;k++){const p=(t*0.6+k/6+m.phase)%1;const lane=(k*7+3)%4;g.fillStyle=PAL[lane];g.fillText(arrows[lane],W*(.2+lane*.2),H*(1-p*.82));}}
+  else{const x=W/2+Math.sin(t*1.3+m.phase)*W*.3,y=H/2+Math.cos(t*0.9+m.phase)*H*.2;const r=g.createRadialGradient(x,y,4,x,y,70);r.addColorStop(0,col);r.addColorStop(1,"rgba(0,0,0,0)");g.globalAlpha=.35;g.fillStyle=r;g.fillRect(0,0,W,H);g.globalAlpha=1;
+    const l0=sp.screen[0];glowText(g,l0,W/2,H*.36,fitText(g,l0,W-24,34),col);
+    if(Math.floor(t*2+m.phase)%2===0)glowText(g,sp.screen[1],W/2,H*.66,fitText(g,sp.screen[1],W-24,24),"#ffffff");
+    g.strokeStyle=col;g.lineWidth=3;g.beginPath();g.arc(x,y,16,0,6.28);g.stroke();g.beginPath();g.moveTo(x+11,y+11);g.lineTo(x+24,y+24);g.stroke();}
+  g.fillStyle="rgba(0,0,0,.25)";for(let yy=0;yy<H;yy+=3)g.fillRect(0,yy,W,1);
+  s.t.needsUpdate=true;}
+function marqueeTex(text,color){return canvasTex(512,128,(g,w,h)=>{g.fillStyle="#0a0614";g.fillRect(0,0,w,h);glowText(g,text,w/2,h/2+4,fitText(g,text,w-40,64),color);});}
+function sideArt(color){return canvasTex(128,256,(g,w,h)=>{g.fillStyle="#140c26";g.fillRect(0,0,w,h);g.fillStyle=color;g.globalAlpha=.9;g.beginPath();g.moveTo(0,h*.25);g.lineTo(w,h*.1);g.lineTo(w,h*.22);g.lineTo(0,h*.37);g.fill();g.globalAlpha=.55;g.beginPath();g.moveTo(0,h*.55);g.lineTo(w,h*.42);g.lineTo(w,h*.47);g.lineTo(0,h*.6);g.fill();g.globalAlpha=1;});}
+function glowPad(m,parent,w,d,z){const gl=plane(w,d,new THREE.MeshBasicMaterial({map:radial(m.spec.color),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,opacity:.7}),0,0.015,z,parent);gl.rotation.x=-Math.PI/2;m.glow=gl;}
+function marquee(m,parent,w,y,z){const mt=new THREE.MeshBasicMaterial({map:marqueeTex(m.spec.label,m.spec.color)});box(w,0.4,0.3,[DARK,DARK,DARK,DARK,mt,DARK],0,y,z,parent);}
+
+/* ---------- machine builders (local space: front faces +z, footprint centered on 0) ---------- */
+const anims=[];
+const B={
+ upright(m,g){const sd=new THREE.MeshLambertMaterial({map:sideArt(m.spec.color)});const zc=-0.2;
+  box(1.25,2.1,1.0,[sd,sd,DARK,DARK,DARK,DARK],0,1.05,zc,g);
+  const e=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1.27,2.12,1.02)),new THREE.LineBasicMaterial({color:m.spec.color}));e.position.set(0,1.05,zc);g.add(e);
+  marquee(m,g,1.3,2.3,zc+0.38);
+  addScreen(m,g,0.95,0.72,0,1.62,zc+0.555,-0.12);
+  const p=box(1.25,0.12,0.45,PANEL,0,1.05,zc+0.62,g);p.rotation.x=0.28;
+  if(m.spec.guns){[-0.3,0.3].forEach((x,k)=>{const gun=box(0.08,0.12,0.3,lam(k?C.blue:C.orange,.3),x,1.2,zc+0.62,g);gun.rotation.x=-0.3;});}
+  else{[m.spec.color,"#ffffff",C.gold].forEach((c,k)=>{const b=cyl(0.045,0.045,0.04,bas(c),-0.15+k*0.16,1.13,zc+0.62,g);b.rotation.x=0.28;});
+   cyl(0.015,0.015,0.16,CHROME,-0.4,1.17,zc+0.6,g,8);sph(0.045,bas(C.pink),-0.4,1.26,zc+0.6,g);}
+  addSlot(m,g,0.72,0.6,0,0.5,zc+0.505);glowPad(m,g,2.2,2.2,0.9);return [1.3,1.4];},
+ pinball(m,g){[[-0.33,0.6,0.86],[0.33,0.6,0.86],[-0.33,-0.6,0.96],[0.33,-0.6,0.96]].forEach(([x,z,h])=>cyl(0.025,0.025,h,CHROME,x,h/2,z,g,8));
+  const pf=canvasTex(256,480,(c,w,h)=>{c.fillStyle="#140a2a";c.fillRect(0,0,w,h);c.strokeStyle=m.spec.color;c.lineWidth=4;c.beginPath();c.arc(w/2,90,95,Math.PI,0);c.stroke();
+   [[w*.3,150],[w*.7,150],[w*.5,215]].forEach(([x,y])=>{c.fillStyle=m.spec.color;c.beginPath();c.arc(x,y,24,0,6.28);c.fill();c.fillStyle="#fff";c.beginPath();c.arc(x,y,10,0,6.28);c.fill();});
+   c.strokeStyle=C.gold;c.lineWidth=6;c.beginPath();c.moveTo(30,330);c.lineTo(80,400);c.moveTo(w-30,330);c.lineTo(w-80,400);c.stroke();
+   c.fillStyle="#fff";c.save();c.translate(92,420);c.rotate(.35);c.fillRect(-32,-7,64,14);c.restore();c.save();c.translate(w-92,420);c.rotate(-.35);c.fillRect(-32,-7,64,14);c.restore();
+   c.font="bold 22px Chakra Petch, sans-serif";c.textAlign="center";c.fillStyle=C.cyan;c.fillText(m.spec.label,w/2,290);
+   for(let k=0;k<5;k++){c.fillStyle=PAL[k];c.beginPath();c.arc(50+k*39,262,7,0,6.28);c.fill();}});
+  const t=new THREE.Group();t.position.set(0,0.98,0.08);t.rotation.x=0.07;g.add(t);
+  box(0.82,0.22,1.45,DARK,0,0,0,t);const top=plane(0.76,1.4,new THREE.MeshBasicMaterial({map:pf}),0,0.112,0,t);top.rotation.x=-Math.PI/2;
+  box(0.03,0.06,1.45,lam(m.spec.color,.5),-0.4,0.13,0,t);box(0.03,0.06,1.45,lam(m.spec.color,.5),0.4,0.13,0,t);
+  sph(0.025,CHROME,0.25,0.14,0.2,t);
+  box(0.82,0.9,0.18,DARK,0,1.62,-0.72,g);
+  const lt=new THREE.MeshBasicMaterial({map:marqueeTex(m.spec.label,m.spec.color)});plane(0.78,0.18,lt,0,1.97,-0.629,g);
+  addSlot(m,g,0.66,0.6,0,1.55,-0.629);
+  cyl(0.012,0.012,0.12,CHROME,0.3,0.92,0.82,g,6).rotation.x=Math.PI/2;
+  glowPad(m,g,1.4,1.4,1.0);return [0.85,1.7];},
+ skeeball(m,g){box(0.92,0.7,2.6,DARK,0,0.35,0.35,g);
+  const lane=canvasTex(128,512,(c,w,h)=>{c.fillStyle="#3a2412";c.fillRect(0,0,w,h);c.strokeStyle="rgba(0,0,0,.35)";c.lineWidth=2;for(let x=8;x<w;x+=12){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke();}c.fillStyle=m.spec.color;c.fillRect(0,0,6,h);c.fillRect(w-6,0,6,h);c.fillStyle="rgba(255,255,255,.5)";c.fillRect(w/2-14,60,28,6);});
+  const r=new THREE.Group();r.position.set(0,0.78,0.35);r.rotation.x=0.12;g.add(r);
+  const lt=plane(0.86,2.6,new THREE.MeshLambertMaterial({map:lane}),0,0,0,r);lt.rotation.x=-Math.PI/2;
+  box(0.05,0.22,2.6,lam(m.spec.color,.6),-0.46,0.1,0,r);box(0.05,0.22,2.6,lam(m.spec.color,.6),0.46,0.1,0,r);
+  box(0.9,0.12,0.3,PANEL,0,0.76,1.5,g);[-0.2,0,0.2].forEach(x=>sph(0.07,lam("#d8d0ff"),x,0.86,1.5,g));
+  box(0.96,1.3,0.7,DARK,0,1.15,-1.3,g);
+  const rings=canvasTex(256,256,(c,w,h)=>{c.fillStyle="#0c0718";c.fillRect(0,0,w,h);[[110,"#2a1a4a"],[86,m.spec.color],[62,"#2a1a4a"],[40,C.gold],[20,"#2a1a4a"]].forEach(([rr,col])=>{c.fillStyle=col;c.beginPath();c.arc(w/2,h*.6,rr,0,6.28);c.fill();});
+   c.fillStyle="#fff";c.font="bold 22px Chakra Petch, sans-serif";c.textAlign="center";c.fillText("10",w/2,h*.6+100);c.fillText("30",w/2,h*.6+74);c.fillText("50",w/2,h*.6+8);c.fillText("100",36,30);c.fillText("100",w-36,30);
+   c.fillStyle="#000";[[36,48],[w-36,48]].forEach(([x,y])=>{c.beginPath();c.arc(x,y,16,0,6.28);c.fill();});});
+  const tf=plane(0.86,0.86,new THREE.MeshBasicMaterial({map:rings}),0,1.2,-0.93,g);tf.rotation.x=-0.65;
+  const net=canvasTex(64,64,(c,w,h)=>{c.strokeStyle="rgba(220,220,255,.55)";c.lineWidth=2;for(let k=0;k<=w;k+=16){c.beginPath();c.moveTo(k,0);c.lineTo(k,h);c.moveTo(0,k);c.lineTo(w,k);c.stroke();}});net.wrapS=net.wrapT=THREE.RepeatWrapping;net.repeat.set(4,4);
+  box(0.96,0.8,0.9,new THREE.MeshBasicMaterial({map:net,transparent:true,depthWrite:false}),0,2.2,-1.2,g);
+  box(0.96,0.45,0.15,DARK,0,2.82,-1.58,g);addScreen(m,g,0.88,0.38,0,2.82,-1.50,0,"score");
+  addSlot(m,g,0.6,0.42,0,0.36,1.656);glowPad(m,g,1.6,1.6,2.0);return [1.0,3.3];},
+ basketball(m,g){box(1.2,0.9,1.6,DARK,0,0.45,0.45,g);
+  const ramp=plane(1.1,1.5,lam("#2a1a4a"),0,0.92,0.45,g);ramp.rotation.x=-Math.PI/2-0.1;
+  for(let k=0;k<6;k++)sph(0.11,lam(C.orange,.15),-0.4+k*0.16,1.02,1.05+(k%2)*0.12,g);
+  const net=canvasTex(64,64,(c,w,h)=>{c.strokeStyle="rgba(230,230,255,.6)";c.lineWidth=2;for(let k=0;k<=w;k+=16){c.beginPath();c.moveTo(k,0);c.lineTo(k,h);c.moveTo(0,k);c.lineTo(w,k);c.stroke();}});net.wrapS=net.wrapT=THREE.RepeatWrapping;net.repeat.set(10,6);
+  const nm=new THREE.MeshBasicMaterial({map:net,transparent:true,depthWrite:false,side:THREE.DoubleSide});
+  [-0.6,0.6].forEach(x=>{const p=plane(2.2,1.9,nm,x,1.85,-0.05,g);p.rotation.y=Math.PI/2;});plane(1.2,2.2,nm,0,1.85,-0.05,g).rotation.x=Math.PI/2;
+  box(1.2,2.8,0.35,DARK,0,1.4,-1.08,g);
+  const bb=canvasTex(256,180,(c,w,h)=>{c.fillStyle="#f2f0ff";c.fillRect(0,0,w,h);c.strokeStyle=C.orange;c.lineWidth=8;c.strokeRect(6,6,w-12,h-12);c.strokeRect(w/2-42,h-80,84,64);});
+  plane(1.0,0.7,new THREE.MeshBasicMaterial({map:bb}),0,2.35,-0.9,g);
+  const hoop=new THREE.Mesh(new THREE.TorusGeometry(0.17,0.015,8,24),bas(C.orange));hoop.position.set(0,2.08,-0.68);hoop.rotation.x=Math.PI/2;g.add(hoop);
+  const nt=new THREE.Mesh(new THREE.CylinderGeometry(0.17,0.11,0.25,12,3,true),new THREE.MeshBasicMaterial({color:"#ffffff",wireframe:true}));nt.position.set(0,1.95,-0.68);g.add(nt);
+  box(1.2,0.45,0.2,DARK,0,3.02,-1.0,g);addScreen(m,g,1.1,0.38,0,3.02,-0.895,0,"score");
+  const ball=sph(0.11,lam(C.orange,.2),0,1.2,1.0,g);let tNext=Math.random()*4,tf=-1;
+  anims.push((t,dt)=>{if(tf<0){if(t>tNext)tf=0;else return;}tf+=dt/1.1;const p=Math.min(1,tf);ball.position.set(0,1.25+(2.08-1.25)*p+Math.sin(p*Math.PI)*0.9,1.0+(-0.68-1.0)*p);
+   if(p>=1){tf=-1;tNext=t+2+Math.random()*4;ball.position.set(0,1.02,1.05);if(m.near)sfx.swish();}});
+  addSlot(m,g,0.8,0.55,0,0.45,1.256);glowPad(m,g,1.8,1.8,1.6);return [1.3,2.5];},
+ claw(m,g){box(1.3,1,1.3,lam("#2b1650"),0,0.5,0,g);
+  box(1.3,1.3,1.3,new THREE.MeshLambertMaterial({color:"#9fe9ff",transparent:true,opacity:.14,depthWrite:false}),0,1.65,0,g);
+  for(let k=0;k<22;k++)sph(0.11,lam(PAL[(k+m.phase*3|0)%6],.3),(k%5-2)*0.22,1.12+Math.floor(k/9)*0.18,((k*3)%5-2)*0.22,g);
+  box(1.34,0.32,1.34,bas(m.spec.color),0,2.46,0,g);
+  const lab=new THREE.MeshBasicMaterial({map:marqueeTex(m.spec.label,"#ffffff")});plane(1.2,0.28,lab,0,2.46,0.675,g);
+  const arm=cyl(0.015,0.015,0.5,CHROME,0,2.05,0,g,6);const claw=cyl(0.09,0.03,0.12,CHROME,0,1.78,0,g,6);
+  anims.push(t=>{const x=Math.sin(t*0.7+m.phase)*0.35,z=Math.cos(t*0.5+m.phase)*0.3;arm.position.x=claw.position.x=x;arm.position.z=claw.position.z=z;});
+  addSlot(m,g,0.8,0.55,0,0.5,0.656);glowPad(m,g,1.8,1.8,1.0);return [1.3,1.3];},
+ airhockey(m,g){box(1.0,0.7,1.9,DARK,0,0.37,0,g);box(1.16,0.16,2.12,lam(m.spec.color,.35),0,0.8,0,g);
+  const sf=canvasTex(256,480,(c,w,h)=>{c.fillStyle="#0e1a40";c.fillRect(0,0,w,h);c.fillStyle="rgba(255,255,255,.18)";for(let y=10;y<h;y+=16)for(let x=10;x<w;x+=16)c.fillRect(x,y,2,2);
+   c.strokeStyle=C.red;c.lineWidth=4;c.beginPath();c.moveTo(0,h/2);c.lineTo(w,h/2);c.stroke();c.beginPath();c.arc(w/2,h/2,40,0,6.28);c.stroke();
+   c.strokeStyle=C.blue;[[0,Math.PI],[Math.PI,0]].forEach(([a,b],k)=>{c.beginPath();c.arc(w/2,k?h:0,60,a,b+(k?Math.PI:0));c.stroke();});c.fillStyle="#000";c.fillRect(w/2-40,0,80,8);c.fillRect(w/2-40,h-8,80,8);});
+  const top=plane(1.06,2.02,new THREE.MeshBasicMaterial({map:sf}),0,0.885,0,g);top.rotation.x=-Math.PI/2;
+  cyl(0.07,0.07,0.06,bas(C.red),0.2,0.92,0.75,g);cyl(0.07,0.07,0.06,bas(C.blue),-0.2,0.92,-0.75,g);
+  const puck=cyl(0.045,0.045,0.02,bas(C.gold),0,0.9,0,g);anims.push(t=>{puck.position.x=Math.sin(t*1.7+m.phase)*0.4;puck.position.z=Math.sin(t*1.1+m.phase*2)*0.85;});
+  addSlot(m,g,0.62,0.45,0,0.4,0.956);addSlot(m,g,0.62,0.45,0,0.4,-0.956,0,Math.PI);glowPad(m,g,2.2,3.0,0);return [1.2,2.2];},
+ wheel(m,g){box(2.4,1.0,0.8,DARK,0,0.5,0,g);box(2.4,3.4,0.3,DARK,0,2.0,-0.25,g);
+  const wt=canvasTex(512,512,(c,w,h)=>{const n=16;for(let k=0;k<n;k++){c.fillStyle=PAL[k%6];c.beginPath();c.moveTo(w/2,h/2);c.arc(w/2,h/2,w/2,k*6.283/n,(k+1)*6.283/n);c.fill();
+   c.save();c.translate(w/2,h/2);c.rotate((k+.5)*6.283/n);c.fillStyle="#120c22";c.font="bold 30px Chakra Petch, sans-serif";c.textAlign="right";c.textBaseline="middle";c.fillText([10,25,5,50,15,100,20,500][k%8],w/2-20,0);c.restore();}
+   c.fillStyle="#120c22";c.beginPath();c.arc(w/2,h/2,46,0,6.28);c.fill();glowText(c,"SPIN",w/2,h/2,30,C.gold);});
+  const wh=new THREE.Mesh(new THREE.CircleGeometry(1.0,48),new THREE.MeshBasicMaterial({map:wt}));wh.position.set(0,2.2,-0.08);g.add(wh);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(1.03,0.04,8,48),lam(C.gold,.4));ring.position.copy(wh.position);g.add(ring);
+  for(let k=0;k<20;k++){const a=k/20*6.283;const b=new THREE.Mesh(bulbGeo,new THREE.MeshBasicMaterial({color:"#ffe9a8"}));b.position.set(Math.cos(a)*1.12,2.2+Math.sin(a)*1.12,-0.06);g.add(b);bulbs.push(b);}
+  const ptr=new THREE.Mesh(new THREE.ConeGeometry(0.09,0.22,12),bas(C.red));ptr.position.set(0,3.3,-0.04);ptr.rotation.z=Math.PI;g.add(ptr);
+  let spin=0.3;m.onTap=()=>{spin=9;};anims.push((t,dt)=>{wh.rotation.z-=spin*dt;spin=Math.max(0.3,spin-dt*2.2);});
+  addSlot(m,g,1.0,0.6,0,0.52,0.406);glowPad(m,g,2.6,1.8,1.0);return [2.4,0.8];},
+ driver(m,g){box(1.2,1.9,0.9,DARK,0,0.95,-0.6,g);marquee(m,g,1.25,2.08,-0.45);addScreen(m,g,1.0,0.66,0,1.45,-0.145,-0.1,"road");
+  box(1.1,0.22,0.42,PANEL,0,1.0,0.06,g);const wl=new THREE.Mesh(new THREE.TorusGeometry(0.17,0.025,8,24),lam("#222"));wl.position.set(0,1.18,0.22);wl.rotation.x=-0.9;g.add(wl);
+  anims.push(t=>{wl.rotation.z=Math.sin(t*1.5+m.phase)*0.5;});
+  box(0.6,0.45,0.6,DARK,0,0.22,0.72,g);box(0.56,0.12,0.5,lam(m.spec.color,.2),0,0.5,0.72,g);box(0.56,0.7,0.12,lam(m.spec.color,.2),0,0.85,0.98,g);
+  addSlot(m,g,0.75,0.5,0,0.55,-0.145);glowPad(m,g,1.6,2.4,0.4);return [1.2,2.1];},
+ whack(m,g){box(1.15,0.9,0.9,DARK,0,0.45,0,g);
+  const tt=canvasTex(256,200,(c,w,h)=>{c.fillStyle="#241640";c.fillRect(0,0,w,h);c.fillStyle="#05030c";[[.2,.3],[.5,.3],[.8,.3],[.35,.7],[.65,.7]].forEach(([x,y])=>{c.beginPath();c.arc(x*w,y*h,26,0,6.28);c.fill();});});
+  const top=plane(1.1,0.86,new THREE.MeshBasicMaterial({map:tt}),0,0.902,0,g);top.rotation.x=-Math.PI/2;
+  [[-0.33,-0.17],[0,-0.17],[0.33,-0.17],[-0.165,0.17],[0.165,0.17]].forEach(([x,z],k)=>{const mo=new THREE.Group();mo.position.set(x,0.8,z);g.add(mo);cyl(0.08,0.08,0.18,lam("#8a5a3a"),0,0,0,mo);sph(0.085,lam("#8a5a3a"),0,0.1,0,mo);sph(0.02,bas("#000"),-0.03,0.14,0.07,mo);sph(0.02,bas("#000"),0.03,0.14,0.07,mo);
+   anims.push(t=>{const p=Math.sin(t*2.2+k*1.9+m.phase);mo.position.y=0.78+Math.max(0,p)*0.16;});});
+  box(1.15,0.9,0.15,DARK,0,1.35,-0.42,g);addScreen(m,g,1.0,0.5,0,1.42,-0.344,0);
+  const mal=new THREE.Group();mal.position.set(0.5,0.95,0.3);mal.rotation.z=0.5;g.add(mal);cyl(0.015,0.015,0.35,lam("#ddd"),0,0.17,0,mal,6);cyl(0.06,0.06,0.16,bas(m.spec.color),0,0.36,0,mal).rotation.z=Math.PI/2;
+  addSlot(m,g,0.8,0.55,0,0.45,0.456);glowPad(m,g,1.6,1.6,0.9);return [1.2,1.0];},
+ pusher(m,g){box(1.3,0.95,1.1,DARK,0,0.475,0,g);box(1.3,1.0,1.1,new THREE.MeshLambertMaterial({color:"#ffe08a",transparent:true,opacity:.12,depthWrite:false}),0,1.45,0,g);
+  box(1.3,0.2,1.1,bas(m.spec.color),0,2.05,0,g);plane(1.2,0.18,new THREE.MeshBasicMaterial({map:marqueeTex(m.spec.label,"#ffffff")}),0,2.05,0.551,g);
+  const shelf=box(1.1,0.04,0.7,CHROME,0,1.22,-0.1,g);box(1.1,0.04,0.9,CHROME,0,1.0,0,g);const gold=lam(C.gold,.35);
+  for(let k=0;k<36;k++){const c=cyl(0.055,0.055,0.012,gold,-0.48+(k%9)*0.12,1.03+(k>17?0.22:0)+(k%3)*0.012,(k>17?-0.1:0.05)+((k*5)%4-1.5)*0.1,g,10);if(k>17)c.userData.top=1;}
+  anims.push(t=>{shelf.position.z=-0.1+Math.sin(t*1.2+m.phase)*0.1;});
+  addSlot(m,g,0.8,0.5,0,0.48,0.556);glowPad(m,g,1.8,1.8,1.0);return [1.3,1.1];},
+ stacker(m,g){box(1.0,2.9,0.9,DARK,0,1.45,0,g);addScreen(m,g,0.8,1.4,0,1.62,0.456,0,"grid");
+  box(1.04,0.3,0.94,bas(m.spec.color),0,2.95,0,g);plane(0.95,0.26,new THREE.MeshBasicMaterial({map:marqueeTex(m.spec.label,"#ffffff")}),0,2.95,0.471,g);
+  box(1.0,0.08,0.3,PANEL,0,0.98,0.6,g);cyl(0.09,0.09,0.06,bas(C.red),0,1.04,0.6,g);
+  addSlot(m,g,0.7,0.5,0,0.55,0.456);glowPad(m,g,1.6,1.6,1.0);return [1.0,1.0];},
+ dance(m,g){box(1.3,2.3,0.8,DARK,0,1.15,-0.7,g);marquee(m,g,1.35,2.45,-0.55);addScreen(m,g,1.0,0.75,0,1.55,-0.295,0,"dance");
+  const pd=canvasTex(256,256,(c,w,h)=>{c.fillStyle="#0c0718";c.fillRect(0,0,w,h);const cells=[[1,0,"▲"],[0,1,"◀"],[2,1,"▶"],[1,2,"▼"]];c.font="56px sans-serif";c.textAlign="center";c.textBaseline="middle";
+   for(let r=0;r<3;r++)for(let k=0;k<3;k++){c.fillStyle="#1c1236";c.fillRect(k*85+4,r*85+4,77,77);}cells.forEach(([k,r,a],i)=>{c.fillStyle=PAL[i];c.fillRect(k*85+4,r*85+4,77,77);c.fillStyle="#0c0718";c.fillText(a,k*85+42,r*85+45);});});
+  box(1.3,0.12,1.3,[DARK,DARK,new THREE.MeshBasicMaterial({map:pd}),DARK,DARK,DARK],0,0.06,0.45,g);
+  const bar=cyl(0.02,0.02,1.2,CHROME,0,1.05,-0.2,g,8);bar.rotation.z=Math.PI/2;
+  addSlot(m,g,0.75,0.5,0,0.6,-0.295);glowPad(m,g,1.8,2.2,0.5);return [1.4,2.2];},
+ photobooth(m,g){box(1.3,2.2,1.3,lam(m.spec.color,.15),0,1.1,0,g);
+  const cur=canvasTex(128,256,(c,w,h)=>{for(let x=0;x<w;x+=16){const gr=c.createLinearGradient(x,0,x+16,0);gr.addColorStop(0,"#5a0f2a");gr.addColorStop(.5,"#c0275a");gr.addColorStop(1,"#5a0f2a");c.fillStyle=gr;c.fillRect(x,0,16,h);}});
+  plane(0.6,1.6,new THREE.MeshLambertMaterial({map:cur}),0.28,0.95,0.656,g);
+  box(1.34,0.36,1.34,DARK,0,2.38,0,g);plane(1.2,0.3,new THREE.MeshBasicMaterial({map:marqueeTex(m.spec.label,m.spec.color)}),0,2.38,0.675,g);
+  addSlot(m,g,0.46,0.6,-0.36,1.3,0.656);glowPad(m,g,1.8,1.8,1.0);return [1.3,1.3];}
+};
+
+/* ---------- what goes where ---------- */
+const NAMES={upright:["Fingerprint Fever","Magnifier Mania","Shadow Chase","Code Breaker","Night Watch","Footprint Frenzy","Safe Cracker","Riddle Racer","Pixel Detective","Spy Patrol","Ghost Signal","Clockwork Caper","Moonlight Mystery","Hidden Door"],
+ lightgun:["Lineup Blaster","Sharp Shooter","Target Trail","Bullseye Bureau"],pinball:["Midnight Manor","Haunted Hallway","Lighthouse Mystery","Train Heist","Masquerade Ball","Riverboat Riddle","Museum Night","Jewel Thief","Fog City","Vanishing Act","Secret Library"],
+ skeeball:["Alibi Alley","Roll Call","Clue Roll"],basketball:["Suspect Shootout","Hoop Hunch"],claw:["Case Closed Claw","Evidence Grabber","Lucky Lift","Prize Pinch","Grab Bag","Mystery Claw","Lost & Found","Snatch & Search"],
+ stacker:["Stakeout Stacker"],pusher:["Coin Clue Pusher","Penny Pile-Up","Gold Rush"],photobooth:["Mugshot Booth"],wheel:["Witness Wheel"],driver:["Getaway Grand Prix","Chase Scene"],dance:["Detective Dance-Off"],whack:["Whack-a-Suspect","Pop-Up Perp"],airhockey:["Cold Case Hockey","Slapshot Sleuth"]};
+const TYPE_LABEL={upright:"Video game",lightgun:"Target shooter",pinball:"Pinball",skeeball:"Skee-ball",basketball:"Basketball shooter",claw:"Claw machine",stacker:"Stacker",pusher:"Coin pusher",photobooth:"Photo booth",wheel:"Prize wheel",driver:"Racing game",dance:"Dance game",whack:"Whack-a-mole",airhockey:"Air hockey"};
+const used={};let colorIx=0;
+function prize(type){const list=NAMES[type];used[type]=(used[type]||0);const name=list[used[type]++%list.length];prizeNo++;const color=PAL[colorIx++%PAL.length];
+  return {type,name,label:name.toUpperCase(),color,prize:prizeNo,screen:[name.split(" ")[0].toUpperCase(),"INSERT COIN"],
+   tag:`Prize #${prizeNo} · ${TYPE_LABEL[type]}`,title:name,text:"This machine will show a game or gift from Amazon. Tap it to see the details and price.",soon:"Product photo coming soon",product:pickProduct(type)};}
+const CASE_DATA=[
+ {n:1,title:"The Great Dog Show Caper",opens:"2026-10-24T09:00:00-04:00",color:C.pink},
+ {n:2,title:"The Main Street Cake Caper",opens:"2026-11-13T09:00:00-05:00",color:C.cyan},
+ {n:3,title:"The Station Hatbox Heist",opens:"2026-11-20T09:00:00-05:00",color:C.gold},
+ {n:4,title:"The Prize Pumpkin Pinch",opens:"2026-11-27T09:00:00-05:00",color:C.violet}];
+const NOWD=new Date();const fmtD=d=>d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+const CASES=CASE_DATA.map(c=>{const o=new Date(c.opens),open=o<=NOWD;const ds=fmtD(o);
+  return open?{type:"upright",label:"CASE #"+c.n,color:c.color,title:c.title,tag:"Case file · Play now",text:"Study the scene closely, then tell us what you saw.",screen:["CASE #"+c.n,"PLAY NOW"],link:"https://eyewitnessgame.com/case"+c.n+"/",linkLabel:"Play Case #"+c.n}
+   :{type:"upright",label:"CASE #"+c.n,color:c.color,title:c.title,tag:"Case file · Opens "+ds,text:"This case opens "+ds+" at 9 AM Eastern. Join the Friday email to get it the morning it opens.",screen:["CASE #"+c.n,ds.toUpperCase()],soon:"Opens "+ds};});
+CASES.push({type:"upright",label:"NEW CASES",color:C.green,title:"Friday Case Club",tag:"Free · one email a week",text:"A new case lands in your inbox every Friday. Nothing else.",screen:["JOIN THE","CASE CLUB"],link:"https://eyewitnessgame.com/#signupCard",linkLabel:"Sign up free"});
+const machines=[],hitboxes=[],solids=[];
+const FACE={E:Math.PI/2,W:-Math.PI/2,S:0,N:Math.PI},DIR={E:[1,0],W:[-1,0],S:[0,1],N:[0,-1]};
+function place(spec,x,z,face,group,stop){
+  const btype=spec.type==="lightgun"?"upright":spec.type;if(spec.type==="lightgun")spec.guns=true;
+  const m={spec,screens:[],phase:machines.length*1.7,group};const grp=new THREE.Group();m.grp=grp;
+  const [w,d]=B[btype](m,grp);grp.position.set(x,0,z);grp.rotation.y=FACE[face];scene.add(grp);
+  const ew=(face==="E"||face==="W")?d:w,ed=(face==="E"||face==="W")?w:d;
+  solids.push({x0:x-ew/2,x1:x+ew/2,z0:z-ed/2,z1:z+ed/2});
+  const hit=new THREE.Mesh(new THREE.BoxGeometry(w+0.1,3.2,d+0.1),new THREE.MeshBasicMaterial({visible:false}));hit.position.y=1.6;hit.userData.m=m;grp.add(hit);hitboxes.push(hit);
+  const [fx,fz]=DIR[face];m.stop=stop||{x:x+fx*(d/2+2.3),z:z+fz*(d/2+2.3),yaw:Math.atan2(fx,fz)};
+  for(const s of m.screens)drawScreen(m,s,0);machines.push(m);return m;}
+function onWall(side,spec,z,stop){const tmp=spec.type==="lightgun"?"upright":spec.type;const d={upright:1.4,pinball:1.7,skeeball:3.3,basketball:2.5,claw:1.3,stacker:1.0,pusher:1.1,photobooth:1.3,wheel:0.8,driver:2.1,dance:2.2,whack:1.0}[tmp];
+  return side<0?place(spec,-HALL.x+d/2+0.15,z,"E","L",stop):place(spec,HALL.x-d/2-0.15,z,"W","R",stop);}
+
+// left wall: the case files first, then skee-ball, basketball, claws and more
+CASES.forEach((c,i)=>onWall(-1,c,0.2-i*1.45));
+[-8,-9.1,-10.2].forEach(z=>onWall(-1,prize("skeeball"),z));
+[-12.4,-13.8].forEach(z=>onWall(-1,prize("basketball"),z));
+[-16,-17.4].forEach(z=>onWall(-1,prize("claw"),z));
+onWall(-1,prize("stacker"),-18.75);onWall(-1,prize("pusher"),-20.1);onWall(-1,prize("photobooth"),-21.6);
+onWall(-1,prize("lightgun"),-23.1);onWall(-1,prize("upright"),-24.5);
+// right wall: racing, dance, shooters, a row of pinball, whack-a-mole, the big wheel
+[0.2,-1.4].forEach(z=>onWall(1,prize("driver"),z));
+onWall(1,prize("dance"),-3.2);
+[-4.9,-6.3].forEach(z=>onWall(1,prize("lightgun"),z));
+[-7.9,-8.9,-9.9,-10.9,-11.9].forEach(z=>onWall(1,prize("pinball"),z));
+[-13.4,-14.7].forEach(z=>onWall(1,prize("whack"),z));
+onWall(1,prize("wheel"),-16.7);
+[-18.9,-20.3,-21.7].forEach(z=>onWall(1,prize("upright"),z));
+onWall(1,prize("claw"),-23.2);onWall(1,prize("pusher"),-24.6);
+// center island
+[-1.5,-2.9,-4.3].forEach(z=>{place(prize("upright"),-0.7,z,"W","C");place(prize("upright"),0.7,z,"E","C");});
+[-8.2,-11.0].forEach(z=>place(prize("airhockey"),0,z,"S","C",{x:2.9,z:z,yaw:Math.PI/2}));
+[-15,-16,-17].forEach(z=>{place(prize("pinball"),-0.85,z,"W","C");place(prize("pinball"),0.85,z,"E","C");});
+[-20.3,-21.7].forEach(z=>{place(prize("claw"),-0.7,z,"W","C");place(prize("claw"),0.7,z,"E","C");});
+[-23.6,-25.0].forEach(z=>{place(prize("upright"),-0.7,z,"W","C");place(prize("upright"),0.7,z,"E","C");});
+// by the entrance
+place(prize("claw"),-6.6,6.2,"E","F",{x:-3.8,z:6.2,yaw:Math.PI/2});place(prize("claw"),6.6,6.2,"W","F",{x:3.8,z:6.2,yaw:-Math.PI/2});
+
+/* ---------- prize counter at the back ---------- */
+const counter=new THREE.Group();
+box(6,0.12,1.1,lam("#3a2466"),0,1.1,0,counter);box(6,1.05,1,lam("#1c1236"),0,0.52,0,counter);
+box(5.6,0.7,0.02,new THREE.MeshBasicMaterial({color:C.gold,transparent:true,opacity:.18}),0,0.62,0.51,counter);
+for(let r=0;r<3;r++){box(6.4,0.06,0.5,lam("#2a1a4a"),0,1.6+r*0.62,-0.75,counter);
+  for(let k=0;k<9;k++){const sz=0.22+((k*7+r*3)%4)*0.05;const b=box(sz*1.3,sz,sz,lam(PAL[(k+r)%6],.25),-2.8+k*0.7,1.63+sz/2+r*0.62,-0.75,counter);b.rotation.y=(k%3-1)*0.25;}}
+counter.position.set(0,0,HALL.zBack+1.4);scene.add(counter);solids.push({x0:-3.2,x1:3.2,z0:HALL.zBack,z1:HALL.zBack+2});
+const counterM={spec:{color:C.gold,tag:"Prize counter · All our picks",title:"The Prize Counter",text:"Every game on the floor and more, all in one list: board games, mystery kits, puzzles, video games and backyard games.",link:"classic.html#counter",linkLabel:"See all 59 picks"},screens:[],grp:counter,stop:{x:0,z:HALL.zBack+5,yaw:0},group:"B"};
+const ch=new THREE.Mesh(new THREE.BoxGeometry(6.4,3.6,2),new THREE.MeshBasicMaterial({visible:false}));ch.position.set(0,1.8,-0.2);ch.userData.m=counterM;counter.add(ch);hitboxes.push(ch);
+const bell=new THREE.Mesh(new THREE.ConeGeometry(0.28,0.35,20,1,true),new THREE.MeshLambertMaterial({color:C.gold,emissive:C.gold,emissiveIntensity:.4,side:THREE.DoubleSide}));bell.position.set(3.4,3.1,HALL.zBack+0.5);bell.rotation.x=Math.PI;scene.add(bell);
+const beacon=new THREE.PointLight(C.gold,0,9,1.5);beacon.position.set(3.4,2.9,HALL.zBack+1);scene.add(beacon);
+
+/* ---------- tour order: down the left wall, the prize counter, back up the right wall, then the middle ---------- */
+const by=g=>machines.filter(m=>m.group===g);
+const stops=[...by("F").slice(0,1),...by("L").sort((a,b)=>b.stop.z-a.stop.z),counterM,...by("R").sort((a,b)=>a.stop.z-b.stop.z),...by("F").slice(1),...by("C").sort((a,b)=>b.stop.z-a.stop.z||a.stop.x-b.stop.x)];
+let stopAt=-1;
+
+/* ---------- walking paths: floor arrows like a street-view walk ---------- */
+const NODES={},EDGES={};
+function node(id,x,z){NODES[id]={id,x,z};EDGES[id]=[];}
+function link(a,b){EDGES[a].push(b);EDGES[b].push(a);}
+const AZ=[5.5,2.5,-0.5,-3,-6,-8.5,-11,-13.2,-15.5,-18.5,-21,-24,-27];
+const CROSS=[5.5,2.5,-6,-13.2,-18.5,-27];
+AZ.forEach((z,i)=>{node("L"+i,-3.7,z);node("R"+i,4.2,z);if(i){link("L"+(i-1),"L"+i);link("R"+(i-1),"R"+i);}
+  if(CROSS.includes(z)){node("C"+i,0.25,z);link("L"+i,"C"+i);link("C"+i,"R"+i);}});
+link("C0","C1");node("S",0.25,7.6);link("S","C0");link("S","L0");link("S","R0");
+// cut-through runners on the floor so the crossings read from far away
+const runTex=canvasTex(512,64,(g,w,h)=>{g.fillStyle="rgba(0,0,0,0)";g.clearRect(0,0,w,h);g.strokeStyle=C.cyan;g.lineWidth=6;g.lineJoin="round";
+  for(let x=24;x<w;x+=48){const dir=x<w/2?-1:1;g.beginPath();g.moveTo(x-8*dir,14);g.lineTo(x+8*dir,32);g.lineTo(x-8*dir,50);g.stroke();}
+  g.fillStyle="rgba(46,242,255,.25)";g.fillRect(0,0,w,3);g.fillRect(0,h-3,w,3);});
+[-6,-13.2,-18.5].forEach(z=>{const p=plane(7.9,0.9,new THREE.MeshBasicMaterial({map:runTex,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}),0.25,0.02,z,scene);p.rotation.x=-Math.PI/2;});
+[-6,-13.2,-18.5].forEach(z=>{sign("CUT THROUGH",C.cyan,4,0.8,110,0.25,3.6,z,0).material.side=THREE.DoubleSide;});
+// faint dots mark every stop on the path
+const dotMat=new THREE.MeshBasicMaterial({color:C.violet,transparent:true,opacity:.55,depthWrite:false});
+const dotGeo=new THREE.RingGeometry(0.16,0.22,24);
+Object.values(NODES).forEach(n=>{const d=new THREE.Mesh(dotGeo,dotMat);d.rotation.x=-Math.PI/2;d.position.set(n.x,0.025,n.z);scene.add(d);});
+// the arrow shape
+const chev=new THREE.Shape();chev.moveTo(0,0.42);chev.lineTo(0.4,0.02);chev.lineTo(0.24,0.02);chev.lineTo(0,0.25);chev.lineTo(-0.24,0.02);chev.lineTo(-0.4,0.02);chev.lineTo(0,0.42);
+const chevGeo=new THREE.ShapeGeometry(chev);
+const arrowRoot=new THREE.Group();scene.add(arrowRoot);
+const arrowHits=[];let curNode=null,arrows=[];
+function buildArrows(id){arrows.forEach(a=>arrowRoot.remove(a.g));arrows=[];arrowHits.length=0;curNode=id;if(!id)return;
+  EDGES[id].forEach(nid=>{const g=new THREE.Group();const mat=new THREE.MeshBasicMaterial({color:"#ffffff",transparent:true,opacity:.95,depthWrite:false});
+    const glow=new THREE.Mesh(new THREE.CircleGeometry(0.55,28),new THREE.MeshBasicMaterial({map:radial(C.cyan),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));glow.rotation.x=-Math.PI/2;glow.position.y=0.03;g.add(glow);
+    for(const off of [0,0.32]){const c=new THREE.Mesh(chevGeo,mat);c.rotation.x=-Math.PI/2;c.position.set(0,0.04,-off-0.05);g.add(c);}
+    const hit=new THREE.Mesh(new THREE.BoxGeometry(1.3,0.4,1.3),new THREE.MeshBasicMaterial({visible:false}));hit.position.y=0.2;hit.userData.node=nid;g.add(hit);arrowHits.push(hit);
+    arrowRoot.add(g);arrows.push({g,mat,nid});});}
+// arrows sit on an arc in front of you (like a street-view walk); each one points the true way to go
+function placeArrows(now){arrows.forEach((a,i)=>{const n=NODES[a.nid];const dx=n.x-view.x,dz=n.z-view.z;const yaw=Math.atan2(-dx,-dz);
+  let rel=yaw-view.yaw;while(rel>Math.PI)rel-=2*Math.PI;while(rel<-Math.PI)rel+=2*Math.PI;
+  let disp,r;const back=Math.abs(rel)>2.4;if(back){disp=0;r=2.05;}else{disp=Math.max(-0.7,Math.min(0.7,rel));r=2.9;}a.g.scale.setScalar(back?0.75:1);
+  const slide=REDUCE?0:Math.sin(now*3+i)*0.08;const ay=view.yaw+disp;
+  a.g.position.set(view.x-Math.sin(ay)*r-Math.sin(yaw)*slide,0,view.z-Math.cos(ay)*r-Math.cos(yaw)*slide);a.g.rotation.y=yaw;a.mat.opacity=.75+Math.sin(now*4)*.2;});}
+function nearestNode(){let best=null,bd=1e9;for(const n of Object.values(NODES)){const d=Math.hypot(n.x-view.x,n.z-view.z);if(d<bd){bd=d;best=n.id;}}return best;}
+function inSolid(x,z){return solids.some(s=>x>s.x0-0.2&&x<s.x1+0.2&&z>s.z0-0.2&&z<s.z1+0.2);}
+function clearPath(x0,z0,x1,z1){const n=Math.ceil(Math.hypot(x1-x0,z1-z0)/0.3);for(let k=1;k<n;k++){if(inSolid(x0+(x1-x0)*k/n,z0+(z1-z0)*k/n))return false;}return true;}
+function walkTo(id){const n=NODES[id];const dx=n.x-view.x,dz=n.z-view.z;card.hidden=true;
+  let ty=Math.atan2(-dx,-dz),rel=ty-view.yaw;while(rel>Math.PI)rel-=2*Math.PI;while(rel<-Math.PI)rel+=2*Math.PI;if(Math.hypot(dx,dz)<0.3||Math.abs(rel)>2.4)ty=view.yaw;
+  goTo({x:n.x,z:n.z,yaw:ty,pitch:-0.1,walk:true});buildArrows(null);sfx.step();}
+
+/* ---------- info card ---------- */
+const card=document.getElementById("card");
+function showCard(m){const s=m.spec;
+  card.style.setProperty("--c",s.color);const pr=s.product;
+  document.getElementById("cTag").textContent=pr?`${s.title} · ${TYPE_LABEL[s.type]}`:s.tag;document.getElementById("cTitle").textContent=pr?pr.name:s.title;
+  document.getElementById("cText").textContent=pr?(pr.blurb||(pr.section+" · one of our favorite picks for game night.")):(PREVIEW||!s.prize?s.text:"A new prize is on its way to this machine.");
+  const row=document.getElementById("cRow");row.innerHTML="";
+  if(pr&&pr.link){const a=document.createElement("a");a.className="go";a.href=pr.link;a.target="_blank";a.rel="noopener sponsored";a.textContent="See it on Amazon";row.appendChild(a);
+    const x=document.createElement("button");x.textContent="Keep walking";x.onclick=()=>{card.hidden=true;};row.appendChild(x);
+    const n=document.createElement("p");n.className="disc";n.textContent=AMAZON_NOTE;row.appendChild(n);card.hidden=false;return;}
+  if(s.link){const a=document.createElement("a");a.className="go";a.href=s.link;a.target="_blank";a.rel="noopener";a.textContent=s.linkLabel;row.appendChild(a);}
+  else{const d=document.createElement("div");d.className="soon";d.textContent=s.soon;row.appendChild(d);}
+  const x=document.createElement("button");x.textContent="Keep walking";x.onclick=()=>{card.hidden=true;};row.appendChild(x);card.hidden=false;}
+
+/* ---------- movement ---------- */
+let glide=null;
+function goTo(stop){glide={fx:view.x,fz:view.z,fy:view.yaw,fp:view.pitch,tx:stop.x,tz:stop.z,ty:stop.yaw,tp:stop.pitch==null?0.06:stop.pitch,t:0};if(!stop.walk)buildArrows(null);let d=glide.ty-glide.fy;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;glide.ty=glide.fy+d;
+  glide.dur=stop.walk?Math.min(1.8,0.45+Math.hypot(stop.x-view.x,stop.z-view.z)*0.32):Math.min(2.2,0.9+Math.hypot(stop.x-view.x,stop.z-view.z)*0.08);}
+function visit(m){goTo(m.stop);showCard(m);sfx.coin();if(m.onTap)m.onTap();}
+document.getElementById("next").onclick=()=>{stopAt=(stopAt+1)%stops.length;visit(stops[stopAt]);};
+document.getElementById("prev").onclick=()=>{stopAt=(stopAt-1+stops.length)%stops.length;visit(stops[stopAt]);};
+const held={};
+document.querySelectorAll(".pad button").forEach(b=>{const k=b.dataset.k;const on=e=>{e.preventDefault();held[k]=true;glide=null;};const off=()=>{held[k]=false;};
+  b.addEventListener("pointerdown",on);b.addEventListener("pointerup",off);b.addEventListener("pointerleave",off);b.addEventListener("pointercancel",off);});
+const keymap={ArrowUp:"f",KeyW:"f",ArrowDown:"b",KeyS:"b",ArrowLeft:"l",KeyA:"l",ArrowRight:"r",KeyD:"r"};
+addEventListener("keydown",e=>{if(keymap[e.code]){held[keymap[e.code]]=true;glide=null;e.preventDefault();}});
+addEventListener("keyup",e=>{if(keymap[e.code])held[keymap[e.code]]=false;});
+const ray=new THREE.Raycaster();let drag=null;const cv=renderer.domElement;
+cv.addEventListener("pointerdown",e=>{drag={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,id:e.pointerId};cv.setPointerCapture(e.pointerId);});
+cv.addEventListener("pointermove",e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.x=e.clientX;drag.y=e.clientY;
+  if(Math.abs(e.clientX-drag.sx)+Math.abs(e.clientY-drag.sy)>6){glide=null;view.yaw+=dx*0.005;view.pitch=Math.max(-0.7,Math.min(0.6,view.pitch+dy*0.004));}});
+cv.addEventListener("pointerup",e=>{if(!drag)return;const moved=Math.abs(e.clientX-drag.sx)+Math.abs(e.clientY-drag.sy);drag=null;if(moved>6)return;
+  ray.setFromCamera(new THREE.Vector2((e.clientX/innerWidth)*2-1,-(e.clientY/innerHeight)*2+1),camera);
+  const ah=ray.intersectObjects(arrowHits,false)[0];if(ah){walkTo(ah.object.userData.node);return;}
+  const hit=ray.intersectObjects(hitboxes,false)[0];if(hit&&hit.distance<16){const m=hit.object.userData.m;stopAt=stops.indexOf(m);visit(m);return;}
+  const fh=ray.intersectObject(floor,false)[0];
+  if(fh){let best=null,bd=1e9;for(const n of Object.values(NODES)){const d=Math.hypot(n.x-fh.point.x,n.z-fh.point.z);if(d<bd&&d<3.5&&clearPath(view.x,view.z,n.x,n.z)){bd=d;best=n.id;}}if(best){walkTo(best);return;}}
+  card.hidden=true;});
+const R=0.35;
+function collide(){view.x=Math.max(-HALL.x+0.6,Math.min(HALL.x-0.6,view.x));view.z=Math.max(HALL.zBack+0.6,Math.min(HALL.zFront-0.6,view.z));
+  for(const s of solids){if(view.x>s.x0-R&&view.x<s.x1+R&&view.z>s.z0-R&&view.z<s.z1+R){const pl=view.x-(s.x0-R),pr=(s.x1+R)-view.x,pb=view.z-(s.z0-R),pf=(s.z1+R)-view.z;const mn=Math.min(pl,pr,pb,pf);
+    if(mn===pl)view.x=s.x0-R;else if(mn===pr)view.x=s.x1+R;else if(mn===pb)view.z=s.z0-R;else view.z=s.z1+R;}}}
+
+/* ---------- sound (synthesized, starts only after a tap) ---------- */
+let ac=null,soundOn=false,master=null;
+function initAudio(){if(ac)return;try{ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=.5;master.connect(ac.destination);}catch(e){ac=null;}}
+function tone(f,t0,dur,type,vol,pan){if(!ac||!soundOn)return;const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t0);
+  g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+  let out=g;if(ac.createStereoPanner){const p=ac.createStereoPanner();p.pan.value=pan||0;g.connect(p);out=p;}o.connect(g);out.connect(master);o.start(t0);o.stop(t0+dur+0.05);}
+const sfx={
+  coin(){if(!ac)return;const t=ac.currentTime;tone(988,t,.09,"square",.12);tone(1319,t+.08,.35,"square",.12);},
+  ding(t,vol){[1,2.76,5.4].forEach((m,k)=>tone(1046*m,t,1.4-k*.35,"sine",vol/(k+1)));},
+  step(){if(!ac)return;const t=ac.currentTime;tone(180,t,.07,"triangle",.05);tone(140,t+.18,.07,"triangle",.04);},
+  swish(){if(!ac)return;const t=ac.currentTime;tone(660,t,.08,"triangle",.05);tone(880,t+.07,.12,"triangle",.05);},
+  jackpot(){flashUntil=performance.now()/1000+2.4;if(!ac)return;const t=ac.currentTime;for(let k=0;k<7;k++)sfx.ding(t+k*.16,.09);},
+  blip(m){if(!ac)return;const p=m.grp.position;const d=Math.hypot(p.x-view.x,p.z-view.z);const vol=.07/Math.max(1,d*0.45);if(vol<.008)return;
+    const t=ac.currentTime,base=[262,330,392,523][Math.random()*4|0];const pan=Math.max(-1,Math.min(1,(p.x-view.x)/5));const pat=[1,1.25,1.5,2];
+    for(let k=0;k<4;k++)tone(base*pat[Math.random()*4|0],t+k*.07,.08,Math.random()<.5?"square":"triangle",vol,pan);}
+};
+let nextBlip=0,nextJackpot=6,flashUntil=0;
+const sndBtn=document.getElementById("snd");
+function setSound(on){soundOn=on;sndBtn.textContent=on?"🔊 Sound":"🔇 Sound";if(on){initAudio();if(ac&&ac.state==="suspended")ac.resume();}}
+sndBtn.onclick=()=>setSound(!soundOn);
+function enter(withSound){document.getElementById("intro").hidden=true;setSound(withSound);if(withSound)sfx.jackpot();setTimeout(()=>{document.getElementById("hint").style.opacity="0";},7000);}
+document.getElementById("enter").onclick=()=>enter(true);document.getElementById("quiet").onclick=()=>enter(false);
+
+/* ---------- loop ---------- */
+addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+let last=performance.now()/1000,screenClock=0,rr=0;
+function frame(){
+  const now=performance.now()/1000,dt=Math.min(0.05,now-last);last=now;
+  if(glide){glide.t=Math.min(1,glide.t+dt/glide.dur);const e=glide.t<.5?2*glide.t*glide.t:1-Math.pow(-2*glide.t+2,2)/2;
+    view.x=glide.fx+(glide.tx-glide.fx)*e;view.z=glide.fz+(glide.tz-glide.fz)*e;view.yaw=glide.fy+(glide.ty-glide.fy)*e;view.pitch=glide.fp+(glide.tp-glide.fp)*e;if(glide.t>=1)glide=null;}
+  const sp=2.8*dt,turn=1.8*dt;
+  if(held.l)view.yaw+=turn;if(held.r)view.yaw-=turn;
+  if(held.f||held.b){const s=held.f?sp:-sp;view.x-=Math.sin(view.yaw)*s;view.z-=Math.cos(view.yaw)*s;}
+  if(!glide)collide();
+  if(!glide&&!held.f&&!held.b){const nn=nearestNode();if(nn!==curNode)buildArrows(nn);}
+  else if(arrows.length&&(held.f||held.b)){const nn=nearestNode();if(nn!==curNode)buildArrows(nn);}
+  arrowRoot.visible=!glide;placeArrows(now);
+  const bob=(held.f||held.b)&&!REDUCE?Math.sin(now*9)*0.025:0;
+  camera.position.set(view.x,1.62+bob,view.z);camera.rotation.set(view.pitch,view.yaw,0);
+  // nearby machines animate their screens (~10 per tick keeps the iPad smooth)
+  screenClock+=dt;if(screenClock>0.1){screenClock=0;let n=0;
+    for(const m of machines){const p=m.grp.position;m.near=Math.hypot(p.x-view.x,p.z-view.z)<10;}
+    for(let k=0;k<machines.length&&n<10;k++){const m=machines[(rr+k)%machines.length];if(m.near&&m.screens.length){m.screens.forEach(s=>drawScreen(m,s,now));n++;}}rr=(rr+7)%machines.length;}
+  if(!REDUCE)for(const a of anims)a(now,dt);
+  const flashing=now<flashUntil;
+  bulbs.forEach((b,i)=>{let on;if(REDUCE)on=true;else if(flashing)on=Math.floor(now*12)%2===i%2;else on=(Math.floor(now*6)+i)%4!==0;
+    b.material.color.set(on?(flashing?(i%2?C.pink:C.gold):"#ffe9a8"):"#3a2a10");});
+  machines.forEach((m,i)=>{if(m.glow)m.glow.material.opacity=.55+Math.sin(now*2+i)*.2;});
+  roomLights.forEach((l,i)=>{l.intensity=1+Math.sin(now*1.3+i*2)*.15+(flashing?Math.random()*.6:0);});
+  beacon.intensity=flashing?(Math.floor(now*10)%2?2.4:0):0;
+  if(!REDUCE)bell.rotation.z=flashing?Math.sin(now*30)*0.35:0;
+  signBack.material.opacity=flashing?(Math.floor(now*8)%2?1:.45):(.88+Math.sin(now*3)*.06);
+  if(soundOn&&ac){if(now>nextBlip){const near=machines.filter(m=>m.near);if(near.length)sfx.blip(near[Math.random()*near.length|0]);nextBlip=now+0.35+Math.random()*0.8;}
+    if(now>nextJackpot){sfx.jackpot();nextJackpot=now+12+Math.random()*10;}}
+  else if(now>nextJackpot){flashUntil=now+2.4;nextJackpot=now+14+Math.random()*10;}
+  renderer.render(scene,camera);requestAnimationFrame(frame);
 }
+camera.position.set(view.x,1.62,view.z);
+frame();
+})();
 </script>
-</body>
-</html>
+
+</body></html>

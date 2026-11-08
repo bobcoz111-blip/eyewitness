@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Game Room · Eyewitness</title>
+<meta name="description" content="Welcome to the Eyewitness Game Room: every case in one place, plus the games and puzzles our players love.">
+<meta property="og:title" content="The Eyewitness Game Room">
+<meta property="og:image" content="https://eyewitnessgame.com/case1/scene.jpg">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;800&display=swap">
+<style>
+:root{
+  --bg:#120f2b; --bg2:#1d1846; --panel:#231d55; --ink:#fff8ec; --mut:#c9c2ef;
+  --pink:#ff4fa3; --cyan:#3ee8ff; --gold:#ffcf4a; --green:#5cf29a; --line:#3a3280;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 20% -10%,#3a2a8f 0,transparent 45%),radial-gradient(circle at 90% 10%,#7a1f6b 0,transparent 40%),var(--bg);
+  color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:17px;line-height:1.5;min-height:100vh}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.sign{font-family:Bungee,Impact,sans-serif;font-weight:400;text-align:center;margin:8px 0 6px;
+  font-size:clamp(34px,7vw,64px);line-height:1.05;letter-spacing:.02em;color:#fff;
+  text-shadow:0 0 6px var(--pink),0 0 18px var(--pink),0 0 36px #ff4fa388}
+.sign span{color:var(--cyan);text-shadow:0 0 6px var(--cyan),0 0 18px var(--cyan)}
+.lede{text-align:center;color:var(--mut);max-width:58ch;margin:0 auto 26px;font-size:18px}
+.ticket{display:inline-block;background:var(--gold);color:#2a1d00;font-weight:800;border-radius:6px;padding:3px 10px;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+h2{font-family:Bungee,Impact,sans-serif;font-weight:400;font-size:clamp(22px,4vw,30px);margin:38px 0 6px;color:var(--gold);text-shadow:0 0 10px #ffcf4a66}
+.sub{color:var(--mut);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.cab{position:relative;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--bg2),var(--panel));
+  border:2px solid var(--line);border-radius:18px 18px 10px 10px;overflow:hidden;text-decoration:none;
+  box-shadow:0 10px 24px #0007;transition:transform .15s,border-color .15s,box-shadow .15s}
+.cab:hover,.cab:focus-visible{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 0 0 2px #3ee8ff55,0 14px 30px #0009;outline:none}
+.cab .scr{aspect-ratio:16/10;background:#000 center/cover no-repeat;border-bottom:2px solid var(--line);position:relative}
+.cab .scr.fallback{display:grid;place-items:center;font-family:Bungee,sans-serif;font-size:42px;color:var(--cyan);text-shadow:0 0 12px var(--cyan)}
+.cab .badge{position:absolute;top:10px;left:10px}
+.cab .body{padding:12px 14px 16px;display:grid;gap:4px}
+.cab .k{font-family:Bungee,sans-serif;font-size:13px;color:var(--pink);letter-spacing:.06em}
+.cab .t{font-weight:800;font-size:18px;line-height:1.25}
+.cab .d{color:var(--mut);font-size:15px}
+.cab .go{margin-top:8px;display:inline-block;align-self:start;background:var(--pink);color:#fff;font-weight:800;border-radius:999px;padding:7px 14px;font-size:15px}
+.cab.locked .go{background:#4a4280;color:var(--mut)}
+.prize .scr{background:#fff center/contain no-repeat;aspect-ratio:1/1}
+.prize .scr img{display:block;margin:0 auto;max-width:90%;max-height:92%;position:relative;top:50%;transform:translateY(-50%)}
+.prize .scr.icon{background:radial-gradient(circle,#3a2f8a,#1a1545);display:grid;place-items:center;aspect-ratio:16/10}
+.prize .scr.icon span{font-size:64px;filter:drop-shadow(0 0 12px #3ee8ff88)}
+#prizes .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+#prizes .scr.icon{aspect-ratio:4/3}
+#prizes .scr.icon span{font-size:44px}
+#prizes .t{font-size:16px}
+#prizes .go{font-size:14px;padding:6px 12px}
+h3.sec{font-family:Bungee,sans-serif;font-weight:400;color:var(--cyan);font-size:19px;margin:26px 0 12px;text-shadow:0 0 8px #3ee8ff66}
+.prize .go{background:var(--gold);color:#2a1d00}
+.counter{background:linear-gradient(180deg,#2a1f66,#1a1545);border:2px solid var(--gold);border-radius:20px;padding:6px 18px 22px;margin-top:40px;box-shadow:0 0 30px #ffcf4a22}
+.disc{color:var(--mut);font-size:13px;margin:14px 0 0}
+.share{text-align:center;margin:44px auto 0;max-width:620px;background:var(--panel);border:2px dashed var(--line);border-radius:16px;padding:18px}
+.share b{color:var(--green)}
+footer{text-align:center;color:var(--mut);font-size:14px;margin-top:40px}
+@media (prefers-reduced-motion:reduce){.cab{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p style="text-align:center;margin:0"><span class="ticket">You're in!</span></p>
+  <h1 class="sign">The Game <span>Room</span></h1>
+  <p class="lede">Thanks for signing up. Every Eyewitness case lives here, and a new one opens every Friday. Pick a machine and play.</p>
+
+  <h2>Eyewitness cases</h2>
+  <p class="sub">Watch once. Answer 12 questions. See who has the sharpest eyes.</p>
+  <div class="grid" id="cases"></div>
+
+  <section class="counter" id="counter" hidden>
+    <h2>The prize counter</h2>
+    <p class="sub">Our favorite games, puzzles and game-night gear, hand-picked for players like you.</p>
+    <div class="grid" id="prizes"></div>
+    <p class="disc">As an Amazon Associate, Eyewitness earns from qualifying purchases. Prices and availability can change.</p>
+  </section>
+
+  <div class="share">
+    <b>Play with friends.</b> Send them <a href="https://eyewitnessgame.com/">eyewitnessgame.com</a> and compare scores after each case.
+  </div>
+  <footer>Eyewitness © 2026 · <a href="https://eyewitnessgame.com/">Back to the front door</a></footer>
+</div>
+
+<script>
+// Cases: unlock dates match the weekly release schedule (Fridays 9 AM Eastern).
+const CASES=[
+  {n:1,slug:"case1",title:"The great dog show caper",desc:"Somebody swiped the trophy. Did you see who?",opens:"2026-10-24T09:00:00-04:00"},
+  {n:2,slug:"case2",title:"The Main Street cake caper",desc:"A prize cake vanishes in broad daylight.",opens:"2026-11-13T09:00:00-05:00"},
+  {n:3,slug:"case3",title:"The station hatbox heist",desc:"Trains, crowds and one very valuable hatbox.",opens:"2026-11-20T09:00:00-05:00"},
+  {n:4,slug:"case4",title:"The prize pumpkin pinch",desc:"The harvest fair's best pumpkin goes missing.",opens:"2026-11-27T09:00:00-05:00"}
+];
+// Prize counter: Amazon affiliate picks (Product Picks sheet, Game Room tab). Tag: bobcoz111-20.
+// Product photos to be added later via SiteStripe image links (Amazon-approved source).
+const PRIZES=[
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "Monopoly Classic",
+"link": "https://www.amazon.com/dp/B0DN37BBGD?tag=bobcoz111-20"
+},
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "Scrabble",
+"link": "https://www.amazon.com/dp/B00IL5XY9K?tag=bobcoz111-20"
+},
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "Wooden Chess & Checkers Set",
+"link": "https://www.amazon.com/dp/B09D9L1MWC?tag=bobcoz111-20"
+},
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "Battleship",
+"link": "https://www.amazon.com/dp/B09D4QRJ8Y?tag=bobcoz111-20"
+},
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "Connect 4",
+"link": "https://www.amazon.com/dp/B00D8STBHY?tag=bobcoz111-20"
+},
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "Yahtzee",
+"link": "https://www.amazon.com/dp/B00TLEMRKM?tag=bobcoz111-20"
+},
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "Risk",
+"link": "https://www.amazon.com/dp/B01ALHAIWG?tag=bobcoz111-20"
+},
+{
+"section": "Classic Board Games",
+"icon": "🎲",
+"name": "The Game of Life",
+"link": "https://www.amazon.com/dp/B06XY48MK1?tag=bobcoz111-20"
+},
+{
+"section": "Mystery & Detective",
+"icon": "🔍",
+"name": "Clue Classic",
+"link": "https://www.amazon.com/dp/B07BMJPPXV?tag=bobcoz111-20"
+},
+{
+"section": "Mystery & Detective",
+"icon": "🔍",
+"name": "Sherlock Holmes Consulting Detective",
+"link": "https://www.amazon.com/dp/2370990074?tag=bobcoz111-20"
+},
+{
+"section": "Mystery & Detective",
+"icon": "🔍",
+"name": "Exit: The Game",
+"link": "https://www.amazon.com/dp/B06WP2G52Z?tag=bobcoz111-20"
+},
+{
+"section": "Mystery & Detective",
+"icon": "🔍",
+"name": "Unlock! Mystery Adventures",
+"link": "https://www.amazon.com/dp/B077XVY44P?tag=bobcoz111-20"
+},
+{
+"section": "Mystery & Detective",
+"icon": "🔍",
+"name": "Hunt A Killer",
+"link": "https://www.amazon.com/dp/B085ZNYPR3?tag=bobcoz111-20"
+},
+{
+"section": "Mystery & Detective",
+"icon": "🔍",
+"name": "Murder Mystery Party Kit",
+"link": "https://www.amazon.com/dp/B000P8HPIM?tag=bobcoz111-20"
+},
+{
+"section": "Family Game Night",
+"icon": "🏠",
+"name": "Ticket to Ride",
+"link": "https://www.amazon.com/dp/B0F8PKN4B7?tag=bobcoz111-20"
+},
+{
+"section": "Family Game Night",
+"icon": "🏠",
+"name": "Catan",
+"link": "https://www.amazon.com/dp/B00U26V4VQ?tag=bobcoz111-20"
+},
+{
+"section": "Family Game Night",
+"icon": "🏠",
+"name": "Sequence",
+"link": "https://www.amazon.com/dp/B00000IVAK?tag=bobcoz111-20"
+},
+{
+"section": "Family Game Night",
+"icon": "🏠",
+"name": "Blokus",
+"link": "https://www.amazon.com/dp/B00FBWBM3G?tag=bobcoz111-20"
+},
+{
+"section": "Family Game Night",
+"icon": "🏠",
+"name": "Carcassonne",
+"link": "https://www.amazon.com/dp/B00NX627HW?tag=bobcoz111-20"
+},
+{
+"section": "Party Games",
+"icon": "🎉",
+"name": "Codenames",
+"link": "https://www.amazon.com/dp/B014Q1XX9S?tag=bobcoz111-20"
+},
+{
+"section": "Party Games",
+"icon": "🎉",
+"name": "Telestrations",
+"link": "https://www.amazon.com/dp/B001SN8GF4?tag=bobcoz111-20"
+},
+{
+"section": "Party Games",
+"icon": "🎉",
+"name": "What Do You Meme?",
+"link": "https://www.amazon.com/dp/B01MRG7T0D?tag=bobcoz111-20"
+},
+{
+"section": "Party Games",
+"icon": "🎉",
+"name": "Heads Up!",
+"link": "https://www.amazon.com/dp/B00FB6O9I2?tag=bobcoz111-20"
+},
+{
+"section": "Party Games",
+"icon": "🎉",
+"name": "Taboo",
+"link": "https://www.amazon.com/dp/B0B3FXMB7Q?tag=bobcoz111-20"
+},
+{
+"section": "Card Games",
+"icon": "🃏",
+"name": "Exploding Kittens",
+"link": "https://www.amazon.com/dp/B010TQY7A8?tag=bobcoz111-20"
+},
+{
+"section": "Card Games",
+"icon": "🃏",
+"name": "Uno",
+"link": "https://www.amazon.com/dp/B07P6MZPK3?tag=bobcoz111-20"
+},
+{
+"section": "Card Games",
+"icon": "🃏",
+"name": "Sushi Go!",
+"link": "https://www.amazon.com/dp/B00J57VU44?tag=bobcoz111-20"
+},
+{
+"section": "Card Games",
+"icon": "🃏",
+"name": "Skip-Bo",
+"link": "https://www.amazon.com/dp/B00006YYY5?tag=bobcoz111-20"
+},
+{
+"section": "Card Games",
+"icon": "🃏",
+"name": "Phase 10",
+"link": "https://www.amazon.com/dp/B01N3489RH?tag=bobcoz111-20"
+},
+{
+"section": "Trivia & Word Games",
+"icon": "🔤",
+"name": "Trivial Pursuit",
+"link": "https://www.amazon.com/dp/B01N4MXCK4?tag=bobcoz111-20"
+},
+{
+"section": "Trivia & Word Games",
+"icon": "🔤",
+"name": "Wavelength",
+"link": "https://www.amazon.com/dp/B07T446163?tag=bobcoz111-20"
+},
+{
+"section": "Trivia & Word Games",
+"icon": "🔤",
+"name": "Bananagrams",
+"link": "https://www.amazon.com/dp/1932188126?tag=bobcoz111-20"
+},
+{
+"section": "Trivia & Word Games",
+"icon": "🔤",
+"name": "Boggle",
+"link": "https://www.amazon.com/dp/B01N6PS4L0?tag=bobcoz111-20"
+},
+{
+"section": "Puzzles & Brain Teasers",
+"icon": "🧩",
+"name": "Hidden-Object Jigsaw Puzzle",
+"link": "https://www.amazon.com/dp/B08669HJ7P?tag=bobcoz111-20"
+},
+{
+"section": "Puzzles & Brain Teasers",
+"icon": "🧩",
+"name": "Ravensburger 1000-Piece Puzzle",
+"link": "https://www.amazon.com/dp/B01NAPZIS0?tag=bobcoz111-20"
+},
+{
+"section": "Puzzles & Brain Teasers",
+"icon": "🧩",
+"name": "Logic Puzzle Book",
+"link": "https://www.amazon.com/dp/B0C7T1V2Y6?tag=bobcoz111-20"
+},
+{
+"section": "Puzzles & Brain Teasers",
+"icon": "🧩",
+"name": "Rubik's Cube",
+"link": "https://www.amazon.com/dp/B09FG5L5ZX?tag=bobcoz111-20"
+},
+{
+"section": "Kids' Corner",
+"icon": "🧸",
+"name": "Guess Who?",
+"link": "https://www.amazon.com/dp/B01N6PRX20?tag=bobcoz111-20"
+},
+{
+"section": "Kids' Corner",
+"icon": "🧸",
+"name": "Spot It!",
+"link": "https://www.amazon.com/dp/B0170U0P6Q?tag=bobcoz111-20"
+},
+{
+"section": "Kids' Corner",
+"icon": "🧸",
+"name": "Outfoxed!",
+"link": "https://www.amazon.com/dp/B00UB7P0XY?tag=bobcoz111-20"
+},
+{
+"section": "Kids' Corner",
+"icon": "🧸",
+"name": "Candy Land",
+"link": "https://www.amazon.com/dp/B00000DMF5?tag=bobcoz111-20"
+},
+{
+"section": "Kids' Corner",
+"icon": "🧸",
+"name": "Operation",
+"link": "https://www.amazon.com/dp/B00000DMFM?tag=bobcoz111-20"
+},
+{
+"section": "Role-Play & Adventure",
+"icon": "🐉",
+"name": "D&D Starter Set",
+"link": "https://www.amazon.com/dp/B0FDJFR245?tag=bobcoz111-20"
+},
+{
+"section": "Role-Play & Adventure",
+"icon": "🐉",
+"name": "D&D Essentials Kit",
+"link": "https://www.amazon.com/dp/0786966831?tag=bobcoz111-20"
+},
+{
+"section": "Role-Play & Adventure",
+"icon": "🐉",
+"name": "Polyhedral Dice Set",
+"link": "https://www.amazon.com/dp/B008KWIU20?tag=bobcoz111-20"
+},
+{
+"section": "Role-Play & Adventure",
+"icon": "🐉",
+"name": "Gloomhaven: Jaws of the Lion",
+"link": "https://www.amazon.com/dp/B088QSDB7S?tag=bobcoz111-20"
+},
+{
+"section": "Video Games",
+"icon": "🎮",
+"name": "Mario Kart 8 Deluxe",
+"link": "https://www.amazon.com/dp/B01N1037CV?tag=bobcoz111-20"
+},
+{
+"section": "Video Games",
+"icon": "🎮",
+"name": "Super Mario Party Jamboree",
+"link": "https://www.amazon.com/dp/B0D7J4W5N3?tag=bobcoz111-20"
+},
+{
+"section": "Video Games",
+"icon": "🎮",
+"name": "Just Dance",
+"link": "https://www.amazon.com/dp/B0FJH3K1RW?tag=bobcoz111-20"
+},
+{
+"section": "Video Games",
+"icon": "🎮",
+"name": "Nintendo Switch Sports",
+"link": "https://www.amazon.com/dp/B09KRK6C82?tag=bobcoz111-20"
+},
+{
+"section": "Retro Arcade",
+"icon": "👾",
+"name": "Arcade1Up Pac-Man Countercade",
+"link": "https://www.amazon.com/dp/B0DJGHWD1G?tag=bobcoz111-20"
+},
+{
+"section": "Retro Arcade",
+"icon": "👾",
+"name": "Atari 2600+ Console",
+"link": "https://www.amazon.com/dp/B0CG7LMFKY?tag=bobcoz111-20"
+},
+{
+"section": "Retro Arcade",
+"icon": "👾",
+"name": "Retro Handheld Game Player",
+"link": "https://www.amazon.com/dp/B0CTVL37T6?tag=bobcoz111-20"
+},
+{
+"section": "Outdoor & Lawn Games",
+"icon": "🌳",
+"name": "Bocce Ball Set",
+"link": "https://www.amazon.com/dp/B07PJFDNLY?tag=bobcoz111-20"
+},
+{
+"section": "Outdoor & Lawn Games",
+"icon": "🌳",
+"name": "Croquet Set",
+"link": "https://www.amazon.com/dp/B07SW7HJV1?tag=bobcoz111-20"
+},
+{
+"section": "Outdoor & Lawn Games",
+"icon": "🌳",
+"name": "Cornhole Boards",
+"link": "https://www.amazon.com/dp/B07TC5X8P5?tag=bobcoz111-20"
+},
+{
+"section": "Outdoor & Lawn Games",
+"icon": "🌳",
+"name": "Ladder Toss",
+"link": "https://www.amazon.com/dp/B00K8ANYWS?tag=bobcoz111-20"
+},
+{
+"section": "Outdoor & Lawn Games",
+"icon": "🌳",
+"name": "Giant Tumbling Tower",
+"link": "https://www.amazon.com/dp/B00ZUABRXO?tag=bobcoz111-20"
+},
+{
+"section": "Outdoor & Lawn Games",
+"icon": "🌳",
+"name": "Spikeball",
+"link": "https://www.amazon.com/dp/B00STL38RE?tag=bobcoz111-20"
+}
+];
+
+const fmt=d=>d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+const el=(t,c)=>{const e=document.createElement(t); if(c) e.className=c; return e;};
+const now=new Date();
+const box=document.getElementById("cases");
+CASES.forEach(c=>{
+  const open=new Date(c.opens)<=now;
+  const a=el("a","cab"+(open?"":" locked")); a.href="https://eyewitnessgame.com/"+c.slug+"/";
+  const scr=el("div","scr"); const img=new Image();
+  img.onload=()=>{scr.style.backgroundImage="url('"+img.src+"')";};
+  img.onerror=()=>{scr.classList.add("fallback"); const s=el("span"); s.textContent="#"+c.n; scr.prepend(s);};
+  img.src="https://eyewitnessgame.com/"+c.slug+"/scene.jpg";
+  if(!open){ const b=el("span","ticket badge"); b.textContent="Opens "+fmt(new Date(c.opens)); scr.append(b); }
+  else if(now-new Date(c.opens)<7*864e5){ const b=el("span","ticket badge"); b.textContent="New this week"; scr.append(b); }
+  const body=el("div","body");
+  const k=el("div","k"); k.textContent="Case #"+c.n;
+  const t=el("div","t"); t.textContent=c.title;
+  const d=el("div","d"); d.textContent=c.desc;
+  const g=el("span","go"); g.textContent=open?"Play now":"Coming soon";
+  body.append(k,t,d,g); a.append(scr,body); box.append(a);
+});
+if(PRIZES.length){
+  document.getElementById("counter").hidden=false;
+  const pb=document.getElementById("prizes"); pb.className="";
+  const sections=[...new Set(PRIZES.map(p=>p.section))];
+  sections.forEach(sec=>{
+    const h3=el("h3","sec"); h3.textContent=sec; pb.append(h3);
+    const g=el("div","grid"); pb.append(g);
+    PRIZES.filter(p=>p.section===sec).forEach(p=>{
+      const a=el("a","cab prize"); a.href=p.link; a.target="_blank"; a.rel="sponsored noopener";
+      const scr=el("div","scr icon");
+      if(p.img){ const im=new Image(); im.src=p.img; im.alt=p.name; im.loading="lazy"; scr.append(im); scr.classList.remove("icon"); }
+      else { const s=el("span"); s.textContent=p.icon; scr.append(s); }
+      const body=el("div","body");
+      const t=el("div","t"); t.textContent=p.name; body.append(t);
+      const go=el("span","go"); go.textContent="On Amazon"; body.append(go);
+      a.append(scr,body); g.append(a);
+    });
+  });
+}
+</script>
+</body>
+</html>
