@@ -180,8 +180,8 @@ function slotTex(n,color){return canvasTex(256,256,(g,w,h)=>{g.fillStyle="#0c071
   else{glowText(g,"NEW PRIZE",w/2,h/2+32,30,color);g.fillStyle="#a99cc8";g.font="18px Chakra Petch, sans-serif";g.fillText("coming soon",w/2,h/2+68);}});}
 const texLoader=new THREE.TextureLoader();texLoader.setCrossOrigin("anonymous");
 function nameTex(pr,color){return canvasTex(256,256,(g,w,h)=>{g.fillStyle="#0c0718";g.fillRect(0,0,w,h);g.strokeStyle=color;g.lineWidth=6;g.strokeRect(8,8,w-16,h-16);
-  g.fillStyle="#a99cc8";g.font="16px Chakra Petch, sans-serif";g.textAlign="center";g.fillText(pr.section.toUpperCase(),w/2,40);
-  const words=pr.name.split(" ");const lines=[];let cur="";g.font="bold 30px Chakra Petch, sans-serif";for(const wd of words){const t=cur?cur+" "+wd:wd;if(g.measureText(t).width>w-56&&cur){lines.push(cur);cur=wd;}else cur=t;}lines.push(cur);
+  g.fillStyle="#a99cc8";g.font="14px Chakra Petch, sans-serif";g.textAlign="center";g.fillText(pr.section.toUpperCase(),w/2,40);
+  const words=pr.name.split(" ");const lines=[];let cur="";g.font="bold 26px Chakra Petch, sans-serif";for(const wd of words){const t=cur?cur+" "+wd:wd;if(g.measureText(t).width>w-56&&cur){lines.push(cur);cur=wd;}else cur=t;}lines.push(cur);
   lines.slice(0,4).forEach((ln,i,a)=>glowText(g,ln,w/2,h/2+(i-(a.length-1)/2)*32,26,color));
   g.fillStyle=C.gold;g.font="bold 17px Chakra Petch, sans-serif";g.fillText("TAP TO SEE IT",w/2,h-30);});}
 function addSlot(m,parent,w,h,x,y,z,rx,ry){if(!m.spec.prize)return;const t=(m.spec.product&&!m.spec.product.img)?nameTex(m.spec.product,m.spec.color):slotTex(m.spec.prize,m.spec.color);const mat=new THREE.MeshBasicMaterial({map:t});const p=plane(w,h,mat,x,y,z,parent);if(rx)p.rotation.x=rx;if(ry)p.rotation.y=ry;
