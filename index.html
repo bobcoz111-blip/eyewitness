@@ -1,12 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Case File #4: The prize pumpkin pinch. Watch a one-minute cartoon crime once, then answer 12 timed questions. How good a witness are you?">
-<meta property="og:type" content="website"><meta property="og:title" content="Case File #4: The prize pumpkin pinch"><meta property="og:description" content="Watch the episode once. Answer 12 questions. Did YOU see who took the pumpkin?"><meta property="og:image" content="https://eyewitnessgame.com/case4/scene.jpg"><meta property="og:url" content="https://eyewitnessgame.com/case4/"><meta name="twitter:card" content="summary_large_image">
-<script>/* lock-until 2026-11-27: send early visitors to the homepage; add ?preview=1 to test */(function(){if(Date.now()<new Date("2026-11-27T09:00:00-05:00")&&!/preview=1/.test(location.search)){location.replace("../")}})();</script>
-<link rel="icon" href="../icon.svg">
-<title>Case File #4 · Eyewitness</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap">
+<title>Eyewitness — the weekly witness game</title>
+<meta name="description" content="Watch a one-minute cartoon crime once, then answer 12 timed questions about what you saw. A new case every Friday. How good a witness are you?">
+<meta property="og:type" content="website"><meta property="og:title" content="Eyewitness — how good a witness are you?"><meta property="og:description" content="Watch the episode once. Answer 12 questions. New case every Friday."><meta property="og:image" content="https://eyewitnessgame.com/case1/scene.jpg"><meta property="og:url" content="https://eyewitnessgame.com/"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg">
 <style>
 /* One phone-width column like a daily puzzle. The painted park film is the hero; the questions take its place. Bright and sunny on purpose. */
 :root{
@@ -34,7 +31,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--coral);outline-
 .stage{position:relative;border-radius:16px;overflow:hidden;border:3px solid var(--ink);background:#16224a;aspect-ratio:852/480}
 .stage video,.stage img{display:block;width:100%;height:100%;object-fit:cover}
 .stage img{position:absolute;inset:0}
-.cover{position:absolute;inset:0;background:#16224a;background-image:radial-gradient(circle at 50% 35%,#263a7a 0,#16224a 60%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-family:var(--display);font-weight:600;font-size:22px;text-align:center;padding:16px}
+.cover{position:absolute;inset:0;background:rgba(22,34,74,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-family:var(--display);font-weight:600;font-size:22px;text-align:center;padding:16px}
 .rec{position:absolute;top:10px;left:10px;background:var(--coral);color:#fff;font:700 13px var(--display);padding:3px 10px;border-radius:999px;letter-spacing:1px}
 .peektag{position:absolute;top:10px;right:10px;background:var(--peek);color:#2a1d00;font:700 13px var(--display);padding:3px 10px;border-radius:999px}
 .bar{height:14px;background:#dbe7f7;border-radius:999px;overflow:hidden;border:2px solid var(--ink)}
@@ -77,89 +74,21 @@ ol.missed{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media (max-width:540px){.two{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){button{transition:none}}
+
+.hero{text-align:center;padding:10px 0 4px}.hero h2{font-size:30px;margin:6px 0}.hero p{color:var(--muted);margin:0 0 14px;font-size:17px}
+.cases{display:grid;gap:14px}.case{display:grid;grid-template-columns:120px 1fr;gap:12px;background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden;color:var(--ink);text-decoration:none}
+.case img{width:120px;height:100%;object-fit:cover;min-height:110px}.case div{padding:10px 12px 10px 0;display:flex;flex-direction:column;gap:4px}.case h3{margin:0;font-size:18px}.case p{margin:0;color:var(--muted);font-size:14px}.go{color:#1b4fd6;font-weight:700;font-size:14px;margin-top:auto}
+.case.featured{grid-template-columns:1fr;border-color:var(--sun)}.case.featured img{width:100%;height:auto;aspect-ratio:852/480}.case.featured div{padding:12px 14px 14px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:18px 0}
 input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:17px;font-family:inherit;background:#fff;color:var(--ink)}
-[hidden]{display:none!important}
-</style>
-
+</style></head><body>
 <div class="wrap">
-<header>
-  <div class="logo">
-    <svg width="44" height="44" viewBox="0 0 100 100" aria-hidden="true"><circle cx="44" cy="44" r="30" fill="#fff" stroke="#16224a" stroke-width="9"/><circle cx="44" cy="44" r="14" fill="#2f7bf0"/><circle cx="44" cy="44" r="7" fill="#16224a"/><circle cx="49" cy="39" r="3" fill="#fff"/><line x1="66" y1="66" x2="90" y2="90" stroke="#16224a" stroke-width="12" stroke-linecap="round"/></svg>
-    <h1>Eyewitness</h1>
-  </div>
-  <a class="pill" id="caseNo" href="../" style="text-decoration:none">Case File #4 · all cases</a>
-</header>
-
-<div class="stage" id="stage">
-  <video id="film" src="case4.mp4" poster="scene.jpg" playsinline preload="auto" aria-label="Episode 4"></video>
-  <img id="still" src="scene.jpg" alt="The harvest market before anything happened" hidden>
-  <span class="rec" id="rec" hidden>CAM 1 · REC</span>
-  <span class="peektag" id="peekTag" hidden>PEEKING</span>
-  <div class="cover" id="cover"><svg width="54" height="54" viewBox="0 0 100 100" aria-hidden="true" style="margin-bottom:4px"><circle cx="44" cy="44" r="30" fill="none" stroke="#ffc93c" stroke-width="9"/><line x1="66" y1="66" x2="90" y2="90" stroke="#ffc93c" stroke-width="12" stroke-linecap="round"/></svg><span id="coverText">This week's case is sealed</span><span style="font-size:16px;font-weight:500" id="coverSub">You get to watch it once, like a real witness.</span></div>
-</div>
-
-<section class="card" id="intro">
-  <span class="label">Case file · Harvest market, Saturday morning</span>
-  <h2>The prize pumpkin pinch</h2>
-  <p style="margin:0">Saturday morning at the harvest market — stalls, music, a prize pumpkin everybody's admiring. Something gets wheeled off that shouldn't. You were there. Watch the episode once — then tell us what you saw.</p>
-  <ol class="how">
-    <li><b>1</b><span>Watch this week's episode. About one minute. No rewinds.</span></li>
-    <li><b>2</b><span>Answer 12 questions. You get 15 seconds each once the answers appear.</span></li>
-    <li><b>3</b><span>Right and fast scores most. Peeking at the opening still costs 250 points.</span></li>
-  </ol>
-  <div class="hint" id="challengeLine" hidden style="background:#fff8e1;border:2px dashed var(--peek);border-radius:12px;padding:10px;color:#4a3300;font-weight:700"></div>
-  <button class="primary" id="play">Watch the episode</button>
-  <span class="hint" id="next" style="text-align:center"></span>
-</section>
-
-<section class="card" id="watch" hidden>
-  <div class="row"><span class="label">Watching the episode · no rewinds</span><span class="big" style="font-size:30px" id="watchLeft">62</span></div>
-  <div class="bar" id="watchWrap"><i id="watchBar"></i></div>
-</section>
-
-<section class="card" id="quiz" hidden>
-  <div class="row"><span class="label" id="qNum">Question 1 of 12</span><span class="label" id="qScore">0 pts</span></div>
-  <div class="bar" id="qWrap"><i id="qBar"></i></div>
-  <span class="kind" id="qKind">Detail</span>
-  <p class="q" id="qText"></p>
-  <div class="opts wait" id="opts"></div>
-  <button class="ghost" id="peek" hidden>Peek at the opening still for 3 seconds (costs 250)</button>
-  <div class="hint" id="hint" aria-live="polite"></div>
-  <div class="fb" id="fb" aria-live="polite"></div>
-</section>
-
-<section class="card" id="result" hidden>
-  <span class="label">Case File #4 closed</span>
-  <span class="rank" id="rank">Reliable witness</span>
-  <div class="row" style="align-items:flex-end"><div class="big" id="final">0</div><div class="hint" id="finalSub"></div></div>
-  <div class="tiles" id="tiles" aria-label="Your answers: green right, yellow right after peeking, red wrong"></div>
-  <div class="stats">
-    <div class="stat"><b id="sStreak">1</b><span>Cases played</span></div>
-    <div class="stat"><b id="sBest">0</b><span>Best score</span></div>
-    
-    <div class="stat"><b id="sNext">--</b><span>Next case</span></div>
-  </div>
-  <span class="label">Challenge your friends</span>
-  <div class="row" style="flex-wrap:nowrap;align-items:center;margin-bottom:6px"><span class="hint" style="white-space:nowrap">Sign it as</span><input type="text" id="nick" maxlength="20" placeholder="your first name" aria-label="Your name on the challenge" style="flex:1;min-width:0;min-height:44px;border:2px solid var(--line);border-radius:10px;padding:0 10px;font-size:16px;font-family:inherit"></div>
-  <div class="hint" id="vsLine" style="font-weight:700;color:var(--ink)"></div>
-  <textarea id="share" rows="4" readonly aria-label="Your shareable result"></textarea>
-  <div class="two">
-    <button class="primary" id="copy">Copy my result</button>
-    <button class="fbk" id="fbShare">Share on Facebook</button>
-  </div>
-  <div class="hint" id="copied" aria-live="polite"></div>
-  <button id="replayTop" class="ghost" style="border-style:solid">▶ Watch the episode again — pause and rewind as much as you like</button>
-</section>
-
-<section class="card" id="missedCard" hidden>
-  <span class="label">What really happened — the answers</span>
-  <ol class="missed" id="missed"></ol>
-  <button id="replay">▶ Watch the episode again</button>
-  <a href="https://eyewitnessgame.com/game-room/" style="display:block;text-align:center;margin-top:12px;padding:14px;border-radius:12px;background:#1d1846;color:#ffcf4a;font-weight:800;text-decoration:none;font-size:18px">🕹️ Step into the Game Room: every case plus our favorite games</a>
-</section>
+<header><div class="logo"><svg width="44" height="44" viewBox="0 0 100 100" aria-hidden="true"><circle cx="44" cy="44" r="30" fill="#fff" stroke="#16224a" stroke-width="9"/><circle cx="44" cy="44" r="14" fill="#2f7bf0"/><circle cx="44" cy="44" r="7" fill="#16224a"/><circle cx="49" cy="39" r="3" fill="#fff"/><line x1="66" y1="66" x2="90" y2="90" stroke="#16224a" stroke-width="12" stroke-linecap="round"/></svg><h1>Eyewitness</h1></div><span class="pill">New case every Friday</span></header>
+<section class="hero"><h2>How good a witness are you?</h2><p>Watch a one-minute cartoon crime — once, no rewinds. Then answer 12 quick questions about what you saw. Share your score and see who's got the sharpest eyes.</p></section>
+<section class="cases"><a class="case featured" href="case1/"><img src="case1/scene.jpg" alt="" loading="lazy"><div><span class="label">Case File #1</span><h3>The great dog show caper</h3><p>City park · the trophy walks off during the dog show.</p><span class="go">Play this case →</span></div></a><a class="case" href="case2/" data-release="2026-11-13" data-label="Fri Nov 13"><img src="case2/scene.jpg" alt="" loading="lazy"><div><span class="label">Case File #2</span><h3>The Main Street cake caper</h3><p>Main Street · something walks off from outside the bakery.</p><span class="go">Play this case →</span></div></a><a class="case" href="case3/" data-release="2026-11-20" data-label="Fri Nov 20"><img src="case3/scene.jpg" alt="" loading="lazy"><div><span class="label">Case File #3</span><h3>The station hatbox heist</h3><p>Railway platform · a lady's luggage goes missing.</p><span class="go">Play this case →</span></div></a><a class="case" href="case4/" data-release="2026-11-27" data-label="Fri Nov 27"><img src="case4/scene.jpg" alt="" loading="lazy"><div><span class="label">Case File #4</span><h3>The prize pumpkin pinch</h3><p>Harvest market · the prize pumpkin doesn't stay put.</p><span class="go">Play this case →</span></div></a></section>
 <section class="card" id="signupCard">
-  <span class="label">Next case drops every Friday</span>
-  <p style="margin:0 0 6px">Get the new case in your inbox the moment it's released. No spam, one email a week.</p>
+  <span class="label">Don't miss the next case</span>
+  <p style="margin:0 0 6px">One email every Friday with the new case. Nothing else.</p>
   <form id="mlForm" action="https://assets.mailerlite.com/jsonp/2682193/forms/202178679620503284/subscribe" method="post" target="mlFrame" class="row" style="flex-wrap:nowrap;align-items:flex-start">
     <div style="flex:1;min-width:0"><input type="email" name="fields[email]" required placeholder="you@example.com" aria-label="Your email" autocomplete="email"></div>
     <input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anti_spam" value="">
@@ -168,123 +97,12 @@ input[type=email]{width:100%;min-height:50px;border:2px solid var(--ink);border-
   <iframe name="mlFrame" title="signup" hidden style="display:none"></iframe>
   <div class="hint" id="mlMsg" aria-live="polite"></div>
 </section>
-
+<section class="card"><span class="label">How it works</span>
+<ol class="how"><li><b>1</b><span>Press play. The episode runs about a minute. You only get to see it once — like a real witness.</span></li><li><b>2</b><span>Answer 12 multiple-choice questions. Right and fast scores most.</span></li><li><b>3</b><span>Stuck? Peek at the opening scene for 3 seconds — it costs you 250 points.</span></li><li><b>4</b><span>Share your result grid and challenge your friends. New case every Friday.</span></li></ol></section>
+<footer>Eyewitness © 2026 · Made with far too much coffee · <a href="privacy/">Privacy</a></footer>
 </div>
-
+<script>document.getElementById("mlForm").addEventListener("submit",()=>{setTimeout(()=>{document.getElementById("mlMsg").textContent="You're in. Check your inbox — Case 1 is waiting. Welcome aboard, witness.";document.getElementById("mlForm").reset()},400)});</script>
 <script>
-const ANSWER=15,PEEK_COST=250,CASE="4";
-const $=id=>document.getElementById(id);
-const film=$("film");
-let DUR=53;
-film.style.visibility="hidden";
-film.addEventListener("loadedmetadata",()=>{if(film.duration&&isFinite(film.duration))DUR=film.duration;$("watchLeft").textContent=Math.ceil(DUR)});
-
-// Every question below was checked against the actual frames of the episode.
-const Q=[
-["Detail","What was the name on the honey stall?","BEN'S HONEY",["BOB'S HONEY","BEE HAPPY HONEY","HILLTOP HONEY"]],
-["Detail","What was on the prize pumpkin?","A blue first-prize ribbon",["A red bow","A price tag","A tiny flag"]],
-["Detail","What was the farmer wearing on his head?","A straw hat",["A baseball cap","A red bandana","Nothing"]],
-["Detail","What instrument was the musician playing?","A fiddle",["A banjo","An accordion","A harmonica"]],
-["Detail","What color was the dancing woman's dress?","Yellow",["Red","Blue","Green"]],
-["Detail","What animal was the little girl holding on a rope?","A white goat",["A brown dog","A pony","A pig"]],
-["Order","What was the farmer doing when the pumpkin was taken?","Chatting at the apple stall with his back turned",["Dancing","Buying honey","Asleep on the hay bale"]],
-["Detail","What was the thief wearing on her head?","A red beret",["A straw hat","A green scarf","A cowboy hat"]],
-["Detail","How did the thief carry the pumpkin away?","In a wheelbarrow",["In a wagon","On her shoulder","In a wheelchair"]],
-["Direction","Which way did the thief go?","To the right",["To the left","Into the market hall","It never moved"]],
-["Detail","What did the farmer throw on the ground before chasing?","His straw hat",["His apple","His boots","His jacket"]],
-["Count","How many crows flew up off the scarecrow?","2",["1","3","5"]]];
-
-function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-function dayKey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
-let stats=store("ewd-stats")||{streak:0,best:0,played:0,lastDay:""};
-let saved=store("ewd-film-"+CASE);
-let nick=store("ewd-nick")||"";
-let timer=null,left=0,qi=0,score=0,marks=[],peeked=false,peeking=false,watchTick=null;
-const sections=["intro","watch","quiz","result"];
-function show(id){sections.forEach(s=>$(s).hidden=s!==id);$("signupCard").hidden=id==="watch"||id==="quiz";$("missedCard").hidden=id!=="result"}
-
-function countdown(){const n=new Date(),m=new Date(n);m.setDate(n.getDate()+((5-n.getDay()+7)%7||7));m.setHours(9,0,0,0);const s=Math.floor((m-n)/1000);const txt=(s>=86400?Math.floor(s/86400)+"d ":"")+Math.floor(s%86400/3600)+"h "+String(Math.floor(s%3600/60)).padStart(2,"0")+"m";$("sNext").textContent=txt;$("next").textContent=saved?"You solved this case. Next case in "+txt+".":"New case every Friday morning."}
-setInterval(countdown,1000);countdown();
-
-function playScene(onDone){film.controls=false;
-  $("cover").hidden=true;$("rec").hidden=false;$("still").hidden=true;film.style.visibility="visible";
-  film.currentTime=0;
-  const p=film.play();if(p&&p.catch)p.catch(()=>{});
-  clearInterval(watchTick);
-  watchTick=setInterval(()=>{const t=film.currentTime;$("watchLeft").textContent=Math.max(0,Math.ceil(DUR-t));$("watchBar").style.width=(Math.max(0,1-t/DUR)*100)+"%";$("watchWrap").classList.toggle("low",t>DUR*0.85)},200);
-  film.onended=()=>{clearInterval(watchTick);$("rec").hidden=true;onDone()};
-}
-function seal(text,sub){$("coverText").textContent=text;$("coverSub").textContent=sub;$("cover").hidden=false;film.style.visibility="hidden"}
-$("play").onclick=()=>{if(saved){showResult();return}show("watch");playScene(()=>{seal("Episode over","Now, what did you see?");startQuiz()})};
-
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function startQuiz(){qi=0;score=0;marks=[];show("quiz");ask()}
-function run(sec,done){clearInterval(timer);left=sec;$("qBar").style.width="100%";$("qWrap").classList.remove("low");timer=setInterval(()=>{left=Math.max(0,left-0.1);$("qBar").style.width=(left/sec*100)+"%";$("qWrap").classList.toggle("low",left/sec<0.25);if(left<=0){clearInterval(timer);done()}},100)}
-function ask(){
-  if(qi>=Q.length)return finish();
-  const [k,q,a,w]=Q[qi];peeked=false;
-  $("qNum").textContent="Question "+(qi+1)+" of "+Q.length;$("qScore").textContent=score.toLocaleString()+" pts";$("qKind").textContent=k;
-  $("qText").textContent="";$("fb").textContent="";$("peek").hidden=true;$("peek").disabled=false;
-  const box=$("opts");box.innerHTML="";box.classList.add("wait");
-  shuffle([a,...w]).forEach(o=>{const b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=()=>pick(b,a);box.appendChild(b)});
-  $("qBar").style.width="100%";$("qWrap").classList.remove("low");$("hint").textContent="Read the question. Your clock starts when the answers appear.";
-  let i=0;clearInterval(timer);
-  timer=setInterval(()=>{i++;$("qText").textContent=q.slice(0,i);if(i>=q.length){clearInterval(timer);setTimeout(()=>{box.classList.remove("wait");$("peek").hidden=false;$("hint").textContent="15 seconds.";run(ANSWER,()=>pick(null,a))},350)}},30);
-}
-$("peek").onclick=()=>{
-  if(peeked||peeking)return;peeked=true;peeking=true;$("peek").disabled=true;$("peek").textContent="Peeking...";
-  $("cover").hidden=true;$("still").hidden=false;$("peekTag").hidden=false;
-  setTimeout(()=>{$("peekTag").hidden=true;$("still").hidden=true;seal("Episode over","Now, what did you see?");peeking=false;$("peek").textContent="Peek at the opening still for 3 seconds (costs 250)"},3000);
-};
-function pick(b,a){
-  clearInterval(timer);$("peek").hidden=true;$("hint").textContent="";
-  [...$("opts").children].forEach(x=>{x.onclick=null;if(x.textContent===a)x.classList.add("ok")});
-  let mark="r",msg="Time's up.";
-  if(b){if(b.textContent===a){let p=Math.round(500+500*left/ANSWER);if(peeked)p=Math.max(0,p-PEEK_COST);score+=p;mark=peeked?"y":"g";msg="+"+p+" points"+(peeked?" (peeked)":"")}else{b.classList.add("no");msg="Not quite."}}
-  marks.push(mark);$("fb").textContent=msg;$("fb").style.color=mark==="r"?"var(--bad)":"var(--good)";
-  setTimeout(()=>{qi++;ask()},1200);
-}
-function rankFor(n){return n>=12?"Eagle-eyed witness":n>=9?"Reliable witness":n>=6?"Shaky witness":n>=3?"Blurry witness":"Were you even there?"}
-function finish(){
-  const today=dayKey(new Date()),y=dayKey(new Date(Date.now()-864e5));
-  if(stats.lastDay!==today){stats.streak=stats.lastDay===y?stats.streak+1:1;stats.played++;stats.lastDay=today}
-  stats.best=Math.max(stats.best,score);store("ewd-stats",stats);
-  saved={score,marks,right:marks.filter(m=>m!=="r").length};store("ewd-film-"+CASE,saved);
-  submit();showResult();
-}
-const PAGE=location.origin+location.pathname;
-function chal(){try{const h=new URLSearchParams(location.hash.slice(1));if(!h.get("c"))return null;return{score:+h.get("c")||0,right:+h.get("r")||0,name:(h.get("n")||"A friend").slice(0,20)}}catch(e){return null}}
-const ch=chal();
-function myLink(r){return PAGE+"#c="+r.score+"&r="+r.right+(nick?"&n="+encodeURIComponent(nick):"")}
-function shareText(r){const em={g:"🟩",y:"🟨",r:"🟥"};let beat="";if(ch){beat=r.score>ch.score?" I beat "+ch.name+"'s "+ch.score.toLocaleString()+"!":r.score<ch.score?" "+ch.name+" beat me — your turn.":" Tied with "+ch.name+"!"}
-  return "Eyewitness Case File #"+CASE+" 🕵️ "+r.right+"/12 · "+r.score.toLocaleString()+" pts"+beat+"\n"+r.marks.map(m=>em[m]).join("")+"\nDid YOU see who took the pumpkin? Beat my score: "+myLink(r)}
-if(ch){$("challengeLine").hidden=false;$("challengeLine").textContent="🕵️ "+ch.name+" scored "+ch.score.toLocaleString()+" ("+ch.right+"/12) on this episode. Think you saw more?"}
-function showResult(){
-  show("result");seal("Case closed","Tap Watch the episode again below to see what you missed.");
-  const r=saved;
-  $("rank").textContent=rankFor(r.right);$("final").textContent=r.score.toLocaleString();$("finalSub").textContent=r.right+" of 12 right · "+r.marks.filter(m=>m==="y").length+" peeks";
-  $("tiles").innerHTML=r.marks.map(m=>'<span class="t-'+m+'"></span>').join("");
-  $("sStreak").textContent=stats.played;$("sBest").textContent=Number(stats.best).toLocaleString();
-  $("share").value=shareText(r);$("nick").value=nick;
-  $("vsLine").textContent=ch?("You "+r.score.toLocaleString()+" · "+ch.name+" "+ch.score.toLocaleString()+(r.score>ch.score?" — you out-witnessed "+ch.name+"!":r.score<ch.score?" — "+ch.name+" saw more this time.":" — dead heat.")):"";
-  $("copied").textContent="";
-  const m=$("missed");m.innerHTML="";
-  Q.forEach((q,i)=>{const li=document.createElement("li");li.textContent=q[1]+" "+q[2]+"."+(r.marks[i]==="r"?" (you missed this)":"");m.appendChild(li)});
-  
-}
-$("nick").oninput=()=>{nick=$("nick").value.trim().slice(0,20);store("ewd-nick",nick);if(saved)$("share").value=shareText(saved)};
-$("copy").onclick=()=>{const t=$("share").value;navigator.clipboard.writeText(t).then(()=>$("copied").textContent="Copied. Paste it on Facebook or in a group text.").catch(()=>{$("share").select();$("copied").textContent="Selected. Use your keyboard's Copy."})};
-$("fbShare").onclick=()=>{const u="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(saved?myLink(saved):PAGE)+"&quote="+encodeURIComponent($("share").value);window.open(u,"_blank","noopener,width=620,height=560")};
-function replayFilm(){window.scrollTo({top:0,behavior:"smooth"});film.controls=true;$("cover").hidden=true;$("still").hidden=true;film.style.visibility="visible";$("rec").hidden=true;film.currentTime=0;const p=film.play();if(p&&p.catch)p.catch(()=>{});film.onended=()=>{}}
-$("replay").onclick=replayFilm;$("replayTop").onclick=replayFilm;
-
-function renderBoard(){}
-function submit(){}
-$("mlForm").addEventListener("submit",()=>{setTimeout(()=>{$("mlMsg").textContent="You're in. Check your inbox — Case 1 is waiting. Welcome aboard, witness.";$("mlForm").reset()},400)});
-if(saved){$("play").textContent="See my result";}
-</script>
-
-<script>
-(function(){const R=new Date("2026-11-27"+"T09:00:00-05:00");if(Date.now()<R&&!/preview=1/.test(location.search)){document.addEventListener("DOMContentLoaded",function(){const b=document.getElementById("play");if(b){b.textContent="Unlocks Friday, November 27, 9 am";b.disabled=true;b.style.opacity=".55";}const n=document.getElementById("next");if(n)n.textContent="This case isn't open yet. Come back Friday morning — or play the current case at eyewitnessgame.com.";});}})();
+document.querySelectorAll('.case[data-release]').forEach(function(a){const R=new Date(a.dataset.release+"T09:00:00-05:00");if(Date.now()<R&&!/preview=1/.test(location.search)){a.removeAttribute('href');a.style.opacity='.6';a.style.filter='grayscale(.6)';const g=a.querySelector('.go');if(g){g.textContent='🔒 Unlocks '+a.dataset.label;g.style.color='#8a7a2e';}}});
 </script>
 </body></html>

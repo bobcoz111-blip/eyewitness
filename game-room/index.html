@@ -360,8 +360,8 @@ const CASE_DATA=[
  {n:4,title:"The Prize Pumpkin Pinch",opens:"2026-11-27T09:00:00-05:00",color:C.violet}];
 const NOWD=new Date();const fmtD=d=>d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
 const CASES=CASE_DATA.map(c=>{const o=new Date(c.opens),open=o<=NOWD;const ds=fmtD(o);
-  return open?{type:"upright",label:"CASE #"+c.n,color:c.color,title:c.title,tag:"Case file · Play now",text:"Study the scene closely, then tell us what you saw.",screen:["CASE #"+c.n,"PLAY NOW"],link:"https://eyewitnessgame.com/case"+c.n+"/",linkLabel:"Play Case #"+c.n}
-   :{type:"upright",label:"CASE #"+c.n,color:c.color,title:c.title,tag:"Case file · Opens "+ds,text:"This case opens "+ds+" at 9 AM Eastern. Join the Friday email to get it the morning it opens.",screen:["CASE #"+c.n,ds.toUpperCase()],soon:"Opens "+ds};});
+  return open?{type:"upright",label:"CASE FILE #"+c.n,color:c.color,title:c.title,tag:"Case file · Play now",text:"Study the scene closely, then tell us what you saw.",screen:["CASE #"+c.n,"PLAY NOW"],link:"https://eyewitnessgame.com/case"+c.n+"/",linkLabel:"Play Case File #"+c.n}
+   :{type:"upright",label:"CASE FILE #"+c.n,color:c.color,title:c.title,tag:"Case file · Opens "+ds,text:"This case opens "+ds+" at 9 AM Eastern. Join the Friday email to get it the morning it opens.",screen:["CASE #"+c.n,ds.toUpperCase()],soon:"Opens "+ds};});
 CASES.push({type:"upright",label:"NEW CASES",color:C.green,title:"Friday Case Club",tag:"Free · one email a week",text:"A new case lands in your inbox every Friday. Nothing else.",screen:["JOIN THE","CASE CLUB"],link:"https://eyewitnessgame.com/#signupCard",linkLabel:"Sign up free"});
 const machines=[],hitboxes=[],solids=[];
 const FACE={E:Math.PI/2,W:-Math.PI/2,S:0,N:Math.PI},DIR={E:[1,0],W:[-1,0],S:[0,1],N:[0,-1]};
